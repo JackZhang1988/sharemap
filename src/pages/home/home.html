@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-searchbar placeholder="搜索地图集、地点、用户"></ion-searchbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goContactPage()">
+        <ion-icon name="person"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="card-background-page">
+  <ion-card>
+    <ion-img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-sf.png"></ion-img>
+    <div class="card-title">地图集1</div>
+    <div class="card-subtitle">41 Listings</div>
+  </ion-card>
+
+  <ion-card>
+    <ion-img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-amsterdam.png"></ion-img>
+    <div class="card-title">地图集2</div>
+    <div class="card-subtitle">64 Listings</div>
+  </ion-card>
+  <ion-card>
+    <ion-img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-sf.png"></ion-img>
+    <div class="card-title">地图集3</div>
+    <div class="card-subtitle">41 Listings</div>
+  </ion-card>
+
+  <ion-card>
+    <ion-img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-amsterdam.png"></ion-img>
+    <div class="card-title">地图集4</div>
+    <div class="card-subtitle">64 Listings</div>
+  </ion-card>
+
+
+  <ion-fab bottom center>
+    <button ion-fab color="primary"><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list side="top">
+      <div class="fab-list-wrapper">
+        <button class="add-fab-btn" ion-fab (click)="openAddModal('map')"><ion-icon name="albums"></ion-icon><div class="fab-btn-title">地图集</div></button>
+        <button class="add-fab-btn" ion-fab (click)="openAddModal('location')"><ion-icon name="pin"></ion-icon><div class="fab-btn-title">地点</div></button>
+      </div>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

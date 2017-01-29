@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      添加地图集
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span color="primary" showWhen="ios">关闭</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <div class="item-img-add cover">
+    <img class="nearlib-cover">
+    <ion-spinner class="cover-spinner"></ion-spinner>
+    <div class="img-add-block cover">
+      <div class="cover-add-title">点击添加封面</div>
+      <div class="img-input-wrap">
+        <form enctype="multipart/form-data" class="img-add-input" method="post">
+          <input name="token" type="hidden">
+          <input type="file" accept="image/x-png, image/gif, image/jpeg" class="img-add-input">
+          <input type="submit">
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <ion-item>
+    <ion-input type="text" placeholder="给你的地图集起一个名字"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-textarea placeholder="介绍一下你的地图集"></ion-textarea>
+  </ion-item>
+
+  <button ion-button block>确定</button>
+
+</ion-content>
