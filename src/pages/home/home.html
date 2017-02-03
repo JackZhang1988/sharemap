@@ -10,29 +10,11 @@
 </ion-header>
 
 <ion-content class="card-background-page">
-  <ion-card>
-    <ion-img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-sf.png"></ion-img>
-    <div class="card-title">地图集1</div>
-    <div class="card-subtitle">41 Listings</div>
+  <ion-card *ngFor='let map of maps'>
+    <ion-img src="{{map.coverImg}}"></ion-img>
+    <div class="card-title">{{map.title}}</div>
+    <div class="card-subtitle">{{map.description}}</div>
   </ion-card>
-
-  <ion-card>
-    <ion-img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-amsterdam.png"></ion-img>
-    <div class="card-title">地图集2</div>
-    <div class="card-subtitle">64 Listings</div>
-  </ion-card>
-  <ion-card>
-    <ion-img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-sf.png"></ion-img>
-    <div class="card-title">地图集3</div>
-    <div class="card-subtitle">41 Listings</div>
-  </ion-card>
-
-  <ion-card>
-    <ion-img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-amsterdam.png"></ion-img>
-    <div class="card-title">地图集4</div>
-    <div class="card-subtitle">64 Listings</div>
-  </ion-card>
-
 
   <ion-fab bottom center>
     <button ion-fab color="primary"><ion-icon name="add"></ion-icon></button>
