@@ -34,7 +34,7 @@ export class AddMapModal extends ModalContent {
       })
   }
   public submit(){
-      this.qiniuService.getToken().subscribe(token => console.log(token));
+    //   this.qiniuService.getToken().subscribe(token => console.log(token));
   }
 }
 

@@ -15,9 +15,22 @@ export class QiniuService {
   constructor(private http: Http, @Inject('IMGURL') private ImgUrl: any) { }
 
   getToken(): Observable<any> {
-    return this.http.get(this.tokenApi)
-      .map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+    let token = window.localStorage.getItem('qiniu_token');
+    let tokenTime = window.localStorage.getItem('qiniu_token_time');
+    if (token && tokenTime && ((new Date()).getTime() - Number(tokenTime)) <= 3500000) {
+      return new Observable(observer => {
+        observer.next({token:token});
+        observer.complete();
+      })
+    } else {
+      return this.http.get(this.tokenApi)
+        .map((res: Response) => res.json())
+        .do(res => {
+            window.localStorage.setItem('qiniu_token',res.token);
+            window.localStorage.setItem('qiniu_token_time',(new Date()).getTime().toString());
+        })
+        .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+    }
   }
 
   addImage(imgData: any): Observable<any> {
@@ -32,7 +45,7 @@ export class QiniuService {
           .map((res: Response) => res.json())
           .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
           .subscribe(res => {
-            observer.next(this.ImgUrl+res.hash);
+            observer.next(this.ImgUrl + res.hash);
             observer.complete();
           })
       })
