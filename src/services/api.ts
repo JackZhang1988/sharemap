@@ -22,7 +22,7 @@ const MAPS: Map[] = [
 
 @Injectable()
 export class MapService {
-  private mapListUrl = 'map/list';
+  private mapListUrl = 'http://localhost:3000/map/list';
 
   constructor(private http: Http) { }
 
@@ -30,7 +30,9 @@ export class MapService {
     return Promise.resolve(MAPS);
   }
 
-  addNewMap(): Promise<any> {
-    return null;
+  addNewMap(map: Map): Observable<any> {
+    return this.http.post('http://localhost:3000/map', map)
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 }

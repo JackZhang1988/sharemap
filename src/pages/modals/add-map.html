@@ -29,11 +29,11 @@
 
 
   <ion-item>
-    <ion-input type="text" placeholder="给你的地图集起一个名字"></ion-input>
+    <ion-input type="text" placeholder="给你的地图集起一个名字" [(ngModel)]="title"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-textarea placeholder="介绍一下你的地图集"></ion-textarea>
+    <ion-textarea placeholder="介绍一下你的地图集" [(ngModel)]="description"></ion-textarea>
   </ion-item>
 
   <button ion-button block (click)="submit()">确定</button>
