@@ -24,7 +24,11 @@ export class HomePage implements OnInit {
     this.getMaps();
   }
   getMaps(): void {
-    this.mapService.getMaps().then(maps => this.maps = maps);
+    this.mapService.getMaps().subscribe(res => {
+        if(res.status == 0){
+            this.maps = res.result;
+        }
+    });
   }
   goContactPage() {
     this.navCtrl.push(ContactPage);
