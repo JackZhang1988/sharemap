@@ -32,6 +32,8 @@ import { AddMapModal, AddLocModal } from '../pages/modals/modals';
     AddMapModal,
     AddLocModal
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: 'IMGURL', useValue: 'http://okyb0e40i.bkt.clouddn.com/' }]
 })
-export class AppModule {}
+export class AppModule { }

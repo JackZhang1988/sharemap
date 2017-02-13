@@ -13,14 +13,14 @@
 </ion-header>
 <ion-content padding>
   <div class="item-img-add cover">
-    <img class="nearlib-cover">
-    <ion-spinner class="cover-spinner"></ion-spinner>
+    <img class="nearlib-cover" [src]="coverImg" *ngIf="coverImg">
+    <ion-spinner class="cover-spinner" [hidden]="!imgLoading"></ion-spinner>
     <div class="img-add-block cover">
       <div class="cover-add-title">点击添加封面</div>
       <div class="img-input-wrap">
         <form enctype="multipart/form-data" class="img-add-input" method="post">
           <input name="token" type="hidden">
-          <input type="file" accept="image/x-png, image/gif, image/jpeg" class="img-add-input">
+          <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input">
           <input type="submit">
         </form>
       </div>
@@ -36,6 +36,6 @@
     <ion-textarea placeholder="介绍一下你的地图集"></ion-textarea>
   </ion-item>
 
-  <button ion-button block>确定</button>
+  <button ion-button block (click)="submit()">确定</button>
 
 </ion-content>

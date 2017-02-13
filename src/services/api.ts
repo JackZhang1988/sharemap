@@ -22,6 +22,8 @@ const MAPS: Map[] = [
 
 @Injectable()
 export class MapService {
+  private mapListUrl = 'map/list';
+
   constructor(private http: Http) { }
 
   getMaps(): Promise<Map[]> {
