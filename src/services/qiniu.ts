@@ -17,7 +17,8 @@ export class QiniuService {
   getToken(): Observable<any> {
     let token = window.localStorage.getItem('qiniu_token');
     let tokenTime = window.localStorage.getItem('qiniu_token_time');
-    if (token && tokenTime && ((new Date()).getTime() - Number(tokenTime)) <= 3500000) {
+    //token 存储7天
+    if (token && tokenTime && ((new Date()).getTime() - Number(tokenTime)) <= 1000*60*60*24*7) {
       return new Observable(observer => {
         observer.next({token:token});
         observer.complete();

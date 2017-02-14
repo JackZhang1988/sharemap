@@ -65,7 +65,8 @@ export class AddMapModal extends ModalContent {
 
 
 @Component({
-  templateUrl: 'add-loc.html'
+  templateUrl: 'add-loc.html',
+  providers: [MapService, QiniuService]
 })
 export class AddLocModal extends ModalContent {
   constructor(public viewCtrl: ViewController, private qiniuService: QiniuService) {
