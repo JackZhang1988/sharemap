@@ -5,10 +5,22 @@ import { ToastController } from 'ionic-angular';
 import { MapService } from '../../services/api';
 import { QiniuService } from '../../services/qiniu';
 
+import { Map } from '../../modules/map';
+
 class ModalContent {
-  constructor(public viewCtrl: ViewController) { }
+  constructor(public viewCtrl: ViewController, public qiniuService?: QiniuService) { }
+  imgLoading = false;
+
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+  public addImage(file, callback) {
+    this.qiniuService.addImage(file).subscribe(imgUrl => {
+      if (imgUrl) {
+        this.imgLoading = false;
+        callback(imgUrl);
+      }
+    })
   }
 }
 
@@ -21,26 +33,25 @@ export class AddMapModal extends ModalContent {
   constructor(
     public viewCtrl: ViewController,
     public toastCtrl: ToastController,
-    private qiniuService: QiniuService,
+    public qiniuService: QiniuService,
     private mapService: MapService
   ) {
     super(viewCtrl);
   }
-  private imgLoading = false;
+  // private imgLoading = false;
   public coverImg: string;
   public title: string;
   public description: string;
 
   public imgChange(event) {
-    console.log(event);
-    var self = this;
-    self.imgLoading = true;
-    this.qiniuService.addImage(event.srcElement.files[0]).subscribe(imgUrl => {
-      if (imgUrl) {
-        self.imgLoading = false;
-        self.coverImg = imgUrl;
-      }
-    })
+    this.imgLoading = true;
+    this.addImage(event.srcElement.files[0], (imgUrl) => this.coverImg = imgUrl);
+    // this.qiniuService.addImage(event.srcElement.files[0]).subscribe(imgUrl => {
+    //   if (imgUrl) {
+    //     this.imgLoading = false;
+    //     this.coverImg = imgUrl;
+    //   }
+    // })
   }
   public submit() {
     console.log(this.coverImg, this.title, this.description);
@@ -69,7 +80,33 @@ export class AddMapModal extends ModalContent {
   providers: [MapService, QiniuService]
 })
 export class AddLocModal extends ModalContent {
-  constructor(public viewCtrl: ViewController, private qiniuService: QiniuService) {
+  constructor(
+    public viewCtrl: ViewController,
+    public qiniuService: QiniuService,
+    private mapService: MapService
+  ) {
     super(viewCtrl);
+  }
+  maps: Map[] = [];
+  locationImgs: String[] = [];
+  isShowImgUploader = true;
+  ngOnInit(): void {
+    this.getMaps();
+  }
+  getMaps(): void {
+    this.mapService.getMaps().subscribe(res => {
+      if (res.status == 0) {
+        this.maps = res.result;
+      }
+    });
+  }
+  imgChange(event) {
+    this.imgLoading = true;
+    this.addImage(event.srcElement.files[0], (imgUrl) => {
+      this.locationImgs.push(imgUrl);
+      if (this.locationImgs.length >= 4) {
+          this.isShowImgUploader = false;
+      }
+    });
   }
 }

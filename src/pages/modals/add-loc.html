@@ -14,19 +14,19 @@
 <ion-content padding>
   <div class="item item-img-add">
     <ul class="img-prev">
-      <li class="prev-item">
-        <img class="prev-img" src="http://ionicframework.com/dist/preview-app/www/assets/img/card-sf.png">
+      <li class="prev-item" *ngFor="let img of locationImgs">
+        <img class="prev-img" src="{{img}}">
       </li>
     </ul>
-    <ion-spinner></ion-spinner>
+    <ion-spinner [hidden]="!imgLoading"></ion-spinner>
     <span class="img-add-block">
         <ion-icon name="add" class="img-add-icon"></ion-icon>
-        <div class="img-input-wrap">
-        <form enctype="multipart/form-data" class="img-add-input" method="post">
-            <input name="token" type="hidden">
-            <input type="file" accept="image/x-png, image/gif, image/jpeg" class="img-add-input">
-            <input type="submit" id="addBookImgSubmit">
-        </form>
+        <div class="img-input-wrap" [hidden]="!isShowImgUploader">
+            <form enctype="multipart/form-data" class="img-add-input" method="post">
+                <input name="token" type="hidden">
+                <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input">
+                <input type="submit">
+            </form>
         </div>
     </span>
   </div>
@@ -38,6 +38,15 @@
   <ion-item>
     <ion-textarea placeholder="分享下你对这里的评级和感受吧..."></ion-textarea>
   </ion-item>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>添加到地图集：</ion-label>
+      <ion-select [(ngModel)]="map">
+        <ion-option *ngFor='let map of maps' value="{{map._id}}">{{map.title}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 
   <button ion-button block>确定</button>
 
