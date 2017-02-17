@@ -88,7 +88,7 @@ export class AddLocModal extends ModalContent {
     super(viewCtrl);
   }
   maps: Map[] = [];
-  locationImgs: String[] = [];
+  locationImgs: string[] = [];
   isShowImgUploader = true;
   ngOnInit(): void {
     this.getMaps();
