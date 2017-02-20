@@ -31,8 +31,8 @@
     </span>
   </div>
 
-  <ion-item>
-    <ion-input type="text" placeholder="地点名称" [(ngModel)]="name"></ion-input>
+  <ion-item (click)="showMapModal()">
+    地点：<span>{{name}}</span>
   </ion-item>
 
   <ion-item>

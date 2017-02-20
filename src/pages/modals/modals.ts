@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
+import { ViewController, ModalController, ToastController } from 'ionic-angular';
 
 import { MapService } from '../../services/api';
 import { QiniuService } from '../../services/qiniu';
@@ -23,7 +22,6 @@ class ModalContent {
     })
   }
 }
-
 
 @Component({
   templateUrl: 'add-map.html',
@@ -82,6 +80,7 @@ export class AddMapModal extends ModalContent {
 export class AddLocModal extends ModalContent {
   constructor(
     public viewCtrl: ViewController,
+    public modalCtrl: ModalController,
     public qiniuService: QiniuService,
     private mapService: MapService
   ) {
@@ -105,8 +104,39 @@ export class AddLocModal extends ModalContent {
     this.addImage(event.srcElement.files[0], (imgUrl) => {
       this.locationImgs.push(imgUrl);
       if (this.locationImgs.length >= 4) {
-          this.isShowImgUploader = false;
+        this.isShowImgUploader = false;
       }
+    });
+  }
+  showMapModal() {
+    let curModal;
+    curModal = this.modalCtrl.create(MapModal);
+    curModal.present();
+  }
+}
+
+@Component({
+  templateUrl: 'map.html'
+})
+export class MapModal {
+  constructor(
+    public viewCtrl: ViewController
+  ) { }
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
+  ngOnInit(): void {
+    let map = new AMap.Map('mapContainer', {
+      rotateEnable: true,
+      dragEnable: true,
+      zoomEnable: true,
+      zooms: [3, 18],
+      zoom: 15,
+      //二维地图显示视口
+      view: new AMap.View2D({
+        zoom: 13, //地图显示的缩放级别,
+        center: [116.397428, 39.90923]
+      })
     });
   }
 }

@@ -5,7 +5,7 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { AddMapModal, AddLocModal } from '../pages/modals/modals';
+import { AddMapModal, AddLocModal, MapModal } from '../pages/modals/modals';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,8 @@ import { AddMapModal, AddLocModal } from '../pages/modals/modals';
     HomePage,
     TabsPage,
     AddMapModal,
-    AddLocModal
+    AddLocModal,
+    MapModal
   ],
   imports: [
     IonicModule.forRoot(MyApp, {
@@ -30,7 +31,8 @@ import { AddMapModal, AddLocModal } from '../pages/modals/modals';
     HomePage,
     TabsPage,
     AddMapModal,
-    AddLocModal
+    AddLocModal,
+    MapModal
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },

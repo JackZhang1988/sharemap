@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-searchbar placeholder="搜索地点"></ion-searchbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span color="primary" showWhen="ios">关闭</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <div id="mapContainer" class="item">
+  </div>
+
+  <button ion-button block (click)="submit()">确定</button>
+
+</ion-content>
