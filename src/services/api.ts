@@ -2,7 +2,7 @@ import { Injectable }     from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 
-import { Map } from '../modules/map';
+import { Map } from '../common/models';
 
 @Injectable()
 export class MapService {

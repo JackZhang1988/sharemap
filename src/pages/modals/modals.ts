@@ -3,8 +3,9 @@ import { ViewController, ModalController, ToastController } from 'ionic-angular'
 
 import { MapService } from '../../services/api';
 import { QiniuService } from '../../services/qiniu';
+import { GDMap } from '../../services/gdmap';
 
-import { Map } from '../../modules/map';
+import { Map } from '../../common/models';
 
 class ModalContent {
   constructor(public viewCtrl: ViewController, public qiniuService?: QiniuService) { }
@@ -116,27 +117,18 @@ export class AddLocModal extends ModalContent {
 }
 
 @Component({
-  templateUrl: 'map.html'
+  templateUrl: 'map.html',
+  providers: [GDMap]
 })
 export class MapModal {
   constructor(
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public gdMap: GDMap,
   ) { }
   dismiss() {
     this.viewCtrl.dismiss();
   }
   ngOnInit(): void {
-    let map = new AMap.Map('mapContainer', {
-      rotateEnable: true,
-      dragEnable: true,
-      zoomEnable: true,
-      zooms: [3, 18],
-      zoom: 15,
-      //二维地图显示视口
-      view: new AMap.View2D({
-        zoom: 13, //地图显示的缩放级别,
-        center: [116.397428, 39.90923]
-      })
-    });
+    this.gdMap.initMap();
   }
 }
