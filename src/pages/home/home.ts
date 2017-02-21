@@ -5,7 +5,7 @@ import { ModalController, NavController, FabContainer } from 'ionic-angular';
 import { AddMapModal, AddLocModal } from '../modals/modals';
 import { ContactPage } from '../contact/contact';
 
-import { Map } from '../../modules/map';
+import { Map } from '../../common/models';
 import { MapService } from '../../services/api';
 
 @Component({

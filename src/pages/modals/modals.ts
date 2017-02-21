@@ -111,16 +111,16 @@ export class AddLocModal extends ModalContent {
   }
   showMapModal() {
     let curModal;
-    curModal = this.modalCtrl.create(MapModal);
+    curModal = this.modalCtrl.create(SearchLocModal);
     curModal.present();
   }
 }
 
 @Component({
-  templateUrl: 'map.html',
+  templateUrl: 'search-loc.html',
   providers: [GDMap]
 })
-export class MapModal {
+export class SearchLocModal {
   constructor(
     public viewCtrl: ViewController,
     public gdMap: GDMap,
@@ -129,6 +129,11 @@ export class MapModal {
     this.viewCtrl.dismiss();
   }
   ngOnInit(): void {
-    this.gdMap.initMap();
+      this.gdMap.initMap();
+      this.gdMap.initGeolocation(data => {
+          console.log(data);
+      },errorData => {});
+  }
+  ionViewDidEnter(){
   }
 }
