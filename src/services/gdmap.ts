@@ -8,6 +8,8 @@ export class GDMap {
   constructor() { }
 
   gdMap: any;
+  auto:any;
+  placeSearch:any;
 
   initMap(pos?: LngLat, container: string = 'mapContainer'): any {
     let self = this;
@@ -41,4 +43,23 @@ export class GDMap {
       AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
     });
   }
+  initAutoSearch(autoOptions?:any):void {
+    let self = this;
+    autoOptions = autoOptions || {};
+    self.gdMap.plugin('AMap.Autocomplete', function() {
+        self.auto = new AMap.Autocomplete(autoOptions);
+    })
+    //构造地点查询类
+    // AMap.event.addListener(self.auto, "select", selectCallback);//注册监听，当选中某条记录时会触发
+    // function select(e) {
+    //     self.placeSearch.setCity(e.poi.adcode);
+    //     self.placeSearch.search(e.poi.name);  //关键字查询查询
+    // }
+  }
+
+  autoSearch(keyword:string,callback:any):void {
+      let self = this;
+      self.auto.search(keyword,callback);
+  }
+
 }

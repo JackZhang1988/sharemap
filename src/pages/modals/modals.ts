@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ViewController, ModalController, ToastController } from 'ionic-angular';
 
 import { MapService } from '../../services/api';
@@ -125,15 +125,48 @@ export class SearchLocModal {
     public viewCtrl: ViewController,
     public gdMap: GDMap,
   ) { }
+  tips: any[];
+  isShowTipSelecter = false;
   dismiss() {
     this.viewCtrl.dismiss();
   }
   ngOnInit(): void {
-      this.gdMap.initMap();
-      this.gdMap.initGeolocation(data => {
-          console.log(data);
-      },errorData => {});
+    this.gdMap.initMap();
+    this.gdMap.initGeolocation(data => {
+      console.log(data);
+    }, errorData => { });
+    this.gdMap.initAutoSearch();
+    this.tips = [];
   }
-  ionViewDidEnter(){
+
+  autoSearch(e: any) {
+    if (e.target.value && e.target.value.trim()) {
+      this.gdMap.autoSearch(e.target.value, (status, result) => {
+        console.log(status, result);
+        if (status == 'complete') {
+          this.isShowTipSelecter = true;
+          this.tips = result.tips;
+        }
+      })
+    }
+  }
+  handleTipSelect(tip:any){
+      console.log(tip);
+  }
+}
+
+@Component({
+  selector: 'search-tips',
+  template: '<div *ngFor="let tip of curTips" (click)="handleTipClick(tip)" [hidden]="!isShowTipSelecter">{{tip.address}}</div>'
+})
+export class SearchTips {
+  constructor() { }
+  @Input() curTips: any[];
+  @Output() tipSelected = new EventEmitter();
+  @Input() isShowTipSelecter: Boolean;
+
+  handleTipClick(tip: any) {
+    this.isShowTipSelecter = false;
+    this.tipSelected.emit(tip)
   }
 }
