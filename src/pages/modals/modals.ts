@@ -123,19 +123,24 @@ export class AddLocModal extends ModalContent {
 export class SearchLocModal {
   constructor(
     public viewCtrl: ViewController,
-    public gdMap: GDMap,
+    public gdMap: GDMap
   ) { }
   tips: any[];
   isShowTipSelecter = false;
+  citycode: String;
   dismiss() {
     this.viewCtrl.dismiss();
   }
   ngOnInit(): void {
     this.gdMap.initMap();
-    this.gdMap.initGeolocation(data => {
-      console.log(data);
-    }, errorData => { });
-    this.gdMap.initAutoSearch();
+    // this.gdMap.initGeolocation(data => {
+    //   console.log(data);
+    //   this.citycode = data.addressComponent.citycode;
+    //   this.gdMap.initAutoSearch({
+    //     city: data.addressComponent.citycode
+    //   });
+    // }, errorData => { });
+    this.gdMap.initLocateMap();
     this.tips = [];
   }
 
@@ -150,14 +155,19 @@ export class SearchLocModal {
       })
     }
   }
-  handleTipSelect(tip:any){
-      console.log(tip);
+  handleTipSelect(tip: any) {
+    console.log(tip);
+    this.isShowTipSelecter = false;
+    this.gdMap.placeSearch.search(tip.name);
   }
 }
 
 @Component({
   selector: 'search-tips',
-  template: '<div *ngFor="let tip of curTips" (click)="handleTipClick(tip)" [hidden]="!isShowTipSelecter">{{tip.address}}</div>'
+  template: '<div *ngFor="let tip of curTips" (click)="handleTipClick(tip)" [hidden]="!isShowTipSelecter">\
+    <span class="addr-name">{{tip.name}}</span>\
+    <span class="addr-district">{{tip.district}}</span>\
+    </div>'
 })
 export class SearchTips {
   constructor() { }
