@@ -102,3 +102,33 @@ img {
         padding-top: 45px;
     }
 }
+
+.tip-item {
+    padding: 5px 0;
+    border-bottom: 1px solid #c8c7cc;
+    line-height: 20px;
+    &:last-child{
+        border-bottom:0
+    }
+    .tip-title{
+        font-size:16px;
+    }
+    .tip-notice{
+        color: #666;
+    }
+}
+.customControl{
+    width:0px;
+    height:0px;
+    overflow:visible;
+    position:absolute;
+    top:50%;
+    left:50%; 
+} 
+.customControl img{ 
+    width: 19px; 
+    height: 32px; 
+    left: -11px; 
+    top: -33px; 
+    position: absolute 
+}

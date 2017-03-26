@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-searchbar placeholder="搜索地点" (ionInput)="autoSearch($event)"></ion-searchbar>
+    <ion-searchbar placeholder="搜索地点" (ionInput)="autoSearch($event)" [(ngModel)]="keyword"></ion-searchbar>
     <!-- <input type="text"  class="search-input"> -->
     <ion-buttons start>
       <button ion-button (click)="dismiss()">
@@ -11,7 +11,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
-  <search-tips [curTips]="tips" [isShowTipSelecter]="isShowTipSelecter" (tipSelected)="handleTipSelect($event)"></search-tips>
+  <search-tips class="search-tips" [curTips]="tips" [isShowTipSelecter]="isShowTipSelecter" (tipSelected)="handleTipSelect($event)"></search-tips>
   <div id="mapContainer" class="item">
   </div>
 

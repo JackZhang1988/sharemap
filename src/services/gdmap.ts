@@ -20,6 +20,8 @@ export class GDMap {
   placeSearch: any;
   citySearch: any;
   city: String;
+  curAddedMarker: any;
+  geocoder:any;
 
   initMap(pos?: LngLat, container: string = 'mapContainer'): any {
     let self = this;
@@ -41,7 +43,7 @@ export class GDMap {
       zooms: [3, 18],
       zoom: 15,
     });
-    self.gdMap.plugin(['AMap.Geolocation', 'AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.CitySearch'], function () {
+    self.gdMap.plugin(['AMap.Geolocation', 'AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.CitySearch', 'AMap.Marker','AMap.Geocoder'], function () {
       let geolocation = new AMap.Geolocation({
         enableHighAccuracy: true, //是否使用高精度定位，默认:true
         timeout: 5000, //超过5秒后停止定位，默认：无穷大
@@ -74,7 +76,7 @@ export class GDMap {
           self.placeSearch.setCity(citySearchResult.city);
         }
       })
-
+      self.geocoder = new AMap.Geocoder();
     })
   }
   initGeolocation(onComplete?, onError?): void {
@@ -113,9 +115,72 @@ export class GDMap {
     // }
   }
 
-  autoSearch(keyword: string, callback: any): void {
+  autoSearch(keyword: String, callback: any): void {
     let self = this;
     self.auto.search(keyword, callback);
+  }
+
+  searchPlace(keyword: String, callback: any) {
+    let plSearch = new AMap.PlaceSearch({ //构造地点查询类
+      pageSize: 5,
+      pageIndex: 1,
+      city: this.city//城市
+    });
+    plSearch.search(keyword, callback);
+  }
+
+  addMarker(position: Number[], callback?: any) {
+    if (position.length) {
+      // let marker = new AMap.Marker({
+      //   icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+      //   position: position
+      // });
+      // marker.setMap(this.gdMap);
+      this.curAddedMarker = new AMap.Marker({
+        map: this.gdMap,
+        position: position
+      })
+      this.gdMap.setFitView();
+      callback && callback();
+    }
+  }
+
+  clearMap() {
+    this.gdMap.clearMap();
+  }
+
+  initDragLocate(onSelected?:any) {
+    let content = document.createElement('div');
+    content.innerHTML = "<img src='http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png'>";
+    content.className = 'customControl';
+    let customControl = {
+      dom: content,
+      addTo: () => {
+        let curCtn = this.gdMap.getContainer();
+        curCtn.appendChild(customControl.dom);
+      },
+      removeFrom: () => {
+        let curCtn = this.gdMap.getContainer();
+        if (customControl.dom.parentNode == curCtn) {
+          curCtn.removeChild(customControl.dom);
+        }
+      }
+    }
+    this.gdMap.on('dragstart', () => {
+      this.curAddedMarker.hide();
+      this.gdMap.addControl(customControl);
+    })
+    this.gdMap.on('moveend', () => {
+      this.gdMap.removeControl(customControl);
+      let position = this.gdMap.getCenter();
+      this.curAddedMarker.setPosition(position);
+      this.curAddedMarker.show();
+      this.geocoder.getAddress(position,(status, result)=>{
+        result.regeocode.location = position;
+        onSelected && onSelected(result.regeocode);
+      })
+
+    })
   }
 
 }

@@ -1,17 +1,26 @@
 export interface Location {
-  mapId: string;
-  lnglat: string;
-  description: string;
-  locationImgs: string[];
+  mapId: String;
+  lnglat: String;
+  description: String;
+  locationImgs: String[];
 }
 
 export interface LngLat {
-  lng: string;
-  lat: string
+  lng: String;
+  lat: String
 }
 
 export interface Map {
-  coverImg: string;
-  title: string;
-  description: string;
+  coverImg: String;
+  title: String;
+  description: String;
+}
+
+export interface Position {
+  name: String,
+  address: String,
+  location: any,
+  district?: String,
+  adcode?: String,
+  citycode?:String
 }

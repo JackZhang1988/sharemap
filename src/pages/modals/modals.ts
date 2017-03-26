@@ -123,16 +123,20 @@ export class AddLocModal extends ModalContent {
 export class SearchLocModal {
   constructor(
     public viewCtrl: ViewController,
-    public gdMap: GDMap
+    public mapService: GDMap
   ) { }
   tips: any[];
   isShowTipSelecter = false;
   citycode: String;
+  keyword: String = '';
+  curSelectPlace: any;
+  hasInitDrag = false;
+
   dismiss() {
     this.viewCtrl.dismiss();
   }
   ngOnInit(): void {
-    this.gdMap.initMap();
+    this.mapService.initMap();
     // this.gdMap.initGeolocation(data => {
     //   console.log(data);
     //   this.citycode = data.addressComponent.citycode;
@@ -140,34 +144,65 @@ export class SearchLocModal {
     //     city: data.addressComponent.citycode
     //   });
     // }, errorData => { });
-    this.gdMap.initLocateMap();
+    this.mapService.initLocateMap();
     this.tips = [];
   }
 
-  autoSearch(e: any) {
-    if (e.target.value && e.target.value.trim()) {
-      this.gdMap.autoSearch(e.target.value, (status, result) => {
+  autoSearch() {
+    if (this.keyword && this.keyword.trim()) {
+      this.mapService.autoSearch(this.keyword, (status, result) => {
         console.log(status, result);
         if (status == 'complete') {
           this.isShowTipSelecter = true;
           this.tips = result.tips;
+          // this.tips = result.poiList.pois;
         }
       })
+    } else {
+      this.isShowTipSelecter = false;
     }
   }
   handleTipSelect(tip: any) {
     console.log(tip);
     this.isShowTipSelecter = false;
-    this.gdMap.placeSearch.search(tip.name);
+    // this.gdMap.placeSearch.search(tip.name);
+    this.keyword = '';
+    this.curSelectPlace = tip;
+    this.mapService.clearMap();
+    this.mapService.addMarker([tip.location.lng, tip.location.lat], () => {
+      if (!this.hasInitDrag) {
+        this.mapService.initDragLocate((result) => {
+          let city = result.addressComponent.city;
+          let province = result.addressComponent.province;
+          let district = result.addressComponent.district;
+          let township = result.addressComponent.township;
+          this.curSelectPlace = {
+            name: result.formattedAddress.replace(province, '').replace(city, '').replace(district, '').replace(township, ''),
+            address: result.formattedAddress,
+            location: result.location,
+            district: result.addressComponent.district,
+            citycode: result.addressComponent.citycode,
+            adcode: result.addressComponent.adcode
+          };
+        });
+        this.hasInitDrag = true;
+      }
+    });
+  }
+
+  submit() {
+    // this.gdMap.addMarker([116.405467, 39.907761]);
+    console.log(this.curSelectPlace);
+
   }
 }
 
 @Component({
   selector: 'search-tips',
-  template: '<div *ngFor="let tip of curTips" (click)="handleTipClick(tip)" [hidden]="!isShowTipSelecter">\
-    <span class="addr-name">{{tip.name}}</span>\
-    <span class="addr-district">{{tip.district}}</span>\
-    </div>'
+  template: '<div class="tip-item" *ngFor="let tip of curTips" (click)="handleTipClick(tip)" [hidden]="!isShowTipSelecter">\
+        <span class="tip-title">{{tip.name}}</span>\
+        <span class="tip-notice">{{tip.district}}</span>\
+      </div>'
 })
 export class SearchTips {
   constructor() { }
