@@ -1,5 +1,12 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+
+import { BrowserModule } from '@angular/platform-browser';
+
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+
 import { MyApp } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
@@ -20,9 +27,15 @@ import { AddMapModal, AddLocModal, SearchLocModal, SearchTips } from '../pages/m
     SearchTips
   ],
   imports: [
+    BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp, {
       backButtonText: ''
-    }, {})
+    }, {
+        links: [
+          { component: HomePage, name: 'Home Page', segment: 'home' },
+        ]
+      })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -37,6 +50,10 @@ import { AddMapModal, AddLocModal, SearchLocModal, SearchTips } from '../pages/m
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    { provide: 'IMGURL', useValue: 'http://okyb0e40i.bkt.clouddn.com/' }]
+    { provide: 'IMGURL', useValue: 'http://okyb0e40i.bkt.clouddn.com/' },
+    SplashScreen,
+    StatusBar
+  ]
 })
 export class AppModule { }
+``
