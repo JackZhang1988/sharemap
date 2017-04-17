@@ -1,14 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { LngLat } from '../common/models';
-var __assign = (this && this.__assign) || Object.assign || function (t) {
-  for (var s, i = 1, n = arguments.length; i < n; i++) {
-    s = arguments[i];
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-      t[p] = s[p];
-  }
-  return t;
-};
 
 @Injectable()
 export class GDMap {
@@ -21,7 +13,7 @@ export class GDMap {
   citySearch: any;
   city: String;
   curAddedMarker: any;
-  geocoder:any;
+  geocoder: any;
 
   initMap(pos?: LngLat, container: string = 'mapContainer'): any {
     let self = this;
@@ -35,7 +27,7 @@ export class GDMap {
   }
   initLocateMap(options: any = {}): any {
     let self = this;
-    __assign(options, { container: 'mapContainer' });
+    options = Object.assign(options, { container: 'mapContainer' });
     self.gdMap = new AMap.Map(options.container, {
       rotateEnable: true,
       dragEnable: true,
@@ -43,7 +35,7 @@ export class GDMap {
       zooms: [3, 18],
       zoom: 15,
     });
-    self.gdMap.plugin(['AMap.Geolocation', 'AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.CitySearch', 'AMap.Marker','AMap.Geocoder'], function () {
+    self.gdMap.plugin(['AMap.Geolocation', 'AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.CitySearch', 'AMap.Marker', 'AMap.Geocoder'], function () {
       let geolocation = new AMap.Geolocation({
         enableHighAccuracy: true, //是否使用高精度定位，默认:true
         timeout: 5000, //超过5秒后停止定位，默认：无穷大
@@ -149,7 +141,7 @@ export class GDMap {
     this.gdMap.clearMap();
   }
 
-  initDragLocate(onSelected?:any) {
+  initDragLocate(onSelected?: any) {
     let content = document.createElement('div');
     content.innerHTML = "<img src='http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png'>";
     content.className = 'customControl';
@@ -175,7 +167,7 @@ export class GDMap {
       let position = this.gdMap.getCenter();
       this.curAddedMarker.setPosition(position);
       this.curAddedMarker.show();
-      this.geocoder.getAddress(position,(status, result)=>{
+      this.geocoder.getAddress(position, (status, result) => {
         result.regeocode.location = position;
         onSelected && onSelected(result.regeocode);
       })

@@ -35,6 +35,14 @@ export class HomePage implements OnInit {
   goContactPage() {
     this.navCtrl.push(ContactPage);
   }
+  saveMap(data) {
+    //todo: save to db
+    console.log(data)
+  }
+  saveLoc(data) {
+    //todo: save to db
+    console.log(data);
+  }
   openAddModal(type, fab: FabContainer) {
     let curModal;
     fab.close();
@@ -43,6 +51,13 @@ export class HomePage implements OnInit {
     } else {
       curModal = this.modalCtrl.create(AddLocModal);
     }
+    curModal.onDidDismiss(data => {
+      if (type == 'map') {
+        this.saveMap(data);
+      } else {
+        this.saveLoc(data);
+      }
+    })
     curModal.present();
   }
 }

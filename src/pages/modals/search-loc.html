@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-searchbar placeholder="搜索地点" (ionInput)="autoSearch($event)" [(ngModel)]="keyword"></ion-searchbar>
+    <ion-searchbar placeholder="搜索地点" (ionInput)="autoSearch($event)" [(ngModel)]="keyword" [debounce]="300"></ion-searchbar>
     <!-- <input type="text"  class="search-input"> -->
     <ion-buttons start>
       <button ion-button (click)="dismiss()">
@@ -14,7 +14,7 @@
   <search-tips class="search-tips" [curTips]="tips" [isShowTipSelecter]="isShowTipSelecter" (tipSelected)="handleTipSelect($event)"></search-tips>
   <div id="mapContainer" class="item">
   </div>
-
+  <ion-item *ngIf="curSelectPlace">{{curSelectPlace.name}}</ion-item>
   <button ion-button block (click)="submit()">确定</button>
 
 </ion-content>

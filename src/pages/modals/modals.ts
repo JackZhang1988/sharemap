@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ViewController, ModalController, ToastController } from 'ionic-angular';
+import { Component, Input, Output, EventEmitter, NgZone } from '@angular/core';
+import { AlertController, ViewController, ModalController, ToastController } from 'ionic-angular';
 
 import { MapService } from '../../services/api';
 import { QiniuService } from '../../services/qiniu';
@@ -81,12 +81,14 @@ export class AddMapModal extends ModalContent {
 export class AddLocModal extends ModalContent {
   constructor(
     public viewCtrl: ViewController,
+    public alertCtrl: AlertController,
     public modalCtrl: ModalController,
     public qiniuService: QiniuService,
     private mapService: MapService
   ) {
     super(viewCtrl);
   }
+  curLocation: any = {};
   maps: Map[] = [];
   locationImgs: string[] = [];
   isShowImgUploader = true;
@@ -112,7 +114,24 @@ export class AddLocModal extends ModalContent {
   showMapModal() {
     let curModal;
     curModal = this.modalCtrl.create(SearchLocModal);
+    curModal.onDidDismiss(data => {
+      // console.log(data);
+      if (data) {
+        this.curLocation = data;
+      }
+    });
     curModal.present();
+  }
+  submit() {
+    if (!this.curLocation.name) {
+      let alert = this.alertCtrl.create({
+        title: '您还没添加地理位置',
+        buttons: ['关闭']
+      });
+      alert.present();
+    } else {
+      this.viewCtrl.dismiss(this.curLocation);
+    }
   }
 }
 
@@ -123,7 +142,8 @@ export class AddLocModal extends ModalContent {
 export class SearchLocModal {
   constructor(
     public viewCtrl: ViewController,
-    public mapService: GDMap
+    public mapService: GDMap,
+    public zone: NgZone
   ) { }
   tips: any[];
   isShowTipSelecter = false;
@@ -153,8 +173,10 @@ export class SearchLocModal {
       this.mapService.autoSearch(this.keyword, (status, result) => {
         console.log(status, result);
         if (status == 'complete') {
-          this.isShowTipSelecter = true;
-          this.tips = result.tips;
+          this.zone.run(() => {
+            this.isShowTipSelecter = true;
+            this.tips = result.tips;
+          })
           // this.tips = result.poiList.pois;
         }
       })
@@ -172,18 +194,21 @@ export class SearchLocModal {
     this.mapService.addMarker([tip.location.lng, tip.location.lat], () => {
       if (!this.hasInitDrag) {
         this.mapService.initDragLocate((result) => {
-          let city = result.addressComponent.city;
-          let province = result.addressComponent.province;
-          let district = result.addressComponent.district;
-          let township = result.addressComponent.township;
-          this.curSelectPlace = {
-            name: result.formattedAddress.replace(province, '').replace(city, '').replace(district, '').replace(township, ''),
-            address: result.formattedAddress,
-            location: result.location,
-            district: result.addressComponent.district,
-            citycode: result.addressComponent.citycode,
-            adcode: result.addressComponent.adcode
-          };
+          this.zone.run(() => {
+            let city = result.addressComponent.city;
+            let province = result.addressComponent.province;
+            let district = result.addressComponent.district;
+            let township = result.addressComponent.township;
+            this.curSelectPlace = {
+              name: result.formattedAddress.replace(province, '').replace(city, '').replace(district, '').replace(township, '') + result.addressComponent.street + result.addressComponent.streetNumber,
+              address: result.formattedAddress,
+              location: result.location,
+              district: result.addressComponent.district,
+              citycode: result.addressComponent.citycode,
+              adcode: result.addressComponent.adcode
+            };
+            console.log(this.curSelectPlace.name);
+          })
         });
         this.hasInitDrag = true;
       }
@@ -193,7 +218,7 @@ export class SearchLocModal {
   submit() {
     // this.gdMap.addMarker([116.405467, 39.907761]);
     console.log(this.curSelectPlace);
-
+    this.viewCtrl.dismiss(this.curSelectPlace);
   }
 }
 
