@@ -12,6 +12,7 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { MapDetailPage } from '../pages/map-detail/map-detail';
 import { AddMapModal, AddLocModal, SearchLocModal, SearchTips } from '../pages/modals/modals';
 
 @NgModule({
@@ -24,7 +25,8 @@ import { AddMapModal, AddLocModal, SearchLocModal, SearchTips } from '../pages/m
     AddMapModal,
     AddLocModal,
     SearchLocModal,
-    SearchTips
+    SearchTips,
+    MapDetailPage,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +49,7 @@ import { AddMapModal, AddLocModal, SearchLocModal, SearchTips } from '../pages/m
     AddMapModal,
     AddLocModal,
     SearchLocModal,
+    MapDetailPage,
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },

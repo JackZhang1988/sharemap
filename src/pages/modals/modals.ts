@@ -60,13 +60,22 @@ export class AddMapModal extends ModalContent {
       description: this.description
     }).subscribe(res => {
       console.log(res);
-      let toast = this.toastCtrl.create({
-        message: '添加成功',
-        duration: 2000,
-        position: 'middle'
-      })
-      toast.onDidDismiss(() => this.viewCtrl.dismiss());
-      toast.present();
+      if (res.status == 0) {
+        let toast = this.toastCtrl.create({
+          message: '添加成功',
+          duration: 2000,
+          position: 'middle'
+        })
+        toast.onDidDismiss(() => this.viewCtrl.dismiss());
+        toast.present();
+      } else {
+        let toast = this.toastCtrl.create({
+          message: '添加失败',
+          duration: 2000,
+          position: 'middle'
+        })
+        toast.present();
+      }
       //   this.viewCtrl.dismiss();
     })
 
@@ -81,6 +90,7 @@ export class AddMapModal extends ModalContent {
 export class AddLocModal extends ModalContent {
   constructor(
     public viewCtrl: ViewController,
+    public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public modalCtrl: ModalController,
     public qiniuService: QiniuService,
@@ -90,7 +100,9 @@ export class AddLocModal extends ModalContent {
   }
   curLocation: any = {};
   maps: Map[] = [];
+  curMap: string;
   locationImgs: string[] = [];
+  description: string;
   isShowImgUploader = true;
   ngOnInit(): void {
     this.getMaps();
@@ -130,7 +142,33 @@ export class AddLocModal extends ModalContent {
       });
       alert.present();
     } else {
-      this.viewCtrl.dismiss(this.curLocation);
+      let lnglat = this.curLocation.location ? [this.curLocation.location.lng, this.curLocation.location.lat] : null;
+      // delete this.curLocation.location;
+      this.mapService.addNewLocation({
+        locationInfo: this.curLocation,
+        lnglat: lnglat,
+        mapId: this.curMap,
+        imgs: this.locationImgs,
+        description: this.description
+      }).subscribe((res) => {
+        console.log(res);
+        if (res.status == 0) {
+          let toast = this.toastCtrl.create({
+            message: '添加成功',
+            duration: 2000,
+            position: 'middle'
+          })
+          toast.onDidDismiss(() => this.viewCtrl.dismiss());
+          toast.present();
+        } else {
+          let toast = this.toastCtrl.create({
+            message: '添加失败',
+            duration: 2000,
+            position: 'middle'
+          })
+          toast.present();
+        }
+      })
     }
   }
 }
@@ -147,8 +185,8 @@ export class SearchLocModal {
   ) { }
   tips: any[];
   isShowTipSelecter = false;
-  citycode: String;
-  keyword: String = '';
+  citycode: string;
+  keyword: string = '';
   curSelectPlace: any;
   hasInitDrag = false;
 
@@ -217,7 +255,7 @@ export class SearchLocModal {
 
   submit() {
     // this.gdMap.addMarker([116.405467, 39.907761]);
-    console.log(this.curSelectPlace);
+    // console.log(this.curSelectPlace);
     this.viewCtrl.dismiss(this.curSelectPlace);
   }
 }

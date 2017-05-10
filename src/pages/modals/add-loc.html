@@ -42,7 +42,7 @@
   <ion-list>
     <ion-item>
       <ion-label>添加到我的地图集：</ion-label>
-      <ion-select [(ngModel)]="map">
+      <ion-select [(ngModel)]="curMap">
         <ion-option *ngFor='let map of maps' value="{{map._id}}">{{map.title}}</ion-option>
       </ion-select>
     </ion-item>

@@ -4,6 +4,7 @@ import { OnInit } from '@angular/core';
 import { ModalController, NavController, FabContainer } from 'ionic-angular';
 import { AddMapModal, AddLocModal } from '../modals/modals';
 import { ContactPage } from '../contact/contact';
+import { MapDetailPage } from '../map-detail/map-detail';
 
 import { Map } from '../../common/models';
 import { MapService } from '../../services/api';
@@ -32,6 +33,11 @@ export class HomePage implements OnInit {
       }
     });
   }
+
+  goMapDetail():void {
+    this.navCtrl.push(MapDetailPage);
+  }
+
   goContactPage() {
     this.navCtrl.push(ContactPage);
   }
