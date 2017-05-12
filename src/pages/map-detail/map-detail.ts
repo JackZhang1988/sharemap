@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the MapDetail page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-@IonicPage()
+@IonicPage({
+  segment: 'map-detail/:id'
+})
 @Component({
   selector: 'page-map-detail',
   templateUrl: 'map-detail.html',
@@ -15,10 +11,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class MapDetailPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.map = this.navParams.get("map");
   }
-
+  public map: any;
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapDetail');
+    this.getMapData()
+  }
+
+  getMapData():void{
+    console.log(this.map)
   }
 
 }

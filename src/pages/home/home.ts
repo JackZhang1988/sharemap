@@ -34,8 +34,11 @@ export class HomePage implements OnInit {
     });
   }
 
-  goMapDetail():void {
-    this.navCtrl.push(MapDetailPage);
+  goMapDetail(map): void {
+    this.navCtrl.push(MapDetailPage, {
+      map: map,
+      id: map.id
+    });
   }
 
   goContactPage() {
