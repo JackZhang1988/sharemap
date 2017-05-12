@@ -11,7 +11,7 @@ import { HomePage } from '../pages/home/home';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = HomePage;
+  rootPage = 'HomePage';
 
   constructor(
     platform: Platform,

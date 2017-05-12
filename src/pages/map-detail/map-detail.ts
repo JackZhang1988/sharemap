@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-@IonicPage({
-  segment: 'map-detail/:id'
-})
+@IonicPage()
 @Component({
   selector: 'page-map-detail',
   templateUrl: 'map-detail.html',
@@ -11,8 +9,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class MapDetailPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.map = this.navParams.get("map");
   }
+  public title:string = this.navParams.get("title");
   public map: any;
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapDetail');

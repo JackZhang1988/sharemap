@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 
-import { ModalController, NavController, FabContainer } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, FabContainer } from 'ionic-angular';
 import { AddMapModal, AddLocModal } from '../modals/modals';
 import { ContactPage } from '../contact/contact';
 import { MapDetailPage } from '../map-detail/map-detail';
@@ -9,6 +9,7 @@ import { MapDetailPage } from '../map-detail/map-detail';
 import { Map } from '../../common/models';
 import { MapService } from '../../services/api';
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
