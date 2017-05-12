@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { HomePage } from './home';
-// import { AddMapModal, AddLocModal, SearchLocModal, SearchTips } from '../modals/modals';
-// import { ModalsModule } from '../modals/modals.module';
+
 import { AddMapModule } from '../modals/add-map.module';
 import { AddLocModule } from '../modals/add-loc.module';
+// import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
     declarations: [
@@ -13,6 +13,7 @@ import { AddLocModule } from '../modals/add-loc.module';
     imports: [
         AddMapModule,
         AddLocModule,
+        // ComponentsModule,
         IonicPageModule.forChild(HomePage),
     ],
     exports: [
