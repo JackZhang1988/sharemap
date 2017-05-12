@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 
 import { IonicPage, ModalController, NavController, FabContainer } from 'ionic-angular';
-import { AddMapModal, AddLocModal } from '../modals/modals';
+// import { AddMapModal, AddLocModal } from '../modals/modals';
 import { ContactPage } from '../contact/contact';
-import { MapDetailPage } from '../map-detail/map-detail';
+// import { MapDetailPage } from '../map-detail/map-detail';
 
 import { Map } from '../../common/models';
 import { MapService } from '../../services/api';
@@ -35,13 +35,6 @@ export class HomePage implements OnInit {
     });
   }
 
-  goMapDetail(map): void {
-    this.navCtrl.push(MapDetailPage, {
-      map: map,
-      id: map.id
-    });
-  }
-
   goContactPage() {
     this.navCtrl.push(ContactPage);
   }
@@ -57,9 +50,9 @@ export class HomePage implements OnInit {
     let curModal;
     fab.close();
     if (type == 'map') {
-      curModal = this.modalCtrl.create(AddMapModal);
+      curModal = this.modalCtrl.create('AddMapModal');
     } else {
-      curModal = this.modalCtrl.create(AddLocModal);
+      curModal = this.modalCtrl.create('AddLocModal');
     }
     curModal.onDidDismiss(data => {
       if (type == 'map') {

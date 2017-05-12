@@ -8,15 +8,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { AddMapModal, AddLocModal, SearchLocModal, SearchTips } from '../pages/modals/modals';
 
 @NgModule({
   declarations: [
-    MyApp,
-    AddMapModal,
-    AddLocModal,
-    SearchLocModal,
-    SearchTips,
+    MyApp
   ],
   imports: [
     BrowserModule,
@@ -25,11 +20,7 @@ import { AddMapModal, AddLocModal, SearchLocModal, SearchTips } from '../pages/m
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    AddMapModal,
-    AddLocModal,
-    SearchLocModal,
-    SearchTips,
+    MyApp
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
