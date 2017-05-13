@@ -4,16 +4,18 @@ import { HomePage } from './home';
 
 import { AddMapModule } from '../modals/add-map.module';
 import { AddLocModule } from '../modals/add-loc.module';
+import { SearchLocModule } from '../search-loc/search-loc.module';
 // import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
     declarations: [
-        HomePage, 
+        HomePage,
     ],
     imports: [
         AddMapModule,
         AddLocModule,
-        // ComponentsModule,
+        SearchLocModule,
+        // SearchTipsModule,
         IonicPageModule.forChild(HomePage),
     ],
     exports: [

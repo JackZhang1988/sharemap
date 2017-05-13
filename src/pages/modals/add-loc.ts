@@ -6,7 +6,7 @@ import { QiniuService } from '../../services/qiniu';
 import { GDMap } from '../../services/gdmap';
 
 import { Map } from '../../common/models';
-import { SearchLocModal } from '../../components/search-loc/search-loc';
+// import { SearchLocModal } from '../../components/search-loc/search-loc';
 
 
 class ModalContent {
@@ -69,7 +69,7 @@ export class AddLocModal extends ModalContent {
   }
   showMapModal() {
     let curModal;
-    curModal = this.modalCtrl.create(SearchLocModal);
+    curModal = this.modalCtrl.create('SearchLocModal');
     curModal.onDidDismiss(data => {
       // console.log(data);
       if (data) {

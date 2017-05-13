@@ -9,12 +9,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 // import { ComponentsModule } from '../components/components.module';
-import { SearchLocModal } from '../components/search-loc/search-loc';
-import { SearchTips } from '../components/search-tips/search-tips';
+// import { SearchLocModal } from '../components/search-loc/search-loc';
+// import { SearchTips } from '../components/search-tips/search-tips';
 
 @NgModule({
   declarations: [
-    MyApp, SearchLocModal, SearchTips
+    MyApp
   ],
   imports: [
     BrowserModule,
@@ -24,7 +24,7 @@ import { SearchTips } from '../components/search-tips/search-tips';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp, SearchLocModal, SearchTips
+    MyApp
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },

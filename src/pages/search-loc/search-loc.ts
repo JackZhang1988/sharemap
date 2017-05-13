@@ -1,11 +1,13 @@
-import { Component, Input, Output, EventEmitter, NgZone, NgModule } from '@angular/core';
-import { IonicModule, IonicPage, AlertController, ViewController, ToastController } from 'ionic-angular';
+import { Component, NgZone } from '@angular/core';
+import { IonicModule, IonicPage, ViewController } from 'ionic-angular';
 
 import { MapService } from '../../services/api';
 import { QiniuService } from '../../services/qiniu';
 import { GDMap } from '../../services/gdmap';
 
 import { Map } from '../../common/models';
+
+@IonicPage()
 @Component({
   templateUrl: 'search-loc.html',
   providers: [GDMap]
