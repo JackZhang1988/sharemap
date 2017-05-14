@@ -2,12 +2,10 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 
 import { IonicPage, ModalController, NavController, FabContainer } from 'ionic-angular';
-// import { AddMapModal, AddLocModal } from '../modals/modals';
-import { ContactPage } from '../contact/contact';
-// import { MapDetailPage } from '../map-detail/map-detail';
-
 import { Map } from '../../common/models';
 import { MapService } from '../../services/api';
+import { ContactPage } from '../contact/contact';
+
 
 @IonicPage()
 @Component({
@@ -38,14 +36,14 @@ export class HomePage implements OnInit {
   goContactPage() {
     this.navCtrl.push(ContactPage);
   }
-  saveMap(data) {
-    //todo: save to db
-    console.log(data)
-  }
-  saveLoc(data) {
-    //todo: save to db
-    console.log(data);
-  }
+  // saveMap(data) {
+  //   //todo: save to db
+  //   console.log(data)
+  // }
+  // saveLoc(data) {
+  //   //todo: save to db
+  //   console.log(data);
+  // }
   openAddModal(type, fab: FabContainer) {
     let curModal;
     fab.close();
@@ -54,13 +52,13 @@ export class HomePage implements OnInit {
     } else {
       curModal = this.modalCtrl.create('AddLocModal');
     }
-    curModal.onDidDismiss(data => {
-      if (type == 'map') {
-        this.saveMap(data);
-      } else {
-        this.saveLoc(data);
-      }
-    })
+    // curModal.onDidDismiss(data => {
+    //   if (type == 'map') {
+    //     this.saveMap(data);
+    //   } else {
+    //     this.saveLoc(data);
+    //   }
+    // })
     curModal.present();
   }
 }

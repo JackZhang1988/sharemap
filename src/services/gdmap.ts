@@ -2,10 +2,18 @@ import { Injectable } from '@angular/core';
 
 import { LngLat } from '../common/models';
 
+let singleInstance = false;
+
 @Injectable()
 export class GDMap {
 
-  constructor() { }
+  constructor() {
+    if (!singleInstance) {
+      this.initMap();
+      this.initLocateMap();
+      singleInstance = true;
+    }
+  }
 
   gdMap: any;
   auto: any;
@@ -135,6 +143,10 @@ export class GDMap {
       this.gdMap.setFitView();
       callback && callback();
     }
+  }
+
+  addMarkers(markList: any[], callback?: any) {
+
   }
 
   clearMap() {

@@ -3,7 +3,6 @@ import { IonicModule, IonicPage, AlertController, ViewController, ModalControlle
 
 import { MapService } from '../../services/api';
 import { QiniuService } from '../../services/qiniu';
-import { GDMap } from '../../services/gdmap';
 
 import { Map } from '../../common/models';
 import { ModalContent } from './modal-content';

@@ -3,7 +3,6 @@ import { IonicPage, ViewController, ToastController } from 'ionic-angular';
 
 import { MapService } from '../../services/api';
 import { QiniuService } from '../../services/qiniu';
-import { GDMap } from '../../services/gdmap';
 import { ModalContent } from './modal-content';
 
 @IonicPage()

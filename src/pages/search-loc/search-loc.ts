@@ -1,49 +1,34 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicModule, IonicPage, ViewController } from 'ionic-angular';
-
-import { MapService } from '../../services/api';
-import { QiniuService } from '../../services/qiniu';
+import { IonicPage, ViewController } from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
-
-import { Map } from '../../common/models';
 
 @IonicPage()
 @Component({
-  templateUrl: 'search-loc.html',
-  providers: [GDMap]
+  templateUrl: 'search-loc.html'
 })
 export class SearchLocModal {
   constructor(
     public viewCtrl: ViewController,
-    public mapService: GDMap,
     public zone: NgZone
   ) { }
-  tips: any[];
+  tips: any[] = [];
   isShowTipSelecter = false;
   citycode: string;
   keyword: string = '';
   curSelectPlace: any;
   hasInitDrag = false;
+  gdService: any;
 
   dismiss() {
     this.viewCtrl.dismiss();
   }
   ngOnInit(): void {
-    this.mapService.initMap();
-    // this.gdMap.initGeolocation(data => {
-    //   console.log(data);
-    //   this.citycode = data.addressComponent.citycode;
-    //   this.gdMap.initAutoSearch({
-    //     city: data.addressComponent.citycode
-    //   });
-    // }, errorData => { });
-    this.mapService.initLocateMap();
-    this.tips = [];
+    this.gdService = new GDMap();
   }
 
   autoSearch() {
     if (this.keyword && this.keyword.trim()) {
-      this.mapService.autoSearch(this.keyword, (status, result) => {
+      this.gdService.autoSearch(this.keyword, (status, result) => {
         console.log(status, result);
         if (status == 'complete') {
           this.zone.run(() => {
@@ -63,10 +48,10 @@ export class SearchLocModal {
     // this.gdMap.placeSearch.search(tip.name);
     this.keyword = '';
     this.curSelectPlace = tip;
-    this.mapService.clearMap();
-    this.mapService.addMarker([tip.location.lng, tip.location.lat], () => {
+    this.gdService.clearMap();
+    this.gdService.addMarker([tip.location.lng, tip.location.lat], () => {
       if (!this.hasInitDrag) {
-        this.mapService.initDragLocate((result) => {
+        this.gdService.initDragLocate((result) => {
           this.zone.run(() => {
             let city = result.addressComponent.city;
             let province = result.addressComponent.province;

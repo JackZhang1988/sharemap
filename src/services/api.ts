@@ -16,6 +16,12 @@ export class MapService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
+  getMapById(mapId):Observable<any> {
+    return this.http.get(this.serverHost + '/map?mapId='+mapId)
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }
+
   getMapLocations(mapId):Observable<any>{
     return this.http.get(this.serverHost + '/map/locations')
       .map((res: Response) => res.json())
