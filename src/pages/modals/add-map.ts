@@ -1,26 +1,10 @@
-import { Component, Input, Output, EventEmitter, NgZone } from '@angular/core';
-import { IonicPage, AlertController, ViewController, ModalController, ToastController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, ViewController, ToastController } from 'ionic-angular';
 
 import { MapService } from '../../services/api';
 import { QiniuService } from '../../services/qiniu';
 import { GDMap } from '../../services/gdmap';
-
-class ModalContent {
-    constructor(public viewCtrl: ViewController, public qiniuService?: QiniuService) { }
-    imgLoading = false;
-
-    dismiss() {
-        this.viewCtrl.dismiss();
-    }
-    public addImage(file, callback) {
-        this.qiniuService.addImage(file).subscribe(imgUrl => {
-            if (imgUrl) {
-                this.imgLoading = false;
-                callback(imgUrl);
-            }
-        })
-    }
-}
+import { ModalContent } from './modal-content';
 
 @IonicPage()
 @Component({
