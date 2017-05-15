@@ -13,6 +13,18 @@
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <div id="mapContainer" class="item">
+  </div>
+  <ion-slides id="slideContainer">
+    <ion-slide *ngFor='let item of mapLocations'>
+      <div class="loc-item card">
+        <img src="{{item.imgs[0]}}" alt="" class="location-img">
+        <div class="location-content">
+          <div class="title">{{item.description}}</div>
+          <div class="address">{{item.locationInfo.address}}</div>
+        </div>
+      </div>
+    </ion-slide>
+  </ion-slides>
 </ion-content>

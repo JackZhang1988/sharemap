@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { MapService } from '../../services/api';
 import { GDMap } from '../../services/gdmap';
 
@@ -7,31 +7,35 @@ import { GDMap } from '../../services/gdmap';
 @Component({
   selector: 'page-map-detail',
   templateUrl: 'map-detail.html',
-  providers: [MapService]
+  providers: [MapService,GDMap]
 })
 export class MapDetailPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private mapService: MapService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private mapService: MapService, private gdService: GDMap) {
   }
-  public title:string = this.navParams.get("title");
-  public mapData:any = this.navParams.data;
-  public markList:any[] = [];
-  public gdService: any;
+  @ViewChild(Slides) slides: Slides;
+
+  public title: string = this.navParams.get("title");
+  public mapData: any = this.navParams.data;
+  // public markList: any[] = [];
+  public mapLocations: any[] = [];
 
   ionViewDidLoad() {
     this.getMapData()
   }
   ngOnInit(): void {
-    this.gdService = new GDMap();
+    this.gdService.initMap();
   }
-  getMapData():void{
+  getMapData(): void {
     console.log(this.mapData)
-    this.mapService.getMapById(this.mapData._id).subscribe(res =>{
+    this.mapService.getMapById(this.mapData._id).subscribe(res => {
       console.log(res.result);
-      for(let item of res.result){
-        this.markList.push(item.lnglat);
+      this.mapLocations = res.result;
+      let markList = [];
+      for (let item of res.result) {
+        markList.push(item.lnglat);
       }
-      this.gdService.addMarkers(this.markList);
+      this.gdService.addMarkers(markList);
     })
   }
 

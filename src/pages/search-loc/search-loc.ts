@@ -4,12 +4,14 @@ import { GDMap } from '../../services/gdmap';
 
 @IonicPage()
 @Component({
-  templateUrl: 'search-loc.html'
+  templateUrl: 'search-loc.html',
+  providers: [GDMap]
 })
 export class SearchLocModal {
   constructor(
     public viewCtrl: ViewController,
-    public zone: NgZone
+    public zone: NgZone,
+    private gdService: GDMap
   ) { }
   tips: any[] = [];
   isShowTipSelecter = false;
@@ -17,13 +19,13 @@ export class SearchLocModal {
   keyword: string = '';
   curSelectPlace: any;
   hasInitDrag = false;
-  gdService: any;
 
   dismiss() {
     this.viewCtrl.dismiss();
   }
   ngOnInit(): void {
-    this.gdService = new GDMap();
+    this.gdService.initMap();
+    this.gdService.initLocateMap();
   }
 
   autoSearch() {

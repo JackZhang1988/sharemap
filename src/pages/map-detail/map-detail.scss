@@ -1,3 +1,30 @@
 page-map-detail {
+    #slideContainer {
+        height: 20%;
+    }
+
+    .loc-item {
+        display: flex;
+        justify-content: space-between;
+        .location-img {
+            width: 150px;
+            height: 150px;
+        }
+
+        .location-content {
+            flex: 4;
+            .title {
+                margin-top: 25px;
+                font-size: 22px;
+            }
+
+            .address {
+                font-size: 16px;
+                max-width: 71%;
+                margin: 10px auto;
+            }
+        }
+
+    }
 
 }

@@ -2,18 +2,12 @@ import { Injectable } from '@angular/core';
 
 import { LngLat } from '../common/models';
 
-let singleInstance = false;
+// let singleInstance = false;
 
 @Injectable()
 export class GDMap {
 
-  constructor() {
-    if (!singleInstance) {
-      this.initMap();
-      this.initLocateMap();
-      singleInstance = true;
-    }
-  }
+  constructor() {}
 
   gdMap: any;
   auto: any;
@@ -145,8 +139,19 @@ export class GDMap {
     }
   }
 
-  addMarkers(markList: any[], callback?: any) {
-
+  addMarkers(markList: any[]) {
+    if (markList.length) {
+      markList.forEach(pos => {
+        new AMap.Marker({
+          map: this.gdMap,
+          // icon: marker.icon,
+          position: pos,
+          // offset: new AMap.Pixel(-12, -36)
+        });
+      })
+      this.gdMap.setFitView();
+      return this.gdMap;
+    }
   }
 
   clearMap() {
