@@ -7,7 +7,7 @@ import { GDMap } from '../../services/gdmap';
 @Component({
   selector: 'page-map-detail',
   templateUrl: 'map-detail.html',
-  providers: [MapService,GDMap]
+  providers: [MapService, GDMap]
 })
 export class MapDetailPage {
 
@@ -38,5 +38,10 @@ export class MapDetailPage {
       this.gdService.addMarkers(markList);
     })
   }
-
+  slideDidChange(): void {
+    let curMarkerInfo = this.mapLocations[this.slides.getActiveIndex()];
+    if(curMarkerInfo){
+      this.gdService.setZoomAndCenter(curMarkerInfo.lnglat)
+    }
+  }
 }

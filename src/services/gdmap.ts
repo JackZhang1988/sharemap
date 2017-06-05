@@ -7,7 +7,7 @@ import { LngLat } from '../common/models';
 @Injectable()
 export class GDMap {
 
-  constructor() {}
+  constructor() { }
 
   gdMap: any;
   auto: any;
@@ -151,6 +151,12 @@ export class GDMap {
       })
       this.gdMap.setFitView();
       return this.gdMap;
+    }
+  }
+
+  setZoomAndCenter(lnglat: Number[],zoom: number = 14,) {
+    if (lnglat && lnglat.length) {
+      this.gdMap.setZoomAndCenter(zoom, lnglat);
     }
   }
 

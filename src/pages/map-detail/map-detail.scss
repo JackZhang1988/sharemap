@@ -1,6 +1,12 @@
 page-map-detail {
+    #mapContainer {
+        height: 100%;
+    }
     #slideContainer {
         height: 20%;
+        position: absolute;
+        bottom: 20px;
+        background: #fff;
     }
 
     .loc-item {
