@@ -4,8 +4,6 @@ import { OnInit } from '@angular/core';
 import { IonicPage, ModalController, NavController, FabContainer } from 'ionic-angular';
 import { Map } from '../../common/models';
 import { MapService } from '../../services/api';
-import { ContactPage } from '../contact/contact';
-
 
 @IonicPage({
   name:'home'
@@ -36,7 +34,7 @@ export class HomePage implements OnInit {
   }
 
   goContactPage() {
-    this.navCtrl.push(ContactPage);
+    this.navCtrl.push('ProfilePage');
   }
 
   goMapDetail(mapData) {
