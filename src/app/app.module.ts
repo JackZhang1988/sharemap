@@ -8,6 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
+import { ContactPageModule } from '../pages/contact/contact.module';
 // import { ComponentsModule } from '../components/components.module';
 // import { SearchLocModal } from '../components/search-loc/search-loc';
 // import { SearchTips } from '../components/search-tips/search-tips';
@@ -18,6 +19,7 @@ import { MyApp } from './app.component';
   ],
   imports: [
     BrowserModule,
+    ContactPageModule,
     HttpModule,
     // ComponentsModule,
     IonicModule.forRoot(MyApp, { backButtonText: '' })

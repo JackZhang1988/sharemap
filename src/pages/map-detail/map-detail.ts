@@ -28,6 +28,10 @@ export class MapDetailPage {
   ngOnInit(): void {
     this.gdService.initMap();
   }
+  ngAfterViewInit() {
+    this.slides.freeMode = true;
+    this.slides.width = window.screen.width * 0.8;
+  }
   getMapData(): void {
     console.log(this.mapData)
     this.mapService.getMapById(this.mapData._id).subscribe(res => {

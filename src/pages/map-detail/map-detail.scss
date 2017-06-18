@@ -6,7 +6,6 @@ page-map-detail {
         height: 20%;
         position: absolute;
         bottom: 20px;
-        background: #fff;
     }
 
     .loc-item {
@@ -32,5 +31,8 @@ page-map-detail {
         }
 
     }
-
+    .swiper-slide {
+        background-color: #fff;
+        margin-left:20px;
+    }
 }

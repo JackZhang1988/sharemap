@@ -16,7 +16,7 @@
 <ion-content>
   <div id="mapContainer" class="item">
   </div>
-  <ion-slides id="slideContainer" [spaceBetween]=50 [pager]=true (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()">
+  <ion-slides id="slideContainer" [pager]=true (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()">
     <ion-slide *ngFor='let item of mapLocations'>
       <div class="loc-item card">
         <img src="{{item.imgs[0]}}" alt="" class="location-img">
