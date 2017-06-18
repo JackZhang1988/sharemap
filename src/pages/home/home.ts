@@ -7,7 +7,9 @@ import { MapService } from '../../services/api';
 import { ContactPage } from '../contact/contact';
 
 
-@IonicPage()
+@IonicPage({
+  name:'home'
+})
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
@@ -35,6 +37,12 @@ export class HomePage implements OnInit {
 
   goContactPage() {
     this.navCtrl.push(ContactPage);
+  }
+
+  goMapDetail(mapData) {
+    this.navCtrl.push('MapDetailPage', {
+      id: mapData._id
+    })
   }
   // saveMap(data) {
   //   //todo: save to db

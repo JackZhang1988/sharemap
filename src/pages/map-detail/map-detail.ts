@@ -3,7 +3,10 @@ import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { MapService } from '../../services/api';
 import { GDMap } from '../../services/gdmap';
 
-@IonicPage()
+@IonicPage({
+  segment:'/map-detail/:id',
+  defaultHistory: ['home']
+})
 @Component({
   selector: 'page-map-detail',
   templateUrl: 'map-detail.html',
@@ -15,7 +18,7 @@ export class MapDetailPage {
   }
   @ViewChild(Slides) slides: Slides;
 
-  public title: string = this.navParams.get("title");
+  public mapInfo: any = {};
   public mapData: any = this.navParams.data;
   public markerList: any[] = [];
   public mapLocations: any[] = [];
@@ -33,18 +36,21 @@ export class MapDetailPage {
   }
   getMapData(): void {
     console.log(this.mapData)
-    this.mapService.getMapById(this.mapData._id).subscribe(res => {
+    this.mapService.getMapById(this.mapData.id).subscribe(res => {
       console.log(res.result);
-      this.mapLocations = res.result;
-      let markList = [];
-      for (let item of res.result) {
-        markList.push(item.lnglat);
+      if(res.status == 0){
+        this.mapInfo = res.result.map;
+        this.mapLocations = res.result.locations;
+        let markList = [];
+        for (let item of this.mapLocations) {
+          markList.push(item.lnglat);
+        }
+        this.gdService.addSimpleMarkers(markList, (markerList) => {
+          this.markerList = markerList;
+          //默认高亮第一个marker
+          this.gdService.highlightMarker(markerList[0]);
+        });
       }
-      this.gdService.addSimpleMarkers(markList, (markerList) => {
-        this.markerList = markerList;
-        //默认高亮第一个marker
-        this.gdService.highlightMarker(markerList[0]);
-      });
     })
   }
 
