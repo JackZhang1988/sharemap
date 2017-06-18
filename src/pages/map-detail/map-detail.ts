@@ -29,7 +29,6 @@ export class MapDetailPage {
     this.gdService.initMap();
   }
   ngAfterViewInit() {
-    this.slides.freeMode = true;
     this.slides.width = window.screen.width * 0.8;
   }
   getMapData(): void {
