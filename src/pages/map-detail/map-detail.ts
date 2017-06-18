@@ -17,8 +17,10 @@ export class MapDetailPage {
 
   public title: string = this.navParams.get("title");
   public mapData: any = this.navParams.data;
-  // public markList: any[] = [];
+  public markerList: any[] = [];
   public mapLocations: any[] = [];
+  private preMarker: any;
+  private curMarker: any;
 
   ionViewDidLoad() {
     this.getMapData()
@@ -35,13 +37,33 @@ export class MapDetailPage {
       for (let item of res.result) {
         markList.push(item.lnglat);
       }
-      this.gdService.addMarkers(markList);
+      this.gdService.addSimpleMarkers(markList, (markerList) => {
+        this.markerList = markerList;
+        //默认高亮第一个marker
+        this.gdService.highlightMarker(markerList[0]);
+      });
     })
   }
+
+  slideWillChange(): void {
+  }
+
   slideDidChange(): void {
     let curMarkerInfo = this.mapLocations[this.slides.getActiveIndex()];
-    if(curMarkerInfo){
-      this.gdService.setZoomAndCenter(curMarkerInfo.lnglat)
+    this.curMarker = this.markerList[this.slides.getActiveIndex()];
+    if (curMarkerInfo) {
+      // this.gdService.setZoomAndCenter(curMarkerInfo.lnglat)
+      // 高亮显示改坐标
+      this.gdService.highlightMarker(this.curMarker);
+      // this.curMarker.setIcon('http://webapi.amap.com/theme/v1.3/markers/b/mark_r.png');
+      // this.curMarker.setIconStyle('red')
+    }
+    this.preMarker = this.markerList[this.slides.getPreviousIndex()];
+
+    if (this.preMarker) {
+      //恢复成默认光标
+      this.gdService.unHighlightMarker(this.preMarker);
+      //  this.preMarker.setIconStyle('blue')
     }
   }
 }

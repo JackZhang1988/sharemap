@@ -139,22 +139,68 @@ export class GDMap {
     }
   }
 
-  addMarkers(markList: any[]) {
+  addMarkers(markList: any[], isFitView = true) {
     if (markList.length) {
+      let markerList = [];
       markList.forEach(pos => {
-        new AMap.Marker({
+        markerList.push(new AMap.Marker({
           map: this.gdMap,
           // icon: marker.icon,
           position: pos,
           // offset: new AMap.Pixel(-12, -36)
-        });
+        }));
       })
-      this.gdMap.setFitView();
-      return this.gdMap;
+      if (isFitView) {
+        this.gdMap.setFitView();
+      }
+      return markerList;
     }
   }
 
-  setZoomAndCenter(lnglat: Number[],zoom: number = 14,) {
+  addSimpleMarkers(posList: any[], callback?: any, options?: any) {
+    if (posList && posList.length) {
+      options = Object.assign({ iconStyle: 'blue' }, options);
+      let markerList = [];
+      let curMap = this.gdMap;
+      AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
+        posList.forEach((pos, index) => {
+          //创建SimpleMarker实例
+          let tt = new SimpleMarker({
+            //前景文字
+            iconLabel: {
+              innerHTML: index + 1,
+              style: {
+                color: '#fff'//设置文字颜色
+              }
+            },
+            //背景图标样式
+            iconStyle: options.iconStyle,
+
+            //...其他Marker选项...，不包括content
+            map: curMap,
+            position: pos
+          });
+          markerList.push(tt);
+        })
+        curMap.setFitView();
+        callback && callback(markerList)
+      });
+    }
+  }
+
+  highlightMarker(marker: any) {
+    if (marker) {
+      marker.setIconStyle('red');
+    }
+  }
+
+  unHighlightMarker(marker: any) {
+    if (marker) {
+      marker.setIconStyle('blue');
+    }
+  }
+
+  setZoomAndCenter(lnglat: Number[], zoom: number = 14, ) {
     if (lnglat && lnglat.length) {
       this.gdMap.setZoomAndCenter(zoom, lnglat);
     }

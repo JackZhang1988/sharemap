@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicModule, IonicPage, AlertController, ViewController, ModalController, ToastController } from 'ionic-angular';
+import { IonicPage, AlertController, ViewController, ModalController, ToastController } from 'ionic-angular';
 
 import { MapService } from '../../services/api';
 import { QiniuService } from '../../services/qiniu';
