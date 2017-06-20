@@ -16,6 +16,13 @@
 <ion-content>
   <div id="mapContainer" class="item">
   </div>
+  <div id="mapDetail">
+    <div class="user-info">
+      <img class="avatar" src="http://okyb0e40i.bkt.clouddn.com/FmYuiaXcxOee_nLJmouPS5C-m2uM">
+      <span class="user-name">jack</span>
+    </div>
+    <div class="map-intro">{{mapInfo.description}}</div>
+  </div>
   <ion-slides id="slideContainer" [pager]=true (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()">
     <ion-slide *ngFor='let item of mapLocations'>
       <div class="loc-item card">
