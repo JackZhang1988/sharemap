@@ -16,19 +16,17 @@
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label floating>手机号</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input placeholder="手机号" type="number"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>密码</ion-label>
-      <ion-input type="password"></ion-input>
+      <ion-input placeholder="密码" type="password"></ion-input>
     </ion-item>
     <button small ion-button clear>忘记密码？</button>
   </ion-list>
 
   <div padding>
-    <button ion-button block>登录</button>
+    <button ion-button block navPush="SignupPage">登录</button>
     <button ion-button block color="secondary">注册</button>
   </div>
 </ion-content>

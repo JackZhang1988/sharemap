@@ -15,29 +15,28 @@
 
 <ion-content [ngSwitch]="signStep">
   <div *ngSwitchCase=0>
-    <ion-list>
+    <form [formGroup]="stepOneForm">
       <ion-item>
-        <ion-label floating>手机号</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input placeholder="手机号" type="number" formControlName="phoneNum" [class.invalid]="!stepOneForm.controls.phoneNum.valid && submitAttempt"></ion-input>
+      </ion-item>
+      <ion-item [hidden]="!submitAttempt || !this.stepOneForm.controls.phoneNum.getError('notPhone')">
+        <div>请输入正确的手机号</div>
       </ion-item>
       <ion-item>
-        <ion-label floating>短信验证码</ion-label>
-        <ion-input type="text"></ion-input>
-        <button ion-button outline item-right class="send-code-btn">发送验证码</button>
+        <ion-input placeholder="短信验证码" type="text" formControlName="msgCode"></ion-input>
+        <button ion-button outline item-right class="send-code-btn" (click)="sendMsgCode()">发送验证码</button>
       </ion-item>
       <ion-item>
-        <ion-label floating>密码</ion-label>
-        <ion-input type="password"></ion-input>
+        <ion-input placeholder="密码" type="password" formControlName="password" [class.invalid]="!stepOneForm.controls.password.valid && submitAttempt"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label floating>重复密码</ion-label>
-        <ion-input type="password"></ion-input>
+        <ion-input placeholder="重复密码" type="password" formControlName="rePassword" [class.invalid]="!stepOneForm.controls.rePassword.valid && submitAttempt"></ion-input>
       </ion-item>
-    </ion-list>
+    </form>
 
     <div padding>
-      <button ion-button block>登录</button>
-      <button ion-button block color="secondary">注册</button>
+      <button ion-button block navPush="LoginPage">登录</button>
+      <button ion-button block color="secondary" (click)="signup()">注册</button>
     </div>
   </div>
   <div *ngSwitchCase=1>
