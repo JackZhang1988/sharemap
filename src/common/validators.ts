@@ -1,4 +1,4 @@
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 export class MyValidator {
 
@@ -11,4 +11,8 @@ export class MyValidator {
         return null;
     }
 
+    static passwordMatchValidator(g: FormGroup) {
+        return g.get('password').value === g.get('passwordConfirm').value
+            ? null : { 'mismatch': true };
+    }
 }

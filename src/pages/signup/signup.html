@@ -19,19 +19,19 @@
       <ion-item>
         <ion-input placeholder="手机号" type="number" formControlName="phoneNum" [class.invalid]="!stepOneForm.controls.phoneNum.valid && submitAttempt"></ion-input>
       </ion-item>
-      <ion-item [hidden]="!submitAttempt || !this.stepOneForm.controls.phoneNum.getError('notPhone')">
-        <div>请输入正确的手机号</div>
-      </ion-item>
+      <small class="error-msg" [hidden]="!submitAttempt || !this.stepOneForm.controls.phoneNum.getError('notPhone')">请输入正确的手机号</small>
       <ion-item>
         <ion-input placeholder="短信验证码" type="text" formControlName="msgCode"></ion-input>
         <button ion-button outline item-right class="send-code-btn" (click)="sendMsgCode()">发送验证码</button>
       </ion-item>
-      <ion-item>
-        <ion-input placeholder="密码" type="password" formControlName="password" [class.invalid]="!stepOneForm.controls.password.valid && submitAttempt"></ion-input>
+      <ion-item formGroupName="passwords">
+        <ion-input placeholder="密码" type="password" formControlName="password" [class.invalid]="!stepOneForm.controls.passwords.controls.password.valid && submitAttempt"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-input placeholder="重复密码" type="password" formControlName="rePassword" [class.invalid]="!stepOneForm.controls.rePassword.valid && submitAttempt"></ion-input>
+      <small class="error-msg" [hidden]="!submitAttempt || !stepOneForm.controls.passwords.controls.password.getError('minlength')">请输入至少5位数密码</small>      
+      <ion-item formGroupName="passwords">
+        <ion-input placeholder="重复密码" type="password" formControlName="passwordConfirm" [class.invalid]="!stepOneForm.controls.passwords.controls.passwordConfirm.valid && submitAttempt"></ion-input>
       </ion-item>
+      <small class="error-msg" [hidden]="!submitAttempt || !stepOneForm.controls.passwords.getError('mismatch')">输入的密码不匹配</small>
     </form>
 
     <div padding>

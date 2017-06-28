@@ -2,4 +2,8 @@ page-signup {
     .invalid{
         border:1px solid red;
     }
+    .error-msg{
+        padding-left: 16px;
+        color: red;
+    }
 }

@@ -24,10 +24,11 @@ export class SignupPage {
     this.stepOneForm = formBuilder.group({
       phoneNum: ['', Validators.compose([Validators.required, MyValidator.isPhone])],
       msgCode: [''],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
-      rePassword: ['', Validators.compose([Validators.required, Validators.minLength(5)])]
+      passwords: formBuilder.group({
+        password: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
+        passwordConfirm: ['', Validators.compose([Validators.required, Validators.minLength(5)])]
+      }, { validator: MyValidator.passwordMatchValidator })
     });
-
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignupPage');
@@ -39,5 +40,8 @@ export class SignupPage {
   signup() {
     console.log(this.stepOneForm.controls);
     this.submitAttempt = true;
+    if(this.stepOneForm.valid){
+      
+    }
   }
 }
