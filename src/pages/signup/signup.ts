@@ -59,7 +59,7 @@ export class SignupPage {
       }
       this.apiService.signup(param).subscribe(res => {
         if (res.status == 0) {
-          this.storage.set('user', res.result.user);
+          this.storage.set('userId', res.result.userId);
           this.storage.set('token', res.result.token);
         }
       })
