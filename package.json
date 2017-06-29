@@ -13,6 +13,7 @@
     "run:before": "build"
   },
   "dependencies": {
+    "@angular/animations": "4.1.3",
     "@angular/common": "4.0.0",
     "@angular/compiler": "4.0.0",
     "@angular/compiler-cli": "4.0.0",
@@ -31,6 +32,7 @@
     "ionicons": "3.0.0",
     "rxjs": "5.1.1",
     "sw-toolbox": "3.4.0",
+    "web-animations-js": "^2.2.5",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {

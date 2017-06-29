@@ -27,7 +27,7 @@
       <ion-item formGroupName="passwords">
         <ion-input placeholder="密码" type="password" formControlName="password" [class.invalid]="!stepOneForm.controls.passwords.controls.password.valid && submitAttempt"></ion-input>
       </ion-item>
-      <small class="error-msg" [hidden]="!submitAttempt || !stepOneForm.controls.passwords.controls.password.getError('minlength')">请输入至少5位数密码</small>      
+      <small class="error-msg" [hidden]="!submitAttempt || !stepOneForm.controls.passwords.controls.password.getError('minlength')">请输入至少5位数密码</small>
       <ion-item formGroupName="passwords">
         <ion-input placeholder="重复密码" type="password" formControlName="passwordConfirm" [class.invalid]="!stepOneForm.controls.passwords.controls.passwordConfirm.valid && submitAttempt"></ion-input>
       </ion-item>
@@ -39,14 +39,14 @@
       <button ion-button block color="secondary" (click)="signup()">注册</button>
     </div>
   </div>
-  <div *ngSwitchCase=1>
-    <div class="item-img-add avatar">
-      <img class="nearlib-cover" [src]="coverImg" *ngIf="coverImg">
+  <div *ngSwitchCase=1 [@enterTrigger]="'swipRight'">
+    <div class="user-avatar-add">
+      <img class="prev-img user-avatar-img" [src]="coverImg" *ngIf="coverImg">
       <ion-spinner class="cover-spinner" [hidden]="!imgLoading"></ion-spinner>
-      <div class="img-add-block cover">
-        <div class="cover-add-title">点击添加头像</div>
+      <div class="img-add-block avatar">
+        <!--<div class="cover-add-title">点击添加头像</div>-->
         <div class="img-input-wrap">
-          <form enctype="multipart/form-data" class="img-add-input" method="post">
+          <form enctype="multipart/form-data" method="post">
             <input name="token" type="hidden">
             <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input">
             <input type="submit">
@@ -54,6 +54,7 @@
         </div>
       </div>
     </div>
+
     <ion-list>
       <ion-item>
         <ion-label floating>用户名</ion-label>

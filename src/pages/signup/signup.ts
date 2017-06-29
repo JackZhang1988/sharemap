@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, trigger, state, style, transition, animate } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import { MyValidator } from '../../common/validators';
 import { ApiService } from '../../services/api';
-
+import 'web-animations-js/web-animations.min';
 /**
  * Generated class for the SignupPage page.
  *
@@ -16,7 +16,19 @@ import { ApiService } from '../../services/api';
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
-  providers: [ApiService]
+  providers: [ApiService],
+  animations: [
+    trigger('enterTrigger', [
+      state('swipRight', style({
+        opacity: '1',
+        transform: 'none'
+      })),
+      transition('void => *', [style({
+        opacity: '0',
+        transform: 'translate3d(100%, 0, 0)'
+      }), animate('300ms')])
+    ])
+  ]
 })
 export class SignupPage {
 
@@ -50,6 +62,7 @@ export class SignupPage {
 
   signup() {
     this.submitAttempt = true;
+    this.signStep = 1; //进入下一步
     if (this.stepOneForm.valid) {
       console.log(this.stepOneForm.controls);
       let param = {
@@ -57,12 +70,12 @@ export class SignupPage {
         msgCode: this.stepOneForm.controls.msgCode.value,
         password: this.stepOneForm.controls.passwords.value.password
       }
-      this.apiService.signup(param).subscribe(res => {
-        if (res.status == 0) {
-          this.storage.set('userId', res.result.userId);
-          this.storage.set('token', res.result.token);
-        }
-      })
+      // this.apiService.signup(param).subscribe(res => {
+      //   if (res.status == 0) {
+      //     this.storage.set('userId', res.result.userId);
+      //     this.storage.set('token', res.result.token);
+      //   }
+      // })
     }
   }
 }
