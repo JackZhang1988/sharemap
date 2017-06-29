@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, ToastController } from 'ionic-angular';
 
-import { MapService } from '../../services/api';
+import { ApiService } from '../../services/api';
 import { QiniuService } from '../../services/qiniu';
 import { ModalContent } from './modal-content';
 
 @IonicPage()
 @Component({
     templateUrl: 'add-map.html',
-    providers: [MapService, QiniuService]
+    providers: [ApiService, QiniuService]
 })
 export class AddMapModal extends ModalContent {
     constructor(
         public viewCtrl: ViewController,
         public toastCtrl: ToastController,
         public qiniuService: QiniuService,
-        private mapService: MapService
+        private apiService: ApiService
     ) {
         super(viewCtrl);
     }
@@ -36,7 +36,7 @@ export class AddMapModal extends ModalContent {
     }
     public submit() {
         console.log(this.coverImg, this.title, this.description);
-        this.mapService.addNewMap({
+        this.apiService.addNewMap({
             coverImg: this.coverImg,
             title: this.title,
             description: this.description

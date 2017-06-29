@@ -25,3 +25,11 @@ export interface Position {
   adcode?: string,
   citycode?: string
 }
+
+export interface User {
+  phone: number,
+  name: string,
+  sex?: string,
+  signature?: string,
+  avatar?: string,
+}

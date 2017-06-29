@@ -38,10 +38,14 @@ export class SignupPage {
   }
 
   signup() {
-    console.log(this.stepOneForm.controls);
     this.submitAttempt = true;
-    if(this.stepOneForm.valid){
-      
+    if (this.stepOneForm.valid) {
+      console.log(this.stepOneForm.controls);
+      let param = {
+        phone: this.stepOneForm.controls.phoneNum.value,
+        msgCode: this.stepOneForm.controls.msgCode.value,
+        password: this.stepOneForm.controls.passwords.value.password
+      }
     }
   }
 }

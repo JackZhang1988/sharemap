@@ -3,7 +3,7 @@ import { OnInit } from '@angular/core';
 
 import { IonicPage, ModalController, NavController, FabContainer } from 'ionic-angular';
 import { Map } from '../../common/models';
-import { MapService } from '../../services/api';
+import { ApiService } from '../../services/api';
 
 @IonicPage({
   name:'home'
@@ -11,7 +11,7 @@ import { MapService } from '../../services/api';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [MapService, FabContainer]
+  providers: [ApiService, FabContainer]
 })
 export class HomePage implements OnInit {
 
@@ -20,13 +20,13 @@ export class HomePage implements OnInit {
   constructor(
     public modalCtrl: ModalController,
     public navCtrl: NavController,
-    private mapService: MapService) { }
+    private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.getMaps();
   }
   getMaps(): void {
-    this.mapService.getMaps().subscribe(res => {
+    this.apiService.getMaps().subscribe(res => {
       if (res.status == 0) {
         this.maps = res.result;
       }

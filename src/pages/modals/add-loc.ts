@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, AlertController, ViewController, ModalController, ToastController } from 'ionic-angular';
 
-import { MapService } from '../../services/api';
+import { ApiService } from '../../services/api';
 import { QiniuService } from '../../services/qiniu';
 
 import { Map } from '../../common/models';
@@ -11,7 +11,7 @@ import { ModalContent } from './modal-content';
 @IonicPage()
 @Component({
   templateUrl: 'add-loc.html',
-  providers: [MapService, QiniuService]
+  providers: [ApiService, QiniuService]
 })
 export class AddLocModal extends ModalContent {
   constructor(
@@ -20,7 +20,7 @@ export class AddLocModal extends ModalContent {
     public alertCtrl: AlertController,
     public modalCtrl: ModalController,
     public qiniuService: QiniuService,
-    private mapService: MapService
+    private apiService: ApiService
   ) {
     super(viewCtrl);
   }
@@ -34,7 +34,7 @@ export class AddLocModal extends ModalContent {
     this.getMaps();
   }
   getMaps(): void {
-    this.mapService.getMaps().subscribe(res => {
+    this.apiService.getMaps().subscribe(res => {
       if (res.status == 0) {
         this.maps = res.result;
       }
@@ -70,7 +70,7 @@ export class AddLocModal extends ModalContent {
     } else {
       let lnglat = this.curLocation.location ? [this.curLocation.location.lng, this.curLocation.location.lat] : null;
       // delete this.curLocation.location;
-      this.mapService.addNewLocation({
+      this.apiService.addNewLocation({
         locationInfo: this.curLocation,
         lnglat: lnglat,
         mapId: this.curMap,

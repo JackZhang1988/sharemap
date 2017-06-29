@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { MapService } from '../../services/api';
+import { ApiService } from '../../services/api';
 import { GDMap } from '../../services/gdmap';
 
 @IonicPage({
@@ -10,11 +10,11 @@ import { GDMap } from '../../services/gdmap';
 @Component({
   selector: 'page-map-detail',
   templateUrl: 'map-detail.html',
-  providers: [MapService, GDMap]
+  providers: [ApiService, GDMap]
 })
 export class MapDetailPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private mapService: MapService, private gdService: GDMap) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiService, private gdService: GDMap) {
   }
   @ViewChild(Slides) slides: Slides;
 
@@ -36,7 +36,7 @@ export class MapDetailPage {
   }
   getMapData(): void {
     console.log(this.mapData)
-    this.mapService.getMapById(this.mapData.id).subscribe(res => {
+    this.apiService.getMapById(this.mapData.id).subscribe(res => {
       console.log(res.result);
       if(res.status == 0){
         this.mapInfo = res.result.map;
