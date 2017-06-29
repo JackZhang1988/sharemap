@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
 import { MyValidator } from '../../common/validators';
+import { ApiService } from '../../services/api';
 
 /**
  * Generated class for the SignupPage page.
@@ -13,6 +16,7 @@ import { MyValidator } from '../../common/validators';
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
+  providers: [ApiService]
 })
 export class SignupPage {
 
@@ -20,7 +24,14 @@ export class SignupPage {
   public submitAttempt: boolean = false;
   public stepOneForm: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public formBuilder: FormBuilder,
+    private apiService: ApiService,
+    public toastCtrl: ToastController,
+    public storage: Storage,
+  ) {
     this.stepOneForm = formBuilder.group({
       phoneNum: ['', Validators.compose([Validators.required, MyValidator.isPhone])],
       msgCode: [''],
@@ -46,6 +57,12 @@ export class SignupPage {
         msgCode: this.stepOneForm.controls.msgCode.value,
         password: this.stepOneForm.controls.passwords.value.password
       }
+      this.apiService.signup(param).subscribe(res => {
+        if (res.status == 0) {
+          this.storage.set('user', res.result.user);
+          this.storage.set('token', res.result.token);
+        }
+      })
     }
   }
 }

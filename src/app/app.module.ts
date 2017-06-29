@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { ProfilePageModule } from '../pages/profile/profile.module';
@@ -22,7 +23,8 @@ import { ProfilePageModule } from '../pages/profile/profile.module';
     ProfilePageModule,
     HttpModule,
     // ComponentsModule,
-    IonicModule.forRoot(MyApp, { backButtonText: '' })
+    IonicModule.forRoot(MyApp, { backButtonText: '' }),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
