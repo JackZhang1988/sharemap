@@ -40,27 +40,44 @@
     </div>
   </div>
   <div *ngSwitchCase=1 [@enterTrigger]="'swipRight'">
-    <div class="user-avatar-add">
-      <img class="prev-img user-avatar-img" [src]="coverImg" *ngIf="coverImg">
-      <ion-spinner class="cover-spinner" [hidden]="!imgLoading"></ion-spinner>
-      <div class="img-add-block avatar">
-        <!--<div class="cover-add-title">点击添加头像</div>-->
-        <div class="img-input-wrap">
-          <form enctype="multipart/form-data" method="post">
-            <input name="token" type="hidden">
-            <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input">
-            <input type="submit">
-          </form>
+
+    <form [formGroup]="stepTwoForm">
+      <div class="user-avatar-add">
+        <ion-spinner class="avatar-spinner" [hidden]="!imgLoading"></ion-spinner>
+        <div class="img-add-block avatar">
+          <!--<div class="cover-add-title">点击添加头像</div>-->
+          <img class="prev-img user-avatar-img" [src]="avatar" *ngIf="avatar">
+          <ion-icon class="avatar-icon" name="person"></ion-icon>
+          <div class="img-input-wrap">
+            <form enctype="multipart/form-data" method="post">
+              <input name="token" type="hidden">
+              <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input">
+              <input type="submit">
+            </form>
+          </div>
         </div>
+        <small class="error-msg avatar" [hidden]="!stepTwoAttempt || avatar">请上传一张头像</small>
       </div>
-    </div>
-
-    <ion-list>
-      <ion-item>
-        <ion-label floating>用户名</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
-    </ion-list>
-
+      <ion-list>
+        <ion-item>
+          <ion-label>用户名</ion-label>
+          <ion-input formControlName="userName" type="text" [class.invalid]="!stepTwoForm.controls.userName.valid && stepTwoAttempt"></ion-input>
+        </ion-item>
+        <small class="error-msg" [hidden]="!stepTwoAttempt || !this.stepTwoForm.controls.userName.getError('required')">请填写用户名</small>
+        <small class="error-msg" [hidden]="!stepTwoAttempt || !this.stepTwoForm.controls.userName.getError('userNameUsed')">请填写用户名</small>
+        <ion-item>
+          <ion-label>性别</ion-label>
+          <ion-select formControlName="sex">
+            <ion-option value="male">男</ion-option>
+            <ion-option value="female">女</ion-option>
+          </ion-select>
+        </ion-item>
+        <small class="error-msg" [hidden]="!stepTwoAttempt || !this.stepTwoForm.controls.sex.getError('required')">请选择性别</small>
+        <ion-item>
+          <ion-textarea formControlName="signature" placeholder="介绍一下你自己"></ion-textarea>
+        </ion-item>
+      </ion-list>
+    </form>
+    <button ion-button block color="secondary" (click)="updateUser()">提交</button>
   </div>
 </ion-content>
