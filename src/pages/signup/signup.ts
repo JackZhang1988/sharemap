@@ -103,8 +103,30 @@ export class SignupPage {
 
   updateUser() {
     this.stepTwoAttempt = true;
-    if(this.stepTwoForm.valid){
-
+    if (this.stepTwoForm.valid) {
+      this.storage.get('userId').then(userId => {
+        if (userId) {
+          this.apiService.updateUser({
+            userId: userId,
+            userName: this.stepTwoForm.controls.userName.value,
+            avatar: this.avatar,
+            sex: this.stepTwoForm.controls.sex.value,
+            signature: this.stepTwoForm.controls.signature.value
+          }).subscribe(res => {
+            if (res.status == 0) {
+              let toast = this.toastCtrl.create({
+                message: '注册成功',
+                duration: 2000,
+                position: 'middle'
+              })
+              toast.onDidDismiss(() => {
+                this.navCtrl.setRoot('home');
+              });
+              toast.present();
+            }
+          })
+        }
+      });
     }
   }
 }
