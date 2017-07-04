@@ -51,4 +51,10 @@ export class ApiService {
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
+
+  login(data:any): Observable<any> {
+    return this.http.post(this.serverHost + '/user/login', data)
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }
 }
