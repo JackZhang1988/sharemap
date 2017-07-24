@@ -2,6 +2,7 @@ import { Component, trigger, state, style, transition, animate } from '@angular/
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Observable } from "rxjs";
 
 import 'web-animations-js/web-animations.min';
 import { MyValidator } from '../../common/validators';
@@ -40,6 +41,7 @@ export class SignupPage {
   public stepTwoForm: FormGroup;
   private imgLoading: boolean = false;
   private avatar: string;
+  private sendMsgCodeBtnText: string = '发送验证码';
 
   constructor(
     public navCtrl: NavController,
@@ -69,6 +71,20 @@ export class SignupPage {
   }
 
   sendMsgCode() {
+    if (this.stepOneForm.controls.phoneNum.valid) {
+      this.apiService.sendMsgCode(this.stepOneForm.controls.phoneNum.value).subscribe(res => {
+        if (res.status == 0) {
+          let start = 60;
+          let timer = Observable.interval(1000).take(start);
+          timer.subscribe(x => {
+            this.sendMsgCodeBtnText = (--start) + '秒后重新发送';
+          })
+          timer.takeLast(1).subscribe(x => {
+            this.sendMsgCodeBtnText = '发送验证码';
+          });
+        }
+      });
+    }
   }
 
   signup() {

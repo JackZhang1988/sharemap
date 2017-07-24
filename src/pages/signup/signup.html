@@ -22,7 +22,7 @@
       <small class="error-msg" [hidden]="!submitAttempt || !this.stepOneForm.controls.phoneNum.getError('notPhone')">请输入正确的手机号</small>
       <ion-item>
         <ion-input placeholder="短信验证码" type="text" formControlName="msgCode"></ion-input>
-        <button ion-button outline item-right class="send-code-btn" (click)="sendMsgCode()">发送验证码</button>
+        <button ion-button outline item-right class="send-code-btn" (click)="sendMsgCode()">{{sendMsgCodeBtnText}}</button>
       </ion-item>
       <ion-item formGroupName="passwords">
         <ion-input placeholder="密码" type="password" formControlName="password" [class.invalid]="!stepOneForm.controls.passwords.controls.password.valid && submitAttempt"></ion-input>

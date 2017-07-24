@@ -46,14 +46,20 @@ export class ApiService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
-  updateUser(userInfo:any): Observable<any> {
+  updateUser(userInfo: any): Observable<any> {
     return this.http.post(this.serverHost + '/user/update', userInfo)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
-  login(data:any): Observable<any> {
+  login(data: any): Observable<any> {
     return this.http.post(this.serverHost + '/user/login', data)
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }
+
+  sendMsgCode(phone: string): Observable<any> {
+    return this.http.post(this.serverHost + '/msgCode', { phone: phone })
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
