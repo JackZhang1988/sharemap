@@ -54,7 +54,7 @@ export class SignupPage {
   ) {
     this.stepOneForm = formBuilder.group({
       phoneNum: ['', Validators.compose([Validators.required, MyValidator.isPhone])],
-      msgCode: [''],
+      msgCode: ['', Validators.required],
       passwords: formBuilder.group({
         password: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
         passwordConfirm: ['', Validators.compose([Validators.required, Validators.minLength(5)])]
@@ -72,24 +72,25 @@ export class SignupPage {
 
   sendMsgCode() {
     if (this.stepOneForm.controls.phoneNum.valid) {
-      this.apiService.sendMsgCode(this.stepOneForm.controls.phoneNum.value).subscribe(res => {
-        if (res.status == 0) {
-          let start = 60;
-          let timer = Observable.interval(1000).take(start);
-          timer.subscribe(x => {
-            this.sendMsgCodeBtnText = (--start) + '秒后重新发送';
-          })
-          timer.takeLast(1).subscribe(x => {
-            this.sendMsgCodeBtnText = '发送验证码';
-          });
-        }
-      });
+      if(this.sendMsgCodeBtnText == '发送验证码'){
+        this.apiService.sendMsgCode(this.stepOneForm.controls.phoneNum.value).subscribe(res => {
+          if (res.status == 0) {
+            let start = 60;
+            let timer = Observable.interval(1000).take(start);
+            timer.subscribe(x => {
+              this.sendMsgCodeBtnText = (--start) + '秒后重新发送';
+            })
+            timer.takeLast(1).subscribe(x => {
+              this.sendMsgCodeBtnText = '发送验证码';
+            });
+          }
+        });
+      }
     }
   }
 
   signup() {
     this.submitAttempt = true;
-    this.signStep = 1; //进入下一步
     if (this.stepOneForm.valid) {
       console.log(this.stepOneForm.controls);
       let param = {
@@ -99,8 +100,16 @@ export class SignupPage {
       }
       this.apiService.signup(param).subscribe(res => {
         if (res.status == 0) {
+          this.signStep = 1; //进入下一步
           this.storage.set('userId', res.result.userId);
           this.storage.set('token', res.result.token);
+        } else {
+          let toast = this.toastCtrl.create({
+            message: res.err,
+            duration: 2000,
+            position: 'bottom'
+          })
+          toast.present();
         }
       })
     }
@@ -133,7 +142,7 @@ export class SignupPage {
               let toast = this.toastCtrl.create({
                 message: '注册成功',
                 duration: 2000,
-                position: 'middle'
+                position: 'bottom'
               })
               toast.onDidDismiss(() => {
                 this.navCtrl.setRoot('home');

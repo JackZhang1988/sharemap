@@ -59,7 +59,7 @@ export class ApiService {
   }
 
   sendMsgCode(phone: string): Observable<any> {
-    return this.http.post(this.serverHost + '/msgCode', { phone: phone })
+    return this.http.post(this.serverHost + '/user/msgCode', { phone: phone })
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
