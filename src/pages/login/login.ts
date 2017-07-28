@@ -48,7 +48,7 @@ export class LoginPage {
             let toast = this.toastCtrl.create({
               message: '登录成功',
               duration: 2000,
-              position: 'middle'
+              position: 'bottom'
             })
             toast.onDidDismiss(() => {
               this.navCtrl.setRoot('home');

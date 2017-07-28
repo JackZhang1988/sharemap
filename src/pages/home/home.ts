@@ -4,6 +4,7 @@ import { OnInit } from '@angular/core';
 import { IonicPage, ModalController, NavController, FabContainer } from 'ionic-angular';
 import { Map } from '../../common/models';
 import { ApiService } from '../../services/api';
+import { AuthServiceProvider } from '../../providers/auth/auth';
 
 @IonicPage({
   name:'home'
@@ -11,7 +12,7 @@ import { ApiService } from '../../services/api';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [ApiService, FabContainer]
+  providers: [ApiService, AuthServiceProvider, FabContainer]
 })
 export class HomePage implements OnInit {
 
@@ -20,6 +21,7 @@ export class HomePage implements OnInit {
   constructor(
     public modalCtrl: ModalController,
     public navCtrl: NavController,
+    private authService: AuthServiceProvider,
     private apiService: ApiService) { }
 
   ngOnInit(): void {
@@ -51,20 +53,18 @@ export class HomePage implements OnInit {
   //   console.log(data);
   // }
   openAddModal(type, fab: FabContainer) {
-    let curModal;
     fab.close();
-    if (type == 'map') {
-      curModal = this.modalCtrl.create('AddMapModal');
-    } else {
-      curModal = this.modalCtrl.create('AddLocModal');
-    }
-    // curModal.onDidDismiss(data => {
-    //   if (type == 'map') {
-    //     this.saveMap(data);
-    //   } else {
-    //     this.saveLoc(data);
-    //   }
-    // })
-    curModal.present();
+    this.authService.checkLogin().then(token => {
+      let curModal;
+      if (type == 'map') {
+        curModal = this.modalCtrl.create('AddMapModal');
+      } else {
+        curModal = this.modalCtrl.create('AddLocModal');
+      }
+      curModal.present();
+
+    },()=>{
+      this.navCtrl.push('LoginPage');
+    })
   }
 }
