@@ -55,6 +55,13 @@ export class LoginPage {
             });
             toast.present();
           }
+        }else{
+          let toast = this.toastCtrl.create({
+            message: res.err,
+            duration: 2000,
+            position: 'bottom'
+          })
+          toast.present();
         }
       })
     }

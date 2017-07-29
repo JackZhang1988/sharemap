@@ -2,9 +2,6 @@ import { Injectable } from "@angular/core";
 import { Storage } from "@ionic/storage";
 import { JwtHelper } from "angular2-jwt";
 
-
-const SERVER_URL = 'localhost:3000';
-
 @Injectable()
 export class AuthServiceProvider {
 
