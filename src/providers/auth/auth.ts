@@ -31,6 +31,10 @@ export class AuthServiceProvider {
     });
   }
 
+  getUserInfo() {
+    return this.storage.get('user')
+  }
+
   logout() {
     return this.storage.remove('token');
   }

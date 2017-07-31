@@ -7,7 +7,7 @@ import { ApiService } from '../../services/api';
 import { AuthServiceProvider } from '../../providers/auth/auth';
 
 @IonicPage({
-  name:'home'
+  name: 'home'
 })
 @Component({
   selector: 'page-home',
@@ -36,7 +36,11 @@ export class HomePage implements OnInit {
   }
 
   goContactPage() {
-    this.navCtrl.push('ProfilePage');
+    this.authService.checkLogin().then(token => {
+      this.navCtrl.push('ProfilePage');
+    }, () => {
+      this.navCtrl.push('LoginPage');
+    })
   }
 
   goMapDetail(mapData) {
@@ -63,7 +67,7 @@ export class HomePage implements OnInit {
       }
       curModal.present();
 
-    },()=>{
+    }, () => {
       this.navCtrl.push('LoginPage');
     })
   }

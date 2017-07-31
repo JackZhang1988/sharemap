@@ -80,6 +80,11 @@ img {
         display: block;
         text-align: center;
         line-height: 230px;
+        width: 70px;
+        height: 70px;
+        margin: 0 auto;
+        position: relative;
+        top: 80px;
     }
     .spinner svg {
         width: $img-add-size;

@@ -1,5 +1,6 @@
 export interface Location {
   mapId: string;
+  creater: string;
   lnglat: Number[];
   description: string;
   imgs: string[];
@@ -12,6 +13,7 @@ export interface LngLat {
 }
 
 export interface Map {
+  creater: string;
   coverImg: string;
   title: string;
   description: string;

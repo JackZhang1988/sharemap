@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, ToastController } from 'ionic-angular';
+import { Storage } from "@ionic/storage";
 
 import { ApiService } from '../../services/api';
 import { QiniuService } from '../../services/qiniu';
@@ -14,6 +15,7 @@ export class AddMapModal extends ModalContent {
     constructor(
         public viewCtrl: ViewController,
         public toastCtrl: ToastController,
+        private storage: Storage,
         public qiniuService: QiniuService,
         private apiService: ApiService
     ) {
@@ -36,29 +38,32 @@ export class AddMapModal extends ModalContent {
     }
     public submit() {
         console.log(this.coverImg, this.title, this.description);
-        this.apiService.addNewMap({
-            coverImg: this.coverImg,
-            title: this.title,
-            description: this.description
-        }).subscribe(res => {
-            console.log(res);
-            if (res.status == 0) {
-                let toast = this.toastCtrl.create({
-                    message: '添加成功',
-                    duration: 2000,
-                    position: 'middle'
-                })
-                toast.onDidDismiss(() => this.viewCtrl.dismiss());
-                toast.present();
-            } else {
-                let toast = this.toastCtrl.create({
-                    message: '添加失败',
-                    duration: 2000,
-                    position: 'middle'
-                })
-                toast.present();
-            }
-            //   this.viewCtrl.dismiss();
+        this.storage.get('user').then(userID => {
+            this.apiService.addNewMap({
+                creater: userID,
+                coverImg: this.coverImg,
+                title: this.title,
+                description: this.description
+            }).subscribe(res => {
+                console.log(res);
+                if (res.status == 0) {
+                    let toast = this.toastCtrl.create({
+                        message: '添加成功',
+                        duration: 2000,
+                        position: 'middle'
+                    })
+                    toast.onDidDismiss(() => this.viewCtrl.dismiss());
+                    toast.present();
+                } else {
+                    let toast = this.toastCtrl.create({
+                        message: '添加失败',
+                        duration: 2000,
+                        position: 'middle'
+                    })
+                    toast.present();
+                }
+                //   this.viewCtrl.dismiss();
+            })
         })
 
     }

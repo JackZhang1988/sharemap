@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, AlertController, ViewController, ModalController, ToastController } from 'ionic-angular';
+import { Storage } from "@ionic/storage";
 
 import { ApiService } from '../../services/api';
 import { QiniuService } from '../../services/qiniu';
@@ -15,6 +16,7 @@ import { ModalContent } from './modal-content';
 })
 export class AddLocModal extends ModalContent {
   constructor(
+    private storage: Storage,
     public viewCtrl: ViewController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
@@ -68,32 +70,35 @@ export class AddLocModal extends ModalContent {
       });
       alert.present();
     } else {
-      let lnglat = this.curLocation.location ? [this.curLocation.location.lng, this.curLocation.location.lat] : null;
-      // delete this.curLocation.location;
-      this.apiService.addNewLocation({
-        locationInfo: this.curLocation,
-        lnglat: lnglat,
-        mapId: this.curMap,
-        imgs: this.locationImgs,
-        description: this.description
-      }).subscribe((res) => {
-        console.log(res);
-        if (res.status == 0) {
-          let toast = this.toastCtrl.create({
-            message: '添加成功',
-            duration: 2000,
-            position: 'middle'
-          })
-          toast.onDidDismiss(() => this.viewCtrl.dismiss());
-          toast.present();
-        } else {
-          let toast = this.toastCtrl.create({
-            message: '添加失败',
-            duration: 2000,
-            position: 'middle'
-          })
-          toast.present();
-        }
+      this.storage.get('user').then(userID => {
+        let lnglat = this.curLocation.location ? [this.curLocation.location.lng, this.curLocation.location.lat] : null;
+        // delete this.curLocation.location;
+        this.apiService.addNewLocation({
+          creater: userID,
+          locationInfo: this.curLocation,
+          lnglat: lnglat,
+          mapId: this.curMap,
+          imgs: this.locationImgs,
+          description: this.description
+        }).subscribe((res) => {
+          console.log(res);
+          if (res.status == 0) {
+            let toast = this.toastCtrl.create({
+              message: '添加成功',
+              duration: 2000,
+              position: 'middle'
+            })
+            toast.onDidDismiss(() => this.viewCtrl.dismiss());
+            toast.present();
+          } else {
+            let toast = this.toastCtrl.create({
+              message: '添加失败',
+              duration: 2000,
+              position: 'middle'
+            })
+            toast.present();
+          }
+        })
       })
     }
   }

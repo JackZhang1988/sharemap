@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
+import { AuthHttp } from "angular2-jwt";
 
 import { Map, Location } from '../common/models';
 
@@ -8,7 +9,7 @@ import { Map, Location } from '../common/models';
 export class ApiService {
   private serverHost = 'http://localhost:3000';
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private authHttp: AuthHttp) { }
 
   getMaps(): Observable<any> {
     return this.http.get(this.serverHost + '/map/list')
@@ -29,13 +30,13 @@ export class ApiService {
   }
 
   addNewMap(map: Map): Observable<any> {
-    return this.http.post(this.serverHost + '/map', map)
+    return this.authHttp.post(this.serverHost + '/map', map)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
   addNewLocation(location: Location): Observable<any> {
-    return this.http.post(this.serverHost + '/map/location', location)
+    return this.authHttp.post(this.serverHost + '/map/location', location)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
@@ -47,7 +48,7 @@ export class ApiService {
   }
 
   updateUser(userInfo: any): Observable<any> {
-    return this.http.post(this.serverHost + '/user/update', userInfo)
+    return this.authHttp.post(this.serverHost + '/user/update', userInfo)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
@@ -60,6 +61,12 @@ export class ApiService {
 
   sendMsgCode(phone: string): Observable<any> {
     return this.http.post(this.serverHost + '/user/msgCode', { phone: phone })
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }
+
+  getUserInfo(userId: string): Observable<any> {
+    return this.http.get(this.serverHost + '/user?userId=' + userId)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
