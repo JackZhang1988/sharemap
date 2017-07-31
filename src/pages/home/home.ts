@@ -39,7 +39,11 @@ export class HomePage implements OnInit {
     this.authService.checkLogin().then(token => {
       this.navCtrl.push('ProfilePage');
     }, () => {
-      this.navCtrl.push('LoginPage');
+      this.navCtrl.push('LoginPage', {
+        callback: () => {
+          this.navCtrl.push('ProfilePage')
+        }
+      });
     })
   }
 

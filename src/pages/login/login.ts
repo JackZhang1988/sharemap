@@ -20,6 +20,7 @@ export class LoginPage {
 
   public phone: Number;
   public password: string;
+  public loginCallback: Function;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -27,6 +28,7 @@ export class LoginPage {
     public apiService: ApiService,
     public storage: Storage,
   ) {
+    this.loginCallback = navParams.get("callback");
   }
 
   ionViewDidLoad() {
@@ -52,10 +54,15 @@ export class LoginPage {
             })
             toast.onDidDismiss(() => {
               this.navCtrl.setRoot('home');
+              if (this.loginCallback) {
+                this.loginCallback();
+              } else {
+                this.navCtrl.setRoot('home');
+              }
             });
             toast.present();
           }
-        }else{
+        } else {
           let toast = this.toastCtrl.create({
             message: res.err,
             duration: 2000,
