@@ -11,6 +11,7 @@
 
 <ion-content class="card-background-page">
   <ion-card *ngFor='let map of maps' (click)="goMapDetail(map)">
+    <div class="map-wrapper"></div>
     <img src="{{map.coverImg}}"/>
     <div class="card-title">{{map.title}}</div>
     <div class="card-subtitle">{{map.description}}</div>
