@@ -70,4 +70,9 @@ export class ApiService {
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
+  getUserMaps(userId: string): Observable<any> {
+    return this.authHttp.get(this.serverHost + '/map/usermaps?userId=' + userId)
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }  
 }
