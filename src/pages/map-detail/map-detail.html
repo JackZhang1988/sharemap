@@ -18,7 +18,7 @@
   </div>
   <div id="mapDetail">
     <div class="user-info">
-      <img class="avatar" src="{{mapInfo.creater?.avatar || 'http://okyb0e40i.bkt.clouddn.com/FmYuiaXcxOee_nLJmouPS5C-m2uM'}}">
+      <img class="avatar" src="{{(mapInfo.creater?.avatar || 'http://okyb0e40i.bkt.clouddn.com/FmYuiaXcxOee_nLJmouPS5C-m2uM') | imagefilter:'avatar'}}">
       <span class="user-name">{{mapInfo.creater?.name}}</span>
     </div>
     <div class="map-intro">{{mapInfo.description}}</div>
