@@ -24,6 +24,7 @@ export class MapDetailPage {
   public mapLocations: any[] = [];
   private preMarker: any;
   private curMarker: any;
+  public curView:string = 'list';
 
   ionViewDidLoad() {
     this.getMapData()
@@ -73,6 +74,14 @@ export class MapDetailPage {
       //恢复成默认光标
       this.gdService.unHighlightMarker(this.preMarker);
       //  this.preMarker.setIconStyle('blue')
+    }
+  }
+
+  changeView():void{
+    if(this.curView == 'list'){
+      this.curView = 'map';
+    }else{
+      this.curView = 'list';
     }
   }
 }
