@@ -21,12 +21,12 @@
   <div id="listView" [hidden]="curView=='map'">
     <ion-list>
       <ion-item *ngFor='let item of mapLocations' class="map-list-item">
-        <ion-thumbnail item-left>
+        <ion-thumbnail item-start>
           <img class="" src="{{item.imgs[0] | imagefilter:thumbnail }}">
         </ion-thumbnail>
         <h2>{{item.description}}</h2>
         <p>{{item.locationInfo.address}}</p>
-        <button ion-button clear item-right>View</button>
+        <button ion-button clear item-end>View</button>
       </ion-item>
     </ion-list>
   </div>
