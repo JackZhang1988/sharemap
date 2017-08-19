@@ -8,48 +8,48 @@
 
   <ion-navbar>
     <ion-title>{{mapInfo.title}}</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="changeView()">
-          <ion-icon name="{{curView == 'list' ? 'map':'list'}}"></ion-icon>
-        </button>
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content>
   <div id="listView" [hidden]="curView=='map'">
-    <ion-list>
-      <ion-item *ngFor='let item of mapLocations' class="map-list-item">
-        <ion-thumbnail item-start>
-          <img class="" src="{{item.imgs[0] | imagefilter:thumbnail }}">
-        </ion-thumbnail>
-        <h2>{{item.description}}</h2>
-        <p>{{item.locationInfo.address}}</p>
-        <button ion-button clear item-end>View</button>
-      </ion-item>
-    </ion-list>
+    <ion-card>
+      <img src="{{mapInfo.coverImg | imagefilter:mural}}" />
+      <ion-card-content>
+        <ion-item class="no-padding-left">
+          <ion-avatar item-start>
+            <img src="{{mapInfo.creater?.avatar | imagefilter:avatar}}">
+          </ion-avatar>
+          <h2>{{mapInfo.creater?.name}}</h2>
+          <p>{{mapInfo.creater?.signature}}</p>
+        </ion-item>
+        <ion-card-title>
+          {{mapInfo.title}}
+        </ion-card-title>
+        <p>
+          {{mapInfo.description}}
+        </p>
+      </ion-card-content>
+      <ion-row (click)="changeView()">
+        <button ion-button icon-left clear>
+            <ion-icon name="map"></ion-icon>查看地图视图
+        </button>
+      </ion-row>
+    </ion-card>
+
+    <ion-card>
+      <ion-list>
+        <ion-item *ngFor='let item of mapLocations' class="map-list-item">
+          <ion-thumbnail item-start>
+            <img class="" src="{{item.imgs[0] | imagefilter:thumbnail }}">
+          </ion-thumbnail>
+          <h2>{{item.description}}</h2>
+          <p>{{item.locationInfo.address}}</p>
+          <button ion-button clear item-end>View</button>
+        </ion-item>
+      </ion-list>
+    </ion-card>
   </div>
-  <div id="mapView" [hidden]="curView=='list'">
-    <div id="mapContainer" class="item">
-    </div>
-    <div id="mapDetail">
-      <div class="user-info">
-        <img class="avatar" src="{{(mapInfo.creater?.avatar || 'http://okyb0e40i.bkt.clouddn.com/FmYuiaXcxOee_nLJmouPS5C-m2uM') | imagefilter:'avatar'}}">
-        <span class="user-name">{{mapInfo.creater?.name}}</span>
-      </div>
-      <div class="map-intro">{{mapInfo.description}}</div>
-    </div>
-    <ion-slides id="slideContainer" [pager]=true (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()">
-      <ion-slide *ngFor='let item of mapLocations'>
-        <div class="loc-item card">
-          <img src="{{item.imgs[0] | imagefilter:thumbnail }}" alt="" class="location-img">
-          <div class="location-content">
-            <div class="title">{{item.description}}</div>
-            <div class="address">{{item.locationInfo.address}}</div>
-          </div>
-        </div>
-      </ion-slide>
-    </ion-slides>
-  </div>
+
 </ion-content>

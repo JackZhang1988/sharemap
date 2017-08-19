@@ -31,22 +31,20 @@
     </span>
   </div>
 
-  <ion-item (click)="showMapModal()">
+  <ion-item class="no-padding-left" (click)="showMapModal()">
     <ion-icon name="pin"></ion-icon>添加地点：<span>{{curLocation.name}}</span>
   </ion-item>
 
-  <ion-item>
+  <ion-item class="no-padding-left">
     <ion-textarea placeholder="分享下你对这里的评级和感受吧..." [(ngModel)]="description"></ion-textarea>
   </ion-item>
 
-  <ion-list>
-    <ion-item>
-      <ion-label>添加到我的地图集：</ion-label>
-      <ion-select [(ngModel)]="curMap">
-        <ion-option *ngFor='let map of maps' value="{{map._id}}">{{map.title}}</ion-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
+  <ion-item class="no-padding-left">
+    <ion-label>添加到我的地图集：</ion-label>
+    <ion-select [(ngModel)]="curMap">
+      <ion-option *ngFor='let map of maps' value="{{map._id}}">{{map.title}}</ion-option>
+    </ion-select>
+  </ion-item>
 
   <button ion-button block (click)="submit()">确定</button>
 
