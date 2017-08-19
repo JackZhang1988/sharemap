@@ -15,17 +15,17 @@
   <div id="mapView" [hidden]="curView=='list'">
     <div id="mapContainer" class="item">
     </div>
-    <div id="mapDetail">
+    <!-- <div id="mapDetail">
       <div class="user-info">
         <img class="avatar" src="{{(mapInfo.creater?.avatar || 'http://okyb0e40i.bkt.clouddn.com/FmYuiaXcxOee_nLJmouPS5C-m2uM') | imagefilter:'avatar'}}">
         <span class="user-name">{{mapInfo.creater?.name}}</span>
       </div>
       <div class="map-intro">{{mapInfo.description}}</div>
-    </div>
+    </div> -->
     <ion-slides id="slideContainer" [pager]=true (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()">
       <ion-slide *ngFor='let item of mapLocations'>
         <div class="loc-item card">
-          <img src="{{item.imgs[0] | imagefilter:thumbnail }}" alt="" class="location-img">
+          <img src="{{item.imgs[0] | imagefilter:'thumbnail' }}" alt="" class="location-img">
           <div class="location-content">
             <div class="title">{{item.description}}</div>
             <div class="address">{{item.locationInfo.address}}</div>

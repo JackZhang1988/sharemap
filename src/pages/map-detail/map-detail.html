@@ -15,11 +15,11 @@
 <ion-content>
   <div id="listView" [hidden]="curView=='map'">
     <ion-card>
-      <img src="{{mapInfo.coverImg | imagefilter:mural}}" />
+      <img src="{{mapInfo.coverImg | imagefilter:'mural'}}" />
       <ion-card-content>
         <ion-item class="no-padding-left">
           <ion-avatar item-start>
-            <img src="{{mapInfo.creater?.avatar | imagefilter:avatar}}">
+            <img src="{{mapInfo.creater?.avatar | imagefilter:'avatar'}}">
           </ion-avatar>
           <h2>{{mapInfo.creater?.name}}</h2>
           <p>{{mapInfo.creater?.signature}}</p>
@@ -42,7 +42,7 @@
       <ion-list>
         <ion-item *ngFor='let item of mapLocations' class="map-list-item">
           <ion-thumbnail item-start>
-            <img class="" src="{{item.imgs[0] | imagefilter:thumbnail }}">
+            <img class="" src="{{item.imgs[0] | imagefilter:'thumbnail' }}">
           </ion-thumbnail>
           <h2>{{item.description}}</h2>
           <p>{{item.locationInfo.address}}</p>
