@@ -183,6 +183,9 @@ export class GDMap {
           markerList.push(tt);
         })
         curMap.setFitView();
+        //点标记自适应的视图过大，重新定义点标记自适应的缩放级别
+        curMap.setZoom(curMap.getZoom()-1);
+
         callback && callback(markerList)
       });
     }
