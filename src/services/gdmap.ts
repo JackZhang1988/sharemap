@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { LngLat } from '../common/models';
 
 // let singleInstance = false;
-
+const STATIC_MAP_KEY = 'c3b4477c4c2ad477141ee0358e4d1c82';
 @Injectable()
 export class GDMap {
 
@@ -184,11 +184,15 @@ export class GDMap {
         })
         curMap.setFitView();
         //点标记自适应的视图过大，重新定义点标记自适应的缩放级别
-        curMap.setZoom(curMap.getZoom()-1);
+        curMap.setZoom(curMap.getZoom() - 1);
 
         callback && callback(markerList)
       });
     }
+  }
+
+  getStaticMapImg(paramStr) {
+    return 'http://restapi.amap.com/v3/staticmap?' + paramStr + '&key=' + STATIC_MAP_KEY;
   }
 
   highlightMarker(marker: any) {

@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, ModalController, NavParams, Slides } from 'ionic-angular';
 import { ApiService } from '../../services/api';
 
+const STATIC_MAP_KEY = 'c3b4477c4c2ad477141ee0358e4d1c82';
+
 @IonicPage({
   segment: '/map-detail/:id',
   defaultHistory: ['home']
@@ -25,6 +27,7 @@ export class MapDetailPage {
   public mapData: any = this.navParams.data;
   public mapLocations: any[] = [];
   public curView: string = 'list';
+  public mapStaticImg: string;
 
   ionViewDidLoad() {
     this.getMapData()
@@ -37,6 +40,19 @@ export class MapDetailPage {
       if (res.status == 0) {
         this.mapInfo = res.result.map;
         this.mapLocations = res.result.locations;
+        let markerGpsStr = '';
+        let size = '400*200';
+        let color = '0x387ef5';
+        if (this.mapLocations && this.mapLocations.length) {
+          let markerList = [];
+          for (let i = 0; i < this.mapLocations.length && i < 50; i++) {
+            markerList.push('mid,' + color + ',' + i + ':' + this.mapLocations[i].lnglat[0] + ',' + this.mapLocations[i].lnglat[1]);
+          }
+          markerGpsStr = markerList.join('|');
+        } else {
+          markerGpsStr = '';
+        }
+        this.mapStaticImg = 'http://restapi.amap.com/v3/staticmap?size=' + size + '&markers=' + markerGpsStr + '&key=' + STATIC_MAP_KEY;
       }
     })
   }
