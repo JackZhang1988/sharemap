@@ -67,7 +67,7 @@ export class HomePage implements OnInit {
       if (type == 'map') {
         curModal = this.modalCtrl.create('AddMapModal');
       } else {
-        curModal = this.modalCtrl.create('AddLocModal');
+        curModal = this.modalCtrl.create('SearchLocModal');
       }
       curModal.present();
 

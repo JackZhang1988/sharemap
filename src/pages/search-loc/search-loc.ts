@@ -19,19 +19,55 @@ export class SearchLocModal {
   keyword: string = '';
   curSelectPlace: any;
   hasInitDrag = false;
+  loading = true;
+  loadingText = '正在定位中...';
 
   dismiss() {
     this.viewCtrl.dismiss();
   }
   ngOnInit(): void {
     this.gdService.initMap();
-    this.gdService.initLocateMap();
+    this.gdService.initLocateMap({}, (curLocalResult) => {
+      this.zone.run(() => {
+        if(curLocalResult.addressComponent){
+          this.loading = false;
+          this.gdService.addMarker([curLocalResult.position.lng, curLocalResult.position.lat]);
+          this.setSelectPlace(curLocalResult);
+        }else{
+          this.loadingText='定位失败，请检查您的网络';
+        }
+      })
+      if (!this.hasInitDrag) {
+        this.gdService.initDragLocate((dragResult) => {
+          this.zone.run(() => {
+            this.setSelectPlace(dragResult);
+          })
+        });
+        this.hasInitDrag = true;
+      }
+    });
+  }
+
+  setSelectPlace(result) {
+    let city = result.addressComponent.city;
+    let province = result.addressComponent.province;
+    let district = result.addressComponent.district;
+    let township = result.addressComponent.township;
+    this.curSelectPlace = {
+      name: result.formattedAddress.replace(province, '').replace(city, '').replace(district, '').replace(township, '') + result.addressComponent.street + result.addressComponent.streetNumber,
+      address: result.formattedAddress,
+      location: result.location,
+      district: result.addressComponent.district,
+      citycode: result.addressComponent.citycode,
+      adcode: result.addressComponent.adcode
+    };
+    console.log(this.curSelectPlace.name);
   }
 
   autoSearch() {
     if (this.keyword && this.keyword.trim()) {
       this.gdService.autoSearch(this.keyword, (status, result) => {
-        console.log(status, result);
+        // console.log(status, result);
         if (status == 'complete') {
           this.zone.run(() => {
             this.isShowTipSelecter = true;
@@ -52,26 +88,7 @@ export class SearchLocModal {
     this.curSelectPlace = tip;
     this.gdService.clearMap();
     this.gdService.addMarker([tip.location.lng, tip.location.lat], () => {
-      if (!this.hasInitDrag) {
-        this.gdService.initDragLocate((result) => {
-          this.zone.run(() => {
-            let city = result.addressComponent.city;
-            let province = result.addressComponent.province;
-            let district = result.addressComponent.district;
-            let township = result.addressComponent.township;
-            this.curSelectPlace = {
-              name: result.formattedAddress.replace(province, '').replace(city, '').replace(district, '').replace(township, '') + result.addressComponent.street + result.addressComponent.streetNumber,
-              address: result.formattedAddress,
-              location: result.location,
-              district: result.addressComponent.district,
-              citycode: result.addressComponent.citycode,
-              adcode: result.addressComponent.adcode
-            };
-            console.log(this.curSelectPlace.name);
-          })
-        });
-        this.hasInitDrag = true;
-      }
+
     });
   }
 

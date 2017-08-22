@@ -10,10 +10,11 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content padding>
+<ion-content>
   <search-tips class="search-tips" [curTips]="tips" [isShowTipSelecter]="isShowTipSelecter" (tipSelected)="handleTipSelect($event)"></search-tips>
   <div id="mapContainer" class="item">
   </div>
+  <ion-item *ngIf="loading">{{loadingText}}</ion-item>
   <ion-item *ngIf="curSelectPlace">{{curSelectPlace.name}}</ion-item>
   <button ion-button block (click)="submit()">确定</button>
 
