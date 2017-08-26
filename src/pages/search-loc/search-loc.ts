@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, ViewController } from 'ionic-angular';
+import { IonicPage, ViewController, NavController } from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
 
 @IonicPage()
@@ -11,6 +11,7 @@ export class SearchLocModal {
   constructor(
     public viewCtrl: ViewController,
     public zone: NgZone,
+    public navCtrl: NavController,
     private gdService: GDMap
   ) { }
   tips: any[] = [];
@@ -29,26 +30,33 @@ export class SearchLocModal {
     this.gdService.initMap();
     this.gdService.initLocateMap({}, (curLocalResult) => {
       this.zone.run(() => {
-        if(curLocalResult.addressComponent){
-          this.loading = false;
+        if (curLocalResult.addressComponent) {
           this.gdService.addMarker([curLocalResult.position.lng, curLocalResult.position.lat]);
           this.setSelectPlace(curLocalResult);
-        }else{
-          this.loadingText='定位失败，请检查您的网络';
+        } else {
+          this.loading = true;
+          this.loadingText = '定位失败，请检查您的网络';
         }
       })
-      if (!this.hasInitDrag) {
-        this.gdService.initDragLocate((dragResult) => {
-          this.zone.run(() => {
-            this.setSelectPlace(dragResult);
-          })
-        });
-        this.hasInitDrag = true;
-      }
+    }, () => {
+      this.zone.run(() => {
+        this.loading = true;
+        this.loadingText = '定位失败，请检查您的网络';
+      });
     });
+
+    if (!this.hasInitDrag) {
+      this.gdService.initDragLocate((dragResult) => {
+        this.zone.run(() => {
+          this.setSelectPlace(dragResult);
+        })
+      });
+      this.hasInitDrag = true;
+    }
   }
 
   setSelectPlace(result) {
+    this.loading = false;
     let city = result.addressComponent.city;
     let province = result.addressComponent.province;
     let district = result.addressComponent.district;
@@ -70,6 +78,7 @@ export class SearchLocModal {
         // console.log(status, result);
         if (status == 'complete') {
           this.zone.run(() => {
+            this.loading = false;
             this.isShowTipSelecter = true;
             this.tips = result.tips;
           })
@@ -95,6 +104,9 @@ export class SearchLocModal {
   submit() {
     // this.gdMap.addMarker([116.405467, 39.907761]);
     // console.log(this.curSelectPlace);
-    this.viewCtrl.dismiss(this.curSelectPlace);
+    // this.viewCtrl.dismiss(this.curSelectPlace);
+    this.navCtrl.push('AddLocModal', {
+      curSelectPlace: this.curSelectPlace
+    });
   }
 }

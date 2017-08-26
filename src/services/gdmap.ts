@@ -27,7 +27,7 @@ export class GDMap {
       zoom: 15,
     });
   }
-  initLocateMap(options: any = {}, callback:any): any {
+  initLocateMap(options: any = {}, callback:any, errorCallback:any): any {
     let self = this;
     options = Object.assign(options, { container: 'mapContainer' });
     self.gdMap = new AMap.Map(options.container, {
@@ -61,7 +61,9 @@ export class GDMap {
         console.log(result);
         callback && callback(result);
       }); //返回定位信息
-      AMap.event.addListener(geolocation, 'error', options.onError); //返回定位出错信息
+      AMap.event.addListener(geolocation, 'error', (err)=>{
+        errorCallback && errorCallback(err)
+      }); //返回定位出错信息
 
       self.citySearch = new AMap.CitySearch();
       self.citySearch.getLocalCity((status, citySearchResult) => {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, AlertController, ViewController, ModalController, ToastController } from 'ionic-angular';
+import { IonicPage, AlertController, ViewController, NavParams, ModalController, ToastController } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
 
 import { ApiService } from '../../services/api';
@@ -18,6 +18,7 @@ export class AddLocModal extends ModalContent {
   constructor(
     private storage: Storage,
     public viewCtrl: ViewController,
+    public navParams: NavParams,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public modalCtrl: ModalController,
@@ -32,6 +33,8 @@ export class AddLocModal extends ModalContent {
   locationImgs: string[] = [];
   description: string;
   isShowImgUploader = true;
+  selectPlaceData: any = this.navParams.data;
+  
   ngOnInit(): void {
     this.getMaps();
   }
