@@ -27,7 +27,7 @@ export class GDMap {
       zoom: 15,
     });
   }
-  initLocateMap(options: any = {}, callback:any, errorCallback:any): any {
+  initLocateMap(options: any = {}, callback: any, errorCallback: any): any {
     let self = this;
     options = Object.assign(options, { container: 'mapContainer' });
     self.gdMap = new AMap.Map(options.container, {
@@ -47,7 +47,7 @@ export class GDMap {
         buttonPosition: 'RB', //定位按钮停靠位置，默认：'LB'，左下角
         buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
         showMarker: false, //定位成功后在定位到的位置显示点标记，默认：true
-        markerOptions:{
+        markerOptions: {
           icon: "//webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
         },
         showCircle: false, //定位成功后用圆圈表示定位精度范围，默认：true
@@ -61,7 +61,7 @@ export class GDMap {
         console.log(result);
         callback && callback(result);
       }); //返回定位信息
-      AMap.event.addListener(geolocation, 'error', (err)=>{
+      AMap.event.addListener(geolocation, 'error', (err) => {
         errorCallback && errorCallback(err)
       }); //返回定位出错信息
 
@@ -248,8 +248,10 @@ export class GDMap {
     this.gdMap.on('moveend', () => {
       this.gdMap.removeControl(customControl);
       let position = this.gdMap.getCenter();
-      this.curAddedMarker.setPosition(position);
-      this.curAddedMarker.show();
+      if (this.curAddedMarker) {
+        this.curAddedMarker.setPosition(position);
+        this.curAddedMarker.show();
+      }
       this.geocoder.getAddress(position, (status, result) => {
         result.regeocode.location = position;
         onSelected && onSelected(result.regeocode);
