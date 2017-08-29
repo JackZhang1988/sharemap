@@ -253,8 +253,10 @@ export class GDMap {
         this.curAddedMarker.show();
       }
       this.geocoder.getAddress(position, (status, result) => {
-        result.regeocode.location = position;
-        onSelected && onSelected(result.regeocode);
+        if(result){
+          result.regeocode.location = position;
+          onSelected && onSelected(result.regeocode);
+        }
       })
 
     })

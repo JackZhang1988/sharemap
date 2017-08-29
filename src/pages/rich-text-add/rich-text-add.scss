@@ -1,0 +1,28 @@
+  page-rich-text-add {
+    .rich-add-comp {
+      border: 0.55px solid #c8c7cc;
+    }
+    .add-action {
+      margin-top: 20px;
+    }
+  }
+
+  .rich-bottom-sheet {
+    .action-sheet-container {
+      //   padding: 0;
+    }
+    .action-sheet-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around; //   border-radius: 0;
+    }
+    .sheet-item {
+      flex: 1;
+    }
+    .cancel-btn {
+      //   padding: 6px;
+      //   min-height: 3.5rem;
+      //   height: 3.5rem;
+      //   background-color: #dbdbdb;
+    }
+  }
