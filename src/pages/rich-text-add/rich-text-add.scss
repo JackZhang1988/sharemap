@@ -1,6 +1,10 @@
   page-rich-text-add {
-    .rich-add-comp {
+    .rich-add-item {
       border: 0.55px solid #c8c7cc;
+      margin-bottom: 10px;
+    }
+    .rich-add-text textarea {
+      min-height: 140px;
     }
     .add-action {
       margin-top: 20px;

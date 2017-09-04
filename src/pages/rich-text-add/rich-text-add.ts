@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import { IonicPage, ToastController, NavController, ViewController, NavParams, ActionSheetController } from 'ionic-angular';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { QiniuService } from '../../services/qiniu';
 
 /**
  * Generated class for the RichTextAddPage page.
@@ -12,48 +14,119 @@ import { IonicPage, NavController, NavParams, ActionSheetController } from 'ioni
 @Component({
   selector: 'page-rich-text-add',
   templateUrl: 'rich-text-add.html',
+  providers: [QiniuService]
 })
 export class RichTextAddPage {
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
+  constructor(
+    public navCtrl: NavController,
+    public viewCtrl: ViewController,
+    public toastCtrl: ToastController,
+    public navParams: NavParams,
+    public actionSheetCtrl: ActionSheetController,
+    public imagePicker: ImagePicker,
+    public qiniuService: QiniuService,
+  ) {
   }
   public title: string = this.navParams.get('title') || '';
   public showHeader: any = this.navParams.get('showHeader');
+  public content = [];
 
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
   ionViewDidLoad() {
-
+    if (this.showHeader) {
+      this.content.push({
+        type: 'header',
+        value: ''
+      })
+    }
+  }
+  addText() {
+    this.content.push({
+      type: 'text',
+      value: ''
+    })
   }
 
+  checkPermission(job) {
+    if (this.imagePicker.hasReadPermission()) {
+      job && job();
+    } else {
+      this.imagePicker.requestReadPermission().then(() => {
+        job && job();
+      })
+    }
+  }
+
+  addImages() {
+    this.checkPermission(() => {
+      this.imagePicker.getPictures({}).then((results) => {
+        if (results.length >= 10) {
+          let toast = this.toastCtrl.create({
+            message: '一次性上传图片不能超过10张',
+            duration: 2000,
+            position: 'bottom'
+          })
+          return;
+        }else{
+          for (var i = 0; i < results.length; i++) {
+            console.log('Image URI: ' + results[i]);
+            this.qiniuService.nativeUpload(results[i]).subscribe(res => {
+              this.content.push({
+                type: 'img',
+                value: res
+              })
+            });
+          }
+        }
+      }, (err) => { });
+    })
+  }
+  openCamera() {
+    // this.checkPermission(() => {
+    //   this.imagePicker.getPictures({}).then((results) => {
+    //     for (var i = 0; i < results.length; i++) {
+    //       console.log('Image URI: ' + results[i]);
+    //     }
+    //   }, (err) => { });
+    // })
+  }
   addContent() {
     let actionSheet = this.actionSheetCtrl.create({
       cssClass: 'rich-bottom-sheet',
       buttons: [
         {
           text: '文字',
-          icon: 'ios-create',
+          icon: 'create',
           cssClass: 'sheet-item',
           handler: () => {
             console.log('文字 clicked');
+            this.addText();
           }
         }, {
           text: '图片',
-          icon: 'ios-images',
+          icon: 'images',
           cssClass: 'sheet-item',
           handler: () => {
             console.log('图片 clicked');
+            this.addImages();
           }
         }, {
           text: '相机',
-          icon: 'ios-camera',
+          icon: 'camera',
           cssClass: 'sheet-item',
           handler: () => {
             console.log('相机 clicked');
+            this.openCamera();
           }
         }, {
           text: '取消',
           role: 'cancel',
-          cssClass:'cancel-btn',
+          icon: 'close',
+          cssClass: 'cancel-btn',
           handler: () => {
             console.log('Cancel clicked');
           }

@@ -1,6 +1,8 @@
-import { Injectable, Inject }     from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+
 import 'rxjs/add/operator/toPromise';
 
 // Import RxJs required methods
@@ -12,7 +14,9 @@ import 'rxjs/add/operator/catch';
 export class QiniuService {
   private tokenApi = 'http://localhost:3000/qiniu/token';
 
-  constructor(private http: Http, @Inject('IMGURL') private ImgUrl: any) { }
+  constructor(private http: Http, @Inject('IMGURL') private ImgUrl: any, private transfer: FileTransfer) { }
+  public fileTransfer: FileTransferObject = this.transfer.create();
+
 
   getToken(): Observable<any> {
     //七牛token随时获取
@@ -57,6 +61,31 @@ export class QiniuService {
             observer.next(this.ImgUrl + res.hash);
             observer.complete();
           })
+      })
+    })
+  }
+
+  nativeUpload(fileUrl: string): Observable<any> {
+    return new Observable(observer => {
+      this.getToken().subscribe(tokenRes => {
+        let param = {
+          token: tokenRes.token
+        }
+        let options: FileUploadOptions = {
+          params: {
+            token: tokenRes.token
+          }
+        }
+        this.fileTransfer.upload(fileUrl, encodeURI('http://up.qiniu.com/'), options).then(result => {
+          if (result.responseCode == 200) {
+            let resData = JSON.parse(result.response);
+            observer.next(this.ImgUrl + resData.hash);
+          } else {
+            Observable.throw('上传失败');
+          }
+        }).catch(err => {
+          Observable.throw('上传失败');
+        });
       })
     })
   }

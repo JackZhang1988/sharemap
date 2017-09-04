@@ -9,16 +9,25 @@
   <ion-navbar>
     <ion-title>{{title}}</ion-title>
   </ion-navbar>
-
+  <ion-buttons start>
+    <button ion-button (click)="dismiss()">
+      <span color="primary" showWhen="ios">取消</span>
+      <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-header>
 
 
 <ion-content padding>
   <ion-list>
 
-    <ion-item ng-if="showHeader" class="rich-add-comp">
-      <ion-input type="text" placeholder="请填写标题"></ion-input>
+    <ion-item *ngFor='let item of content' class="rich-add-item" [ngClass]="'rich-add-'+item.type" [ngSwitch]="item.type">
+      <ion-input *ngIf="item.type=='header'" type="text" placeholder="请填写标题" [(ngModel)]="item.value"></ion-input>
+      <ion-textarea *ngIf="item.type=='text'" placeholder="请填写内容" [(ngModel)]="item.value"></ion-textarea>
     </ion-item>
+
+
+
     <button class="add-action" ion-button block icon-left (click)="addContent()"><ion-icon name="add"></ion-icon>添加内容</button>
   </ion-list>
 
