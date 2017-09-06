@@ -4,10 +4,11 @@ import { Observable } from 'rxjs';
 import { AuthHttp } from "angular2-jwt";
 
 import { Map, Location } from '../common/models';
+import { ENV } from '@app/env';
 
 @Injectable()
 export class ApiService {
-  private serverHost = 'http://localhost:3000';
+  private serverHost = ENV.API_URL;
 
   constructor(private http: Http, private authHttp: AuthHttp) { }
 
@@ -74,5 +75,5 @@ export class ApiService {
     return this.authHttp.get(this.serverHost + '/map/usermaps?userId=' + userId)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
-  }  
+  }
 }

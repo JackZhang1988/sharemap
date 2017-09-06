@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, ToastController, NavController, ViewController, NavParams, ActionSheetController } from 'ionic-angular';
 import { ImagePicker } from '@ionic-native/image-picker';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { QiniuService } from '../../services/qiniu';
 
 /**
@@ -27,6 +28,7 @@ export class RichTextAddPage {
     public actionSheetCtrl: ActionSheetController,
     public imagePicker: ImagePicker,
     public qiniuService: QiniuService,
+    public camera: Camera,
   ) {
   }
   public title: string = this.navParams.get('title') || '';
@@ -71,7 +73,7 @@ export class RichTextAddPage {
             position: 'bottom'
           })
           return;
-        }else{
+        } else {
           for (var i = 0; i < results.length; i++) {
             console.log('Image URI: ' + results[i]);
             this.qiniuService.nativeUpload(results[i]).subscribe(res => {
@@ -86,6 +88,25 @@ export class RichTextAddPage {
     })
   }
   openCamera() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      this.qiniuService.nativeUpload(imageData).subscribe(res => {
+        this.content.push({
+          type: 'img',
+          value: res
+        })
+      });
+    }, (err) => {
+      // Handle error
+    });
     // this.checkPermission(() => {
     //   this.imagePicker.getPictures({}).then((results) => {
     //     for (var i = 0; i < results.length; i++) {
