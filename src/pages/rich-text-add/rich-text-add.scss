@@ -9,6 +9,16 @@
     .add-action {
       margin-top: 20px;
     }
+    .rich-add-img {
+      padding: 0;
+      border:0;
+      .item-inner{
+        padding-right: 0!important;
+      }
+      .label {
+        margin: 0;
+      }
+    }
   }
 
   .rich-bottom-sheet {

@@ -66,9 +66,9 @@ export class RichTextAddPage {
   addImages() {
     this.checkPermission(() => {
       this.imagePicker.getPictures({}).then((results) => {
-        if (results.length >= 10) {
+        if (results.length > 5) {
           let toast = this.toastCtrl.create({
-            message: '一次性上传图片不能超过10张',
+            message: '一次性上传图片不能超过5张',
             duration: 2000,
             position: 'bottom'
           })
@@ -88,6 +88,12 @@ export class RichTextAddPage {
     })
   }
   openCamera() {
+    //mock
+    // this.content.push({
+    //   type:'img',
+    //   value:'http://okyb0e40i.bkt.clouddn.com/FrJdSz1P_4kvFIYjvTc-VmgU1SPs'
+    // })
+    // return ;
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
@@ -107,13 +113,7 @@ export class RichTextAddPage {
     }, (err) => {
       // Handle error
     });
-    // this.checkPermission(() => {
-    //   this.imagePicker.getPictures({}).then((results) => {
-    //     for (var i = 0; i < results.length; i++) {
-    //       console.log('Image URI: ' + results[i]);
-    //     }
-    //   }, (err) => { });
-    // })
+
   }
   addContent() {
     let actionSheet = this.actionSheetCtrl.create({
