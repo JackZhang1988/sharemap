@@ -20,14 +20,17 @@
 
 <ion-content padding>
   <ion-list>
-    
-    <ion-item *ngFor='let item of content' class="rich-add-item" [ngClass]="'rich-add-'+item.type">
+
+    <div *ngFor='let item of content;let i = index' class="rich-add-item" [ngClass]="'rich-add-'+item.type">
       <ion-input *ngIf="item.type=='header'" type="text" placeholder="请填写标题" [(ngModel)]="item.value"></ion-input>
       <ion-textarea *ngIf="item.type=='text'" placeholder="请填写内容" [(ngModel)]="item.value"></ion-textarea>
-      <img *ngIf="item.type == 'img'" src="{{item.value | imagefilter:'mural' }}"/>
-    </ion-item>
-
-
+      <img *ngIf="item.type == 'img'" src="{{item.value | imagefilter:'mural' }}" />
+      <ion-label class="action">
+        <span class="action-item" *ngIf="item.type!=='header'" (click)="deleteItem(i)">删除</span>
+        <span class="action-item" *ngIf="i != 0 && content[i-1].type!='header'" (click)="moveupItem(i)">上移</span>
+        <span class="action-item" *ngIf="item.type!=='header'" (click)="addContent(i)">插入</span>
+      </ion-label>
+    </div>
 
     <button class="add-action" ion-button block icon-left (click)="addContent()"><ion-icon name="add"></ion-icon>添加内容</button>
   </ion-list>

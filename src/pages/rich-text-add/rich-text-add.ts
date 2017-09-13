@@ -46,12 +46,22 @@ export class RichTextAddPage {
       })
     }
   }
-  addText() {
-    this.content.push({
+
+  addContentObj(contentObj, index) {
+    if (index) {
+      this.content.splice(index + 1, 0, contentObj);
+    } else {
+      this.content.push(contentObj);
+    }
+  }
+
+  addText(index) {
+    this.addContentObj({
       type: 'text',
       value: ''
-    })
+    }, index);
   }
+
 
   checkPermission(job) {
     if (this.imagePicker.hasReadPermission()) {
@@ -63,7 +73,7 @@ export class RichTextAddPage {
     }
   }
 
-  addImages() {
+  addImages(index) {
     this.checkPermission(() => {
       this.imagePicker.getPictures({}).then((results) => {
         if (results.length > 5) {
@@ -77,23 +87,23 @@ export class RichTextAddPage {
           for (var i = 0; i < results.length; i++) {
             console.log('Image URI: ' + results[i]);
             this.qiniuService.nativeUpload(results[i]).subscribe(res => {
-              this.content.push({
+              this.addContentObj({
                 type: 'img',
                 value: res
-              })
+              }, index);
             });
           }
         }
       }, (err) => { });
     })
   }
-  openCamera() {
+  openCamera(index) {
     //mock
-    // this.content.push({
-    //   type:'img',
-    //   value:'http://okyb0e40i.bkt.clouddn.com/FrJdSz1P_4kvFIYjvTc-VmgU1SPs'
-    // })
-    // return ;
+    // this.addContentObj({
+    //   type: 'img',
+    //   value: 'http://okyb0e40i.bkt.clouddn.com/FrJdSz1P_4kvFIYjvTc-VmgU1SPs'
+    // }, index);
+    // return;
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
@@ -105,17 +115,31 @@ export class RichTextAddPage {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
       this.qiniuService.nativeUpload(imageData).subscribe(res => {
-        this.content.push({
-          type: 'img',
-          value: res
-        })
+        this.addContentObj({
+      type: 'img',
+      value: res
+    },index);
       });
     }, (err) => {
       // Handle error
     });
 
   }
-  addContent() {
+
+  deleteItem(index) {
+    this.content.splice(index, 1);
+  }
+
+  moveupItem(i) {
+    //this.splice(to, 0, this.splice(from, 1)[0]);
+    this.arrayMove(this.content, i, i - 1);
+  }
+
+  arrayMove(array, from, to) {
+    array.splice(to, 0, array.splice(from, 1)[0]);
+  }
+
+  addContent(index) {
     let actionSheet = this.actionSheetCtrl.create({
       cssClass: 'rich-bottom-sheet',
       buttons: [
@@ -125,7 +149,7 @@ export class RichTextAddPage {
           cssClass: 'sheet-item',
           handler: () => {
             console.log('文字 clicked');
-            this.addText();
+            this.addText(index);
           }
         }, {
           text: '图片',
@@ -133,7 +157,7 @@ export class RichTextAddPage {
           cssClass: 'sheet-item',
           handler: () => {
             console.log('图片 clicked');
-            this.addImages();
+            this.addImages(index);
           }
         }, {
           text: '相机',
@@ -141,7 +165,7 @@ export class RichTextAddPage {
           cssClass: 'sheet-item',
           handler: () => {
             console.log('相机 clicked');
-            this.openCamera();
+            this.openCamera(index);
           }
         }, {
           text: '取消',
