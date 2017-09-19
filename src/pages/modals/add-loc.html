@@ -1,39 +1,54 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
+    <!-- <ion-title>
       添加地点
-    </ion-title>
+    </ion-title> -->
     <ion-buttons start>
       <button ion-button (click)="dismiss()">
         <span color="primary" showWhen="ios">取消</span>
         <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
       </button>
     </ion-buttons>
+    <ion-segment [(ngModel)]="pageType">
+      <ion-segment-button value="status">
+        状态
+      </ion-segment-button>
+      <ion-segment-button value="blog">
+        长文
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
-<ion-content padding>
-  <div class="item item-img-add">
-    <ul class="img-prev">
-      <li class="prev-item" *ngFor="let img of locationImgs">
-        <img class="prev-img" src="{{img}}">
-      </li>
-    </ul>
-    <ion-spinner [hidden]="!imgLoading"></ion-spinner>
-    <span class="img-add-block">
-        <ion-icon name="add" class="img-add-icon"></ion-icon>
-        <div class="img-input-wrap" [hidden]="!isShowImgUploader">
-            <form enctype="multipart/form-data" class="img-add-input" method="post">
-                <input name="token" type="hidden">
-                <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input">
-                <input type="submit">
-            </form>
-        </div>
-    </span>
+<ion-content padding [ngSwitch]="pageType">
+  <div class="content-add status" *ngSwitchCase="'status'">
+    <div class="item item-img-add">
+      <ul class="img-prev">
+        <li class="prev-item" *ngFor="let img of locationImgs">
+          <img class="prev-img" src="{{img | imagefilter:'thumbnail'}}">
+        </li>
+      </ul>
+      <ion-spinner [hidden]="!imgLoading"></ion-spinner>
+      <span class="img-add-block">
+          <ion-icon name="add" class="img-add-icon"></ion-icon>
+          <div class="img-input-wrap" [hidden]="!isShowImgUploader">
+              <form enctype="multipart/form-data" class="img-add-input" method="post">
+                  <input name="token" type="hidden">
+                  <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input">
+                  <input type="submit">
+              </form>
+          </div>
+      </span>
+    </div>
+
+    <ion-item class="no-padding-left">
+      <ion-textarea placeholder="分享下你对这里的评级和感受吧..." [(ngModel)]="description"></ion-textarea>
+    </ion-item>
   </div>
 
-  <ion-item class="no-padding-left">
-    <ion-textarea placeholder="分享下你对这里的评级和感受吧..." [(ngModel)]="description"></ion-textarea>
-  </ion-item>
+  <div class="content-add blog" *ngSwitchCase="'blog'">
+    <rich-text-add></rich-text-add>
+
+  </div>
 
   <ion-item class="no-padding-left">
     <ion-label>添加到我的地图集：</ion-label>

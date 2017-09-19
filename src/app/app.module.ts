@@ -14,6 +14,8 @@ import { JwtHelper, AuthConfig, AuthHttp } from "angular2-jwt";
 import { MyApp } from './app.component';
 // import { ProfilePageModule } from '../pages/profile/profile.module';
 import { AuthServiceProvider } from '../providers/auth/auth';
+import { FileTransfer } from '@ionic-native/file-transfer';
+
 
 // import { ComponentsModule } from '../components/components.module';
 // import { SearchLocModal } from '../components/search-loc/search-loc';
@@ -48,6 +50,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, stor
     SplashScreen,
     StatusBar,
     AuthServiceProvider,
+    FileTransfer,
     JwtHelper, {
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,

@@ -28,6 +28,7 @@ export class AddLocModal extends ModalContent {
     super(viewCtrl);
   }
   curLocation: any = {};
+  pageType = 'status';
   maps: Map[] = [];
   curMap: string;
   locationImgs: string[] = [];

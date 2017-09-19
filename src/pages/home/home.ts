@@ -67,11 +67,11 @@ export class HomePage implements OnInit {
       if (type == 'map') {
         curModal = this.modalCtrl.create('AddMapModal');
       } else {
-        // curModal = this.modalCtrl.create('SearchLocModal');
-        curModal = this.modalCtrl.create('RichTextAddPage',{
-          showHeader:true,
-          title:'添加地点描述'
-        });
+        curModal = this.modalCtrl.create('SearchLocModal');
+        // curModal = this.modalCtrl.create('RichTextAddPage',{
+        //   showHeader:true,
+        //   title:'添加地点描述'
+        // });
       }
       curModal.present();
 

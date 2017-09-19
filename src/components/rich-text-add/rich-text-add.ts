@@ -11,13 +11,13 @@ import { QiniuService } from '../../services/qiniu';
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
+// @IonicPage()
 @Component({
-  selector: 'page-rich-text-add',
+  selector: 'rich-text-add',
   templateUrl: 'rich-text-add.html',
   providers: [QiniuService]
 })
-export class RichTextAddPage {
+export class RichTextAdd {
 
 
   constructor(
@@ -99,30 +99,30 @@ export class RichTextAddPage {
   }
   openCamera(index) {
     //mock
-    // this.addContentObj({
-    //   type: 'img',
-    //   value: 'http://okyb0e40i.bkt.clouddn.com/FrJdSz1P_4kvFIYjvTc-VmgU1SPs'
-    // }, index);
-    // return;
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-
-    this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64:
-      this.qiniuService.nativeUpload(imageData).subscribe(res => {
-        this.addContentObj({
+    this.addContentObj({
       type: 'img',
-      value: res
-    },index);
-      });
-    }, (err) => {
-      // Handle error
-    });
+      value: 'http://okyb0e40i.bkt.clouddn.com/FrJdSz1P_4kvFIYjvTc-VmgU1SPs'
+    }, index);
+    return;
+    // const options: CameraOptions = {
+    //   quality: 100,
+    //   destinationType: this.camera.DestinationType.FILE_URI,
+    //   encodingType: this.camera.EncodingType.JPEG,
+    //   mediaType: this.camera.MediaType.PICTURE
+    // }
+
+    // this.camera.getPicture(options).then((imageData) => {
+    //   // imageData is either a base64 encoded string or a file URI
+    //   // If it's base64:
+    //   this.qiniuService.nativeUpload(imageData).subscribe(res => {
+    //     this.addContentObj({
+    //   type: 'img',
+    //   value: res
+    // },index);
+    //   });
+    // }, (err) => {
+    //   // Handle error
+    // });
 
   }
 

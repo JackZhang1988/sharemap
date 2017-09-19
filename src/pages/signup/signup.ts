@@ -90,6 +90,8 @@ export class SignupPage {
   }
 
   signup() {
+    // this.signStep = 1; //进入下一步
+
     this.submitAttempt = true;
     if (this.stepOneForm.valid) {
       console.log(this.stepOneForm.controls);

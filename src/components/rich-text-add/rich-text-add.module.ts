@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { ImagePicker } from '@ionic-native/image-picker';
-import { IonicPageModule } from 'ionic-angular';
-import { RichTextAddPage } from './rich-text-add';
+import { IonicModule } from 'ionic-angular';
+import { RichTextAdd } from './rich-text-add';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { Camera } from '@ionic-native/camera';
 import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   declarations: [
-    RichTextAddPage,
+    RichTextAdd,
   ],
   imports: [
     PipesModule,
-    IonicPageModule.forChild(RichTextAddPage),
+    IonicModule
   ],
-  providers: [ImagePicker, FileTransfer, Camera]
+  providers: [ImagePicker, FileTransfer, Camera],
+  exports:[RichTextAdd]
 })
-export class RichTextAddPageModule { }
+export class RichTextAddModule { }
