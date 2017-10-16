@@ -35,7 +35,8 @@ export class AddLocModal extends ModalContent {
   description: string;
   isShowImgUploader = true;
   selectPlaceData: any = this.navParams.data;
-  
+  showHeader = true;
+
   ngOnInit(): void {
     this.getMaps();
   }

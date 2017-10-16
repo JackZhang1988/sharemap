@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { IonicPage, ToastController, NavController, ViewController, NavParams, ActionSheetController } from 'ionic-angular';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -32,8 +32,10 @@ export class RichTextAdd {
   ) {
   }
   public title: string = this.navParams.get('title') || '';
-  public showHeader: any = this.navParams.get('showHeader');
+  // public showHeader: any = this.navParams.get('showHeader');
   public content = [];
+
+  @Input() showHeader: Boolean;
 
   dismiss() {
     this.viewCtrl.dismiss();
