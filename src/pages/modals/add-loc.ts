@@ -27,14 +27,13 @@ export class AddLocModal extends ModalContent {
   ) {
     super(viewCtrl);
   }
-  curLocation: any = {};
+  curLocation: any = this.navParams.data ? this.navParams.data.curSelectPlace : {};
   pageType = 'status';
   maps: Map[] = [];
   curMap: string;
   locationImgs: string[] = [];
   description: string;
   isShowImgUploader = true;
-  selectPlaceData: any = this.navParams.data;
   showHeader = true;
 
   ngOnInit(): void {
