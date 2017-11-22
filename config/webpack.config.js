@@ -1,7 +1,7 @@
 var path = require('path');
 var useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
 
-console.log('custom webpack run');
+// console.log('custom webpack run');
 
 module.exports = function () {
   useDefaultConfig.resolve.alias = {

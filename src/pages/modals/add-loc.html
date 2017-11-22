@@ -27,7 +27,7 @@
           <img class="prev-img" src="{{img | imagefilter:'thumbnail'}}">
         </li>
       </ul>
-      <ion-spinner [hidden]="!imgLoading"></ion-spinner>
+      <ion-spinner class="img-spinner" [hidden]="!imgLoading"></ion-spinner>
       <span class="img-add-block">
           <ion-icon name="add" class="img-add-icon"></ion-icon>
           <div class="img-input-wrap" [hidden]="!isShowImgUploader">
