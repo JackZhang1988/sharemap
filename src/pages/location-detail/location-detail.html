@@ -14,6 +14,21 @@
 
 
 <ion-content>
+  <ion-card *ngIf="locationInfo">
+    <ion-card-content>
+      <ion-card-title>{{locationInfo.locationInfo?.name}}</ion-card-title>
+      <div>
+        <ion-icon name="pin"></ion-icon> {{locationInfo.locationInfo?.district + locationInfo.locationInfo?.address}}
+      </div>
+      <p class="location-desc">
+        {{locationInfo.description}}
+      </p>
+    </ion-card-content>
+  </ion-card>
   <map-view [location]="lnglat" [viewType]="'location-view'"></map-view>
+  <ion-card>
+    <img src="{{img | imagefilter:'mural'  }}" alt="" *ngFor='let img of locationInfo.imgs' >
+  </ion-card>
 
+  <button>发表评论</button>
 </ion-content>

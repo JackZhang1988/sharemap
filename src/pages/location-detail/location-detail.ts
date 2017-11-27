@@ -17,7 +17,7 @@ export class LocationDetailPage {
   ) {
   }
 
-  public locationInfo: any = {};
+  public locationInfo?: any = {};
   public locationParams: any = this.navParams.data;
   public mapStaticImg: string;
   public lnglat: Number[];
