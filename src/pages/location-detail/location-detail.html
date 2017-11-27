@@ -7,12 +7,19 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>LocationDetail</ion-title>
+    <ion-title>地点详情</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-card (click)="changeView()">
+    <img src="{{mapStaticImg}}" alt="">
+    <ion-row>
+    <button ion-button icon-left clear>
+        <ion-icon name="map"></ion-icon>查看地图视图
+    </button>
+    </ion-row>
+  </ion-card>
 </ion-content>
