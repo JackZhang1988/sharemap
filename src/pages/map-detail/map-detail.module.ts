@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { MapDetailPage } from './map-detail';
 import { PipesModule } from '../../pipes/pipes.module';
-import { MapViewModule } from '../modals/map-view.module';
 import { LocationDetailPageModule } from '../location-detail/location-detail.module';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +11,7 @@ import { LocationDetailPageModule } from '../location-detail/location-detail.mod
   ],
   imports: [
     PipesModule,
-    MapViewModule,
+    ComponentsModule,
     LocationDetailPageModule,
     IonicPageModule.forChild(MapDetailPage),
   ],

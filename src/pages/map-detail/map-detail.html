@@ -32,14 +32,8 @@
         </p>
       </ion-card-content>
     </ion-card>
-    <ion-card (click)="changeView()">
-      <img src="{{mapStaticImg}}" alt="">
-      <ion-row>
-      <button ion-button icon-left clear>
-          <ion-icon name="map"></ion-icon>查看地图视图
-      </button>
-      </ion-row>
-    </ion-card>
+
+    <map-view [location]="mapLocations" [viewType]="'map-locations'" [viewTitle]="viewTitle"></map-view>
 
     <ion-card>
       <ion-list>

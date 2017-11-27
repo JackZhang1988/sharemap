@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{mapInfo.title}}</ion-title>
+    <ion-title>{{title}}</ion-title>
     <ion-buttons start>
       <button ion-button (click)="dismiss()">
         <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
@@ -22,7 +22,7 @@
       </div>
       <div class="map-intro">{{mapInfo.description}}</div>
     </div> -->
-    <ion-slides id="slideContainer" [pager]=true (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()">
+    <ion-slides *ngIf="type=='map-locations'" id="slideContainer" [pager]=true (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()">
       <ion-slide *ngFor='let item of mapLocations'>
         <button ion-item>
           <ion-thumbnail item-start>

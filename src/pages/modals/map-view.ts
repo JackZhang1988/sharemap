@@ -18,8 +18,9 @@ export class MapViewModal {
     }
     @ViewChild(Slides) slides: Slides;
 
+    public type: string = this.navParams.get('type');
+    public title: string = this.navParams.get('title');
     public mapInfo: any = this.navParams.get('mapInfo');
-    public mapData: any = this.navParams.get('mapData');
     public mapLocations: any[] = this.navParams.get('mapLocations');
     public markerList: any[] = [];
     private preMarker: any;
@@ -40,7 +41,9 @@ export class MapViewModal {
         this.gdService.initMap();
     }
     ngAfterViewInit() {
-        this.slides.width = window.screen.width * 0.8;
+        if (this.type == 'map-locations') {
+            this.slides.width = window.screen.width * 0.8;
+        }
     }
 
     dismiss() {

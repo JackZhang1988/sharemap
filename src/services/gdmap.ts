@@ -17,6 +17,10 @@ export class GDMap {
   curAddedMarker: any;
   geocoder: any;
 
+  getStaticMapKey(){
+    return STATIC_MAP_KEY;
+  }
+
   initMap(pos?: LngLat, container: string = 'mapContainer'): any {
     let self = this;
     self.gdMap = new AMap.Map(container, {
