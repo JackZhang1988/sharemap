@@ -69,4 +69,10 @@ export class MapDetailPage {
     });
     mapViewModal.present();
   }
+
+  goLocationDetail(locationData) {
+    this.navCtrl.push('LocationDetailPage', {
+      id: locationData._id
+    })
+  }
 }

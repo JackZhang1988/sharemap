@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { MapDetailPage } from './map-detail';
 import { PipesModule } from '../../pipes/pipes.module';
 import { MapViewModule } from '../modals/map-view.module';
+import { LocationDetailPageModule } from '../location-detail/location-detail.module';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { MapViewModule } from '../modals/map-view.module';
   imports: [
     PipesModule,
     MapViewModule,
+    LocationDetailPageModule,
     IonicPageModule.forChild(MapDetailPage),
   ],
   exports: [
