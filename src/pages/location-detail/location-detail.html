@@ -27,7 +27,7 @@
   </ion-card>
   <map-view [location]="lnglat" [viewType]="'location-view'"></map-view>
   <ion-card>
-    <img src="{{img | imagefilter:'mural'  }}" alt="" *ngFor='let img of locationInfo.imgs' >
+    <img src="{{img | imagefilter:'mural'  }}" alt="" *ngFor='let img of locationInfo.imgs' class="location-img">
   </ion-card>
 
   <button>发表评论</button>

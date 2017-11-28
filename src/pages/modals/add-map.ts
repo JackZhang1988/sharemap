@@ -38,7 +38,7 @@ export class AddMapModal extends ModalContent {
     }
     public submit() {
         console.log(this.coverImg, this.title, this.description);
-        this.storage.get('user').then(userID => {
+        this.storage.get('userId').then(userID => {
             this.apiService.addNewMap({
                 creater: userID,
                 coverImg: this.coverImg,

@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, ViewController, NavController } from 'ionic-angular';
+import { IonicPage, ViewController, ModalController } from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
 
 @IonicPage()
@@ -11,7 +11,7 @@ export class SearchLocModal {
   constructor(
     public viewCtrl: ViewController,
     public zone: NgZone,
-    public navCtrl: NavController,
+    public modalCtrl: ModalController,
     private gdService: GDMap
   ) { }
   tips: any[] = [];
@@ -102,11 +102,16 @@ export class SearchLocModal {
   }
 
   submit() {
-    // this.gdMap.addMarker([116.405467, 39.907761]);
-    // console.log(this.curSelectPlace);
-    // this.viewCtrl.dismiss(this.curSelectPlace);
-    this.navCtrl.push('AddLocModal', {
-      curSelectPlace: this.curSelectPlace
+    let curModal = this.modalCtrl.create('AddLocModal', {
+        curSelectPlace: this.curSelectPlace
+    })
+    curModal.onDidDismiss(data => {
+      console.log(data);
+      if(data){
+        //有数据返回表示添加成功
+        this.viewCtrl.dismiss();
+      }
     });
+    curModal.present();
   }
 }

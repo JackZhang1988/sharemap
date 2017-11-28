@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { IonicPage, ToastController, NavController, ViewController, NavParams, ActionSheetController } from 'ionic-angular';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera, CameraOptions } from '@ionic-native/camera';

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, AlertController, ViewController, NavParams, ModalController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, ViewController, NavParams, ToastController } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
 
 import { ApiService } from '../../services/api';
@@ -18,10 +18,10 @@ export class AddLocModal extends ModalContent {
   constructor(
     private storage: Storage,
     public viewCtrl: ViewController,
+    public navCtrl: NavController,
     public navParams: NavParams,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
-    public modalCtrl: ModalController,
     public qiniuService: QiniuService,
     private apiService: ApiService
   ) {
@@ -55,26 +55,43 @@ export class AddLocModal extends ModalContent {
       }
     });
   }
-  showMapModal() {
-    let curModal;
-    curModal = this.modalCtrl.create('SearchLocModal');
-    curModal.onDidDismiss(data => {
-      // console.log(data);
-      if (data) {
-        this.curLocation = data;
-      }
-    });
-    curModal.present();
-  }
+  // showMapModal() {
+  //   let curModal;
+  //   curModal = this.modalCtrl.create('SearchLocModal');
+  //   curModal.onDidDismiss(data => {
+  //     // console.log(data);
+  //     if (data) {
+  //       this.curLocation = data;
+  //     }
+  //   });
+  //   curModal.present();
+  // }
   submit() {
-    if (!this.curLocation.name) {
+    let requireField = [{
+      key: this.curLocation.name,
+      errorMsg: '缺少地理位置信息，请返回重新添加'
+    }, {
+      key: this.curMap,
+      errorMsg: '请选择要添加的地图集'
+    }, {
+      key: this.description,
+      errorMsg: '请填写位置描述'
+    }]
+    let errorMsg = ''
+    requireField.forEach((item, index) => {
+      if (!item.key) {
+        errorMsg = item.errorMsg;
+        return false;
+      }
+    })
+    if (errorMsg) {
       let alert = this.alertCtrl.create({
-        title: '您还没添加地理位置',
+        title: errorMsg,
         buttons: ['关闭']
       });
       alert.present();
     } else {
-      this.storage.get('user').then(userID => {
+      this.storage.get('userId').then(userID => {
         let lnglat = this.curLocation.location ? [this.curLocation.location.lng, this.curLocation.location.lat] : null;
         // delete this.curLocation.location;
         this.apiService.addNewLocation({
@@ -92,7 +109,12 @@ export class AddLocModal extends ModalContent {
               duration: 2000,
               position: 'middle'
             })
-            toast.onDidDismiss(() => this.viewCtrl.dismiss());
+            toast.onDidDismiss(() => {
+              this.navCtrl.push('LocationDetailPage', {
+                id: res.result._id
+              })
+              this.viewCtrl.dismiss(res.result);
+            });
             toast.present();
           } else {
             let toast = this.toastCtrl.create({
