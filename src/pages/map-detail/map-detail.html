@@ -37,13 +37,13 @@
 
     <ion-card>
       <ion-list>
-        <button ion-item *ngFor='let item of mapLocations'>
+        <button ion-item *ngFor='let item of mapLocations' (click)="goLocationDetail(item)">
           <ion-thumbnail item-start>
             <img class="" src="{{item.imgs[0] | imagefilter:'thumbnail' }}">
           </ion-thumbnail>
           <h2>{{item.description}}</h2>
           <p>{{item.locationInfo.address}}</p>
-          <button ion-button clear item-end (click)="goLocationDetail(item)">详情</button>
+          <button ion-button clear item-end>详情</button>
         </button>
       </ion-list>
     </ion-card>

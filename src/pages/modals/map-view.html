@@ -24,7 +24,7 @@
     </div> -->
     <ion-slides *ngIf="type=='map-locations'" id="slideContainer" [pager]=true (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()">
       <ion-slide *ngFor='let item of mapLocations'>
-        <button ion-item>
+        <button ion-item (click)="goLocationDetail(item)">
           <ion-thumbnail item-start>
             <img class="" src="{{item.imgs[0] | imagefilter:'thumbnail' }}">
           </ion-thumbnail>
