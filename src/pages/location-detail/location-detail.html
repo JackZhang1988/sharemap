@@ -29,6 +29,10 @@
   <ion-card>
     <img src="{{img | imagefilter:'mural'  }}" alt="" *ngFor='let img of locationInfo.imgs' class="location-img">
   </ion-card>
-
-  <button>发表评论</button>
+  <div class="comment-ctn">
+    <ion-item>
+      <ion-textarea #commentInput id="commentInput" rows="1" maxLength="500" (keyup)="resize()" [(ngModel)]="commentInputValue" placeholder="发表你的评论吧"></ion-textarea>
+      <button ion-button item-right>评论</button>
+    </ion-item>
+  </div>
 </ion-content>

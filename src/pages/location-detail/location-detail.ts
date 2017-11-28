@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiService } from '../../services/api';
 @IonicPage({
@@ -10,7 +10,7 @@ import { ApiService } from '../../services/api';
   providers: [ApiService],
 })
 export class LocationDetailPage {
-
+  @ViewChild('commentInput') commentInput: ElementRef;
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
     private apiService: ApiService
@@ -21,6 +21,7 @@ export class LocationDetailPage {
   public locationParams: any = this.navParams.data;
   public mapStaticImg: string;
   public lnglat: Number[];
+  commentInputValue:string;
 
   ionViewDidLoad() {
     console.log(this.navParams);
@@ -36,4 +37,10 @@ export class LocationDetailPage {
     })
   }
 
+  resize() {
+    var element = this.commentInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
+    var scrollHeight = element.scrollHeight;
+    element.style.height = scrollHeight + 'px';
+    this.commentInput['_elementRef'].nativeElement.style.height = (scrollHeight + 16) + 'px';
+  }
 }
