@@ -25,8 +25,12 @@ export class MapViewModal {
     public markerList: any[] = [];
     private preMarker: any;
     private curMarker: any;
-
+    
+    private randomMapId:string = 'mapContainer-'+(new Date()).getTime().toString(32);
+    
     ionViewDidLoad() {
+        this.gdService.initMap(this.randomMapId);
+        
         let markList = [];
         for (let item of this.mapLocations) {
             markList.push(item.lnglat);
@@ -38,7 +42,6 @@ export class MapViewModal {
         });
     }
     ngOnInit(): void {
-        this.gdService.initMap();
     }
     ngAfterViewInit() {
         if (this.type == 'map-locations') {
