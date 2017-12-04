@@ -26,6 +26,7 @@ export class MapViewModal {
     private preMarker: any;
     private curMarker: any;
     
+    //使用动态id，方式生成多个modal时id重复
     private randomMapId:string = 'mapContainer-'+(new Date()).getTime().toString(32);
     
     ionViewDidLoad() {
@@ -41,8 +42,7 @@ export class MapViewModal {
             this.gdService.highlightMarker(markerList[0]);
         });
     }
-    ngOnInit(): void {
-    }
+
     ngAfterViewInit() {
         if (this.type == 'map-locations') {
             this.slides.width = window.screen.width * 0.8;
