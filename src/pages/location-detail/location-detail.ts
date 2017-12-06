@@ -3,6 +3,7 @@ import { IonicPage, NavController, ToastController, NavParams } from 'ionic-angu
 import { ApiService } from '../../services/api';
 import { Storage } from "@ionic/storage";
 import { AuthServiceProvider } from '../../providers/auth/auth';
+import { Keyboard } from '@ionic-native/keyboard';
 
 @IonicPage({
   segment: '/location-detail/:id',
@@ -20,7 +21,8 @@ export class LocationDetailPage {
     public navParams: NavParams,
     private storage: Storage,
     private authService: AuthServiceProvider,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private keyboard: Keyboard
   ) {
   }
 
@@ -82,6 +84,8 @@ export class LocationDetailPage {
           pageType: 'location',
         }).subscribe(res => {
           if (res.status == 0) {
+            this.commentInputValue = '';
+            this.commentList.push(res.result);
             let toast = this.toastCtrl.create({
               message: '添加成功',
               duration: 2000,
