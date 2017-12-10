@@ -1,11 +1,41 @@
 page-map-detail {
-    #mapDetail {
-        position: absolute;
-        bottom: 20px;
-        height: 200px;
-        background: #fff;
-        overflow: hidden;
-        width: 100%;
-        padding: 5px 10px;
+  #mapDetail {
+    position: absolute;
+    bottom: 20px;
+    height: 200px;
+    background: #fff;
+    overflow: hidden;
+    width: 100%;
+    padding: 5px 10px;
+  }
+  .map-main-wrap {
+    position: relative;
+    .map-info {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
     }
+    .map-user-info {
+      flex: 4;
+      color: #fff;
+      .avatar {
+        padding-left: 16px;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+    }
+    .info-item {
+      background: linear-gradient(to top, rgba(54, 54, 54, 0.42), rgba(227, 227, 227, 0.12));
+      &.map-action {
+        flex: 2;
+        min-width: 130px;
+        .button {
+          color: #fff;
+          margin-top: 0;
+          margin-bottom: 0;
+          height: 100%;
+        }
+      }
+    }
+  }
 }
