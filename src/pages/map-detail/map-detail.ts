@@ -24,9 +24,11 @@ export class MapDetailPage {
   public mapParams: any = this.navParams.data;
   public mapLocations: any[] = [];
   public viewTitle: string;
+  private mapCommentCount: Number;
 
   ionViewDidLoad() {
-    this.getMapData()
+    this.getMapData();
+    this.getMapCommentCount();
   }
 
   getMapData(): void {
@@ -41,6 +43,15 @@ export class MapDetailPage {
     })
   }
 
+  getMapCommentCount() {
+    this.apiService.getMapCommentCount(this.mapParams.id).subscribe(res => {
+      if (res.status == 0) {
+        console.log(res);
+        this.mapCommentCount = res.result;
+      }
+    })
+  }
+
   goLocationDetail(locationData) {
     this.navCtrl.push('LocationDetailPage', {
       id: locationData._id
@@ -50,7 +61,7 @@ export class MapDetailPage {
   goMapComments(): void {
     this.navCtrl.push('MapCommentsPage', {
       mapId: this.mapParams.id,
-      creater: this.mapInfo.creater
+      creater: this.mapInfo.creater,
     })
   }
 }

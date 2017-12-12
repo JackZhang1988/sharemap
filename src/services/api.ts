@@ -89,6 +89,12 @@ export class ApiService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
+  getMapCommentCount(pageId: string): Observable<any> {
+    return this.http.get(this.serverHost + '/comment/count?pageId=' + pageId)
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }
+
   sendComment(commentData: any): Observable<any> {
     return this.authHttp.post(this.serverHost + '/comment', commentData)
       .map((res: Response) => res.json())
