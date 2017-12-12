@@ -4,6 +4,7 @@ import { MapDetailPage } from './map-detail';
 import { PipesModule } from '../../pipes/pipes.module';
 import { LocationDetailPageModule } from '../location-detail/location-detail.module';
 import { ComponentsModule } from '../../components/components.module';
+import { MapCommentsPageModule } from '../map-comments/map-comments.module';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { ComponentsModule } from '../../components/components.module';
     PipesModule,
     ComponentsModule,
     LocationDetailPageModule,
+    MapCommentsPageModule,
     IonicPageModule.forChild(MapDetailPage),
   ],
   exports: [

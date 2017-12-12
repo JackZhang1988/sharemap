@@ -1,0 +1,26 @@
+comment {
+  .comment-ctn {
+    padding-bottom: 20px;
+    .comment-input {
+      color: #4d4c4c;
+      overflow: hidden;
+    }
+    .comment-btn {
+      padding-right: 10px;
+    }
+    .comment-list {
+      margin: 0 0px;
+      padding-left: 15px;
+      .comment-item {
+        padding-left: 0;
+        &:first-child {
+          border-top: 0;
+        }
+        .comment-name {
+          color: #4d4c4c;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

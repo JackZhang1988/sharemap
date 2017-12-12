@@ -46,4 +46,11 @@ export class MapDetailPage {
       id: locationData._id
     })
   }
+
+  goMapComments(): void {
+    this.navCtrl.push('MapCommentsPage', {
+      mapId: this.mapParams.id,
+      creater: this.mapInfo.creater
+    })
+  }
 }

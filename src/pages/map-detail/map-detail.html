@@ -16,12 +16,12 @@
   <div id="listView" [hidden]="curView=='map'">
     <ion-card>
       <div class="map-main-wrap">
-        <img src="{{mapInfo.coverImg | imagefilter:'mural'}}" />
+        <img src="{{mapInfo.coverImg | imagefilter:'mural'}}" *ngIf="mapInfo.coverImg"/>
         <div class="img-wrap"></div>
         <ion-row class="map-info">
           <ion-item class="info-item map-user-info no-padding-left">
             <ion-avatar item-start class="avatar">
-              <img src="{{mapInfo.creater?.avatar | imagefilter:'avatar'}}">
+              <img src="{{mapInfo.creater?.avatar | imagefilter:'avatar'}}" *ngIf="mapInfo.creater?.avatar">
             </ion-avatar>
             <div>{{mapInfo.creater?.name}}</div>
           </ion-item>
@@ -30,7 +30,7 @@
               <ion-icon name="heart"></ion-icon>
               <div>12</div>
             </button>
-            <button ion-button icon-left clear small>
+            <button ion-button icon-left clear small (click)="goMapComments()">
               <ion-icon name="text"></ion-icon>
               <div>4</div>
             </button>

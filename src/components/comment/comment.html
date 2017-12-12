@@ -1,0 +1,22 @@
+<div class="comment-ctn">
+  <ion-item *ngIf="inputPosition == 'top'">
+    <ion-textarea #commentInput class="comment-input" rows="1" maxLength="500" (keydown)="resize($event)" [(ngModel)]="commentInputValue"
+      placeholder="发表你的评论吧"></ion-textarea>
+    <button ion-button item-right (click)="sendComment()" class="comment-btn">评论</button>
+  </ion-item>
+  <ion-list class="comment-list">
+    <ion-item class="comment-item" *ngFor="let comment of commentList" (click)="replyComment(commentInput, comment.fromUser)">
+      <ion-avatar item-start>
+        <img src="{{comment.fromUser.avatar | imagefilter:'avatar'}}">
+      </ion-avatar>
+      <div class="comment-name">{{comment.fromUser.name}}</div>
+      <p>
+        <span class="replay-name" *ngIf="comment.toUser">回复 {{comment.toUser?.name}} </span>{{comment.content}}</p>
+    </ion-item>
+  </ion-list>
+  <ion-item *ngIf="inputPosition == 'bottom'">
+    <ion-textarea #commentInput class="comment-input" rows="1" maxLength="500" (keydown)="resize($event)" [(ngModel)]="commentInputValue"
+      placeholder="发表你的评论吧"></ion-textarea>
+    <button ion-button item-right (click)="sendComment()" class="comment-btn">评论</button>
+  </ion-item>
+</div>

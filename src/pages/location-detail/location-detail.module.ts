@@ -3,6 +3,8 @@ import { IonicPageModule } from 'ionic-angular';
 import { ComponentsModule } from '../../components/components.module';
 import { LocationDetailPage } from './location-detail';
 import { PipesModule } from '../../pipes/pipes.module';
+import { CommentComponentModule } from '../../components/comment/comment.module';
+
 
 @NgModule({
   declarations: [
@@ -10,6 +12,7 @@ import { PipesModule } from '../../pipes/pipes.module';
   ],
   imports: [
     ComponentsModule,
+    CommentComponentModule,
     PipesModule,
     IonicPageModule.forChild(LocationDetailPage),
   ],
