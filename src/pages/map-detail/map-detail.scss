@@ -36,6 +36,12 @@ page-map-detail {
           height: 100%;
         }
       }
+      .icon {
+        &.active {
+          color: rgb(214, 96, 88);
+        }
+      }
     }
   }
 }
+

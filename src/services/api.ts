@@ -95,8 +95,20 @@ export class ApiService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
+  getMapLikeInfo(pageId: string): Observable<any> {
+    return this.http.get(this.serverHost + '/like/info?targetId=' + pageId)
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }
+
   sendComment(commentData: any): Observable<any> {
     return this.authHttp.post(this.serverHost + '/comment', commentData)
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }
+
+  sendLike(likeData: any): Observable<any> {
+    return this.authHttp.post(this.serverHost + '/like', likeData)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }

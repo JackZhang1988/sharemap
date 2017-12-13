@@ -16,7 +16,7 @@
   <div id="listView" [hidden]="curView=='map'">
     <ion-card>
       <div class="map-main-wrap">
-        <img src="{{mapInfo.coverImg | imagefilter:'mural'}}" *ngIf="mapInfo.coverImg"/>
+        <img src="{{mapInfo.coverImg | imagefilter:'mural'}}" *ngIf="mapInfo.coverImg" />
         <div class="img-wrap"></div>
         <ion-row class="map-info">
           <ion-item class="info-item map-user-info no-padding-left">
@@ -26,9 +26,9 @@
             <div>{{mapInfo.creater?.name}}</div>
           </ion-item>
           <div class="info-item map-action">
-            <button ion-button icon-left clear small>
-              <ion-icon name="heart"></ion-icon>
-              <div>12</div>
+            <button ion-button icon-left clear small (click)="sendLike()" class="like-btn">
+              <ion-icon name="heart" [ngClass]="{'active':hasLiked}"></ion-icon>
+              <div *ngIf="likeCount!=0">{{likeCount}}</div>
             </button>
             <button ion-button icon-left clear small (click)="goMapComments()">
               <ion-icon name="text"></ion-icon>

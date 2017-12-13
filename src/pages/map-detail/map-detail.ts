@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { ApiService } from '../../services/api';
+import { Storage } from "@ionic/storage";
 
 @IonicPage({
   segment: '/map-detail/:id',
@@ -15,6 +16,7 @@ export class MapDetailPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    private storage: Storage,
     private apiService: ApiService,
   ) {
   }
@@ -25,10 +27,13 @@ export class MapDetailPage {
   public mapLocations: any[] = [];
   public viewTitle: string;
   private mapCommentCount: Number;
+  private likeCount = 0;
+  public hasLiked = false;
 
   ionViewDidLoad() {
     this.getMapData();
     this.getMapCommentCount();
+    this.getMapLikeInfo();
   }
 
   getMapData(): void {
@@ -52,6 +57,16 @@ export class MapDetailPage {
     })
   }
 
+  getMapLikeInfo() {
+    this.apiService.getMapLikeInfo(this.mapParams.id).subscribe(res => {
+      if (res.status == 0) {
+        console.log(res);
+        this.likeCount = res.result.count;
+        this.hasLiked = res.result.hasLiked;
+      }
+    })
+  }
+
   goLocationDetail(locationData) {
     this.navCtrl.push('LocationDetailPage', {
       id: locationData._id
@@ -62,6 +77,27 @@ export class MapDetailPage {
     this.navCtrl.push('MapCommentsPage', {
       mapId: this.mapParams.id,
       creater: this.mapInfo.creater,
+    })
+  }
+
+  sendLike(): void {
+    this.storage.get('userId').then(userID => {
+      this.apiService.sendLike({
+        targetId: this.mapParams.id,
+        targetType: 'map',
+        creater: userID,
+        hasLiked: this.hasLiked
+      }).subscribe(res => {
+        if (res.status == 0) {
+          this.hasLiked = res.result.hasLiked;
+          if(res.result.hasLiked){
+            this.likeCount++;
+          }else{
+            this.likeCount--;
+          }
+        }
+      })
+
     })
   }
 }
