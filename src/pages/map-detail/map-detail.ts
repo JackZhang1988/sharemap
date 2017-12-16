@@ -58,12 +58,14 @@ export class MapDetailPage {
   }
 
   getMapLikeInfo() {
-    this.apiService.getMapLikeInfo(this.mapParams.id).subscribe(res => {
-      if (res.status == 0) {
-        console.log(res);
-        this.likeCount = res.result.count;
-        this.hasLiked = res.result.hasLiked;
-      }
+    this.storage.get('userId').then(userID => {
+      this.apiService.getMapLikeInfo(this.mapParams.id, userID).subscribe(res => {
+        if (res.status == 0) {
+          console.log(res);
+          this.likeCount = res.result.count;
+          this.hasLiked = res.result.hasLiked;
+        }
+      })
     })
   }
 
@@ -82,21 +84,29 @@ export class MapDetailPage {
 
   sendLike(): void {
     this.storage.get('userId').then(userID => {
-      this.apiService.sendLike({
-        targetId: this.mapParams.id,
-        targetType: 'map',
-        creater: userID,
-        hasLiked: this.hasLiked
-      }).subscribe(res => {
-        if (res.status == 0) {
-          this.hasLiked = res.result.hasLiked;
-          if(res.result.hasLiked){
-            this.likeCount++;
-          }else{
-            this.likeCount--;
+      if (userID) {
+        this.apiService.sendLike({
+          targetId: this.mapParams.id,
+          targetType: 'map',
+          creater: userID,
+          hasLiked: this.hasLiked
+        }).subscribe(res => {
+          if (res.status == 0) {
+            this.hasLiked = res.result.hasLiked;
+            if (res.result.hasLiked) {
+              this.likeCount++;
+            } else {
+              this.likeCount--;
+            }
           }
-        }
-      })
+        })
+      } else {
+        this.navCtrl.push('LoginPage', {
+          callback: () => {
+            this.navCtrl.push('ProfilePage')
+          }
+        });
+      }
 
     })
   }

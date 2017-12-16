@@ -95,8 +95,8 @@ export class ApiService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
-  getMapLikeInfo(pageId: string): Observable<any> {
-    return this.http.get(this.serverHost + '/like/info?targetId=' + pageId)
+  getMapLikeInfo(pageId: string, creater: string): Observable<any> {
+    return this.http.get(this.serverHost + '/like/info?targetId=' + pageId + '&creater=' + creater)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
