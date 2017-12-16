@@ -1,10 +1,21 @@
 <div class="comment-ctn">
-  <ion-item *ngIf="inputPosition == 'top'">
+  <!-- <ion-item *ngIf="inputPosition == 'top'">
     <ion-textarea #commentInput class="comment-input" rows="1" maxLength="500" (keydown)="resize($event)" [(ngModel)]="commentInputValue"
       placeholder="发表你的评论吧"></ion-textarea>
-    <button ion-button item-right (click)="sendComment()" class="comment-btn">评论</button>
-  </ion-item>
+    <button ion-button icon-left item-right (click)="sendLike()" class="btn like-btn">
+      <ion-icon name="heart"></ion-icon>{{hasLiked?'取消点赞':'点赞'}}
+    </button>
+    <button ion-button icon-left item-right (click)="sendComment()" class="btn comment-btn">
+      <ion-icon name="text"></ion-icon>评论</button>
+  </ion-item> -->
+  <div class="like-list" *ngIf="likeList?.length">
+    <ion-icon name="ios-heart-outline" class="left-icon"></ion-icon>
+    <ion-avatar item-start *ngFor="let likeItem of likeList" class="like-item">
+      <img src="{{likeItem.creater.avatar | imagefilter:'avatar'}}" class="like-avatar">
+    </ion-avatar>
+  </div>
   <ion-list class="comment-list">
+    <ion-icon name="ios-text-outline" class="left-icon"></ion-icon>
     <ion-item class="comment-item" *ngFor="let comment of commentList" (click)="replyComment(commentInput, comment.fromUser)">
       <ion-avatar item-start>
         <img src="{{comment.fromUser.avatar | imagefilter:'avatar'}}">
@@ -14,9 +25,13 @@
         <span class="replay-name" *ngIf="comment.toUser">回复 {{comment.toUser?.name}} </span>{{comment.content}}</p>
     </ion-item>
   </ion-list>
-  <ion-item *ngIf="inputPosition == 'bottom'">
+  <ion-item>
     <ion-textarea #commentInput class="comment-input" rows="1" maxLength="500" (keydown)="resize($event)" [(ngModel)]="commentInputValue"
       placeholder="发表你的评论吧"></ion-textarea>
-    <button ion-button item-right (click)="sendComment()" class="comment-btn">评论</button>
+    <button ion-button icon-left item-right (click)="sendLike()" class="btn like-btn">
+      <ion-icon name="ios-heart-outline"></ion-icon>{{hasLiked?'取消点赞':'点赞'}}
+    </button>
+    <button ion-button icon-left item-right (click)="sendComment()" class="btn comment-btn">
+      <ion-icon name="ios-text-outline"></ion-icon>评论</button>
   </ion-item>
 </div>

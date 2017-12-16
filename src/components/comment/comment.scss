@@ -1,16 +1,27 @@
 comment {
+  .btn {
+    position: relative;
+    top: 7px;
+  }
   .comment-ctn {
     padding-bottom: 20px;
     .comment-input {
       color: #4d4c4c;
       overflow: hidden;
     }
+    .like-btn {
+      margin-right: 0;
+    }
     .comment-btn {
       padding-right: 10px;
     }
     .comment-list {
       margin: 0 0px;
-      padding-left: 15px;
+      padding: 0 30px;
+      position: relative;
+      .left-icon {
+        line-height: 55px;
+      }
       .comment-item {
         padding-left: 0;
         &:first-child {
@@ -20,6 +31,32 @@ comment {
           color: #4d4c4c;
           font-size: 14px;
         }
+      }
+    }
+  }
+  .left-icon {
+    position: absolute;
+    left: 5px;
+    display: block;
+    font-size: 20px;
+    line-height: 42px;
+  }
+  .like-list {
+    padding: 0 30px;
+    position: relative;
+    background-color: rgba(221, 221, 221, 0.64);
+    .like-item {
+      display: inline-block;
+      margin-right: 5px;
+      position: relative;
+      top: 3px;
+      &:last-child {
+        margin-right: 0;
+      }
+      .like-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 100%;
       }
     }
   }

@@ -31,13 +31,17 @@ export class CommentComponent {
   public commentList: any[];
   public commentToUser: any;
   private replyInputValue: string = '';
+  private hasLiked: boolean = false;
+  public likeList: any[];
 
   @Input() pageId: string;
   @Input() toUser: any;
+  @Input() from: string;  //引用来源，map|location
   @Input() inputPosition: string = 'top';
 
   ngOnInit() {
     this.getComments();
+    this.getLikeInfo();
   }
 
   resize($event) {
@@ -54,6 +58,18 @@ export class CommentComponent {
     }
     // this.commentInput['_elementRef'].nativeElement.style.height = (scrollHeight + 16) + 'px';
   }
+  getLikeInfo() {
+    this.storage.get('userId').then(userID => {
+      this.apiService.getLikeInfo(this.pageId, userID).subscribe(res => {
+        if (res.status == 0) {
+          console.log(res);
+          this.hasLiked = res.result.hasLiked;
+          this.likeList = res.result.likeList;
+        }
+      })
+    })
+  }
+
   getComments() {
     this.apiService.getComments(this.pageId).subscribe(res => {
       if (res.status == 0) {
@@ -127,5 +143,33 @@ export class CommentComponent {
     this.commentInputValue = '回复 ' + toUser.name + '：'
     this.replyInputValue = this.commentInputValue;
     // this.keyboard.show();
+  }
+  sendLike(): void {
+    this.storage.get('userId').then(userID => {
+      if (userID) {
+        this.apiService.sendLike({
+          targetId: this.pageId,
+          targetType: this.from,
+          creater: userID,
+          hasLiked: this.hasLiked
+        }).subscribe(res => {
+          if (res.status == 0) {
+            this.hasLiked = res.result.hasLiked;
+            if (this.hasLiked) {
+              this.likeList.push(res.result.like);
+            } else {
+              this.likeList = this.likeList.filter(item => item.creater._id != userID);
+            }
+          }
+        })
+      } else {
+        this.navCtrl.push('LoginPage', {
+          callback: () => {
+            this.navCtrl.push('ProfilePage')
+          }
+        });
+      }
+
+    })
   }
 }

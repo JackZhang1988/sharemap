@@ -59,7 +59,7 @@ export class MapDetailPage {
 
   getMapLikeInfo() {
     this.storage.get('userId').then(userID => {
-      this.apiService.getMapLikeInfo(this.mapParams.id, userID).subscribe(res => {
+      this.apiService.getLikeInfo(this.mapParams.id, userID).subscribe(res => {
         if (res.status == 0) {
           console.log(res);
           this.likeCount = res.result.count;

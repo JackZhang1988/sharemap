@@ -33,5 +33,5 @@
   <ion-card>
     <img src="{{img | imagefilter:'mural'  }}" alt="" *ngFor='let img of locationInfo.imgs' class="location-img">
   </ion-card>
-  <comment [pageId]="locationParams.id" [toUser]="locationInfo.creater" [inputPosition]="'top'"></comment>
+  <comment [pageId]="locationParams.id" [toUser]="locationInfo.creater" [inputPosition]="'top'" [from]="'location'"></comment>
 </ion-content>
