@@ -52,14 +52,7 @@ export class HomePage implements OnInit {
       id: mapData._id
     })
   }
-  // saveMap(data) {
-  //   //todo: save to db
-  //   console.log(data)
-  // }
-  // saveLoc(data) {
-  //   //todo: save to db
-  //   console.log(data);
-  // }
+
   openAddModal(type, fab: FabContainer) {
     fab.close();
     this.authService.checkLogin().then(token => {
@@ -68,10 +61,6 @@ export class HomePage implements OnInit {
         curModal = this.modalCtrl.create('AddMapModal');
       } else {
         curModal = this.modalCtrl.create('SearchLocModal');
-        // curModal = this.modalCtrl.create('RichTextAddPage',{
-        //   showHeader:true,
-        //   title:'添加地点描述'
-        // });
       }
       curModal.present();
 

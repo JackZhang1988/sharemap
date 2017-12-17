@@ -13,6 +13,7 @@ export interface LngLat {
 }
 
 export interface Map {
+  id: string,
   creater: string;
   coverImg: string;
   title: string;

@@ -85,7 +85,7 @@ export class CommentComponent {
           let toast = this.toastCtrl.create({
             message: '不能给自己留言',
             duration: 2000,
-            position: 'middle'
+            position: 'bottom'
           })
           toast.present();
           return;
@@ -95,7 +95,7 @@ export class CommentComponent {
           let toast = this.toastCtrl.create({
             message: '评论不能为空',
             duration: 2000,
-            position: 'middle'
+            position: 'bottom'
           })
           toast.present();
           return;
@@ -113,14 +113,14 @@ export class CommentComponent {
             let toast = this.toastCtrl.create({
               message: '添加成功',
               duration: 2000,
-              position: 'middle'
+              position: 'bottom'
             })
             toast.present();
           } else {
             let toast = this.toastCtrl.create({
               message: '添加失败',
               duration: 2000,
-              position: 'middle'
+              position: 'bottom'
             })
             toast.present();
           }

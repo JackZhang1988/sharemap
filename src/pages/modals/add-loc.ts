@@ -107,7 +107,7 @@ export class AddLocModal extends ModalContent {
             let toast = this.toastCtrl.create({
               message: '添加成功',
               duration: 2000,
-              position: 'middle'
+              position: 'bottom'
             })
             toast.onDidDismiss(() => {
               this.navCtrl.push('LocationDetailPage', {
@@ -120,7 +120,7 @@ export class AddLocModal extends ModalContent {
             let toast = this.toastCtrl.create({
               message: '添加失败',
               duration: 2000,
-              position: 'middle'
+              position: 'bottom'
             })
             toast.present();
           }

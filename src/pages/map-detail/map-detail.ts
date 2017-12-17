@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { IonicPage, NavController, ModalController, NavParams, Slides, AlertController, ToastController } from 'ionic-angular';
 import { ApiService } from '../../services/api';
 import { Storage } from "@ionic/storage";
 
@@ -16,8 +16,11 @@ export class MapDetailPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    public modalCtrl: ModalController,
     private storage: Storage,
     private apiService: ApiService,
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
   ) {
   }
   @ViewChild(Slides) slides: Slides;
@@ -29,6 +32,7 @@ export class MapDetailPage {
   private mapCommentCount: Number;
   private likeCount = 0;
   public hasLiked = false;
+  private isOwner = false;
 
   ionViewDidLoad() {
     this.getMapData();
@@ -44,6 +48,9 @@ export class MapDetailPage {
         this.mapInfo = res.result.map;
         this.mapLocations = res.result.locations;
         this.viewTitle = this.mapInfo.title;
+        this.storage.get('userId').then(userID => {
+          this.isOwner = userID == res.result.map.creater._id;
+        })
       }
     })
   }
@@ -80,6 +87,45 @@ export class MapDetailPage {
       mapId: this.mapParams.id,
       creater: this.mapInfo.creater,
     })
+  }
+  editMap(): void {
+    let addMapModal = this.modalCtrl.create('AddMapModal', {
+      mapInfo: this.mapInfo
+    });
+    addMapModal.present();
+  }
+
+  delMap(): void {
+    let confirm = this.alertCtrl.create({
+      title: '确定要删除此地图集吗?',
+      message: '删除后不可恢复',
+      buttons: [
+        {
+          text: '取消',
+          handler: () => {
+          }
+        },
+        {
+          text: '确定',
+          handler: () => {
+            this.apiService.delMap(this.mapParams.id).subscribe(res => {
+              if (res.status == 0) {
+                let toast = this.toastCtrl.create({
+                  message: '删除成功',
+                  duration: 1500,
+                  position: 'bottom'
+                })
+                toast.onDidDismiss(() => {
+                  this.navCtrl.pop();
+                });
+                toast.present();
+              }
+            })
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   sendLike(): void {

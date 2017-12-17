@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, ToastController } from 'ionic-angular';
+import { IonicPage, ViewController, ToastController, NavParams } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
 
 import { ApiService } from '../../services/api';
@@ -16,6 +16,7 @@ export class AddMapModal extends ModalContent {
         public viewCtrl: ViewController,
         public toastCtrl: ToastController,
         private storage: Storage,
+        public navParams: NavParams,
         public qiniuService: QiniuService,
         private apiService: ApiService
     ) {
@@ -25,6 +26,18 @@ export class AddMapModal extends ModalContent {
     public coverImg: string;
     public title: string;
     public description: string;
+    public mapInfo: any = this.navParams.get('mapInfo');
+    private isEdit: boolean = false;
+
+    ionViewDidLoad() {
+        if (this.mapInfo) {
+            this.isEdit = true;
+            this.coverImg = this.mapInfo.coverImg;
+            this.title = this.mapInfo.title;
+            this.coverImg = this.mapInfo.coverImg;
+            this.description = this.mapInfo.description;
+        }
+    }
 
     public imgChange(event) {
         this.imgLoading = true;
@@ -43,22 +56,23 @@ export class AddMapModal extends ModalContent {
                 creater: userID,
                 coverImg: this.coverImg,
                 title: this.title,
-                description: this.description
+                description: this.description,
+                id: this.mapInfo._id
             }).subscribe(res => {
                 console.log(res);
                 if (res.status == 0) {
                     let toast = this.toastCtrl.create({
-                        message: '添加成功',
+                        message: '保存成功',
                         duration: 2000,
-                        position: 'middle'
+                        position: 'bottom'
                     })
                     toast.onDidDismiss(() => this.viewCtrl.dismiss());
                     toast.present();
                 } else {
                     let toast = this.toastCtrl.create({
-                        message: '添加失败',
+                        message: '保存失败',
                         duration: 2000,
-                        position: 'middle'
+                        position: 'bottom'
                     })
                     toast.present();
                 }
