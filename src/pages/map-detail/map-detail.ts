@@ -129,10 +129,10 @@ export class MapDetailPage {
   }
 
   addLocation():void {
-    // let addLocationModal = this.modalCtrl.create('addLocationModal', {
-    //   mapInfo: this.mapInfo
-    // });
-    // addLocationModal.present();
+    let addLocationModal = this.modalCtrl.create('SearchLocModal', {
+      mapInfo: this.mapInfo
+    });
+    addLocationModal.present();
   }
 
   sendLike(): void {

@@ -30,21 +30,27 @@ export class AddLocModal extends ModalContent {
   curLocation: any = this.navParams.data ? this.navParams.data.curSelectPlace : {};
   pageType = 'status';
   maps: Map[] = [];
-  curMap: string;
+  curSelectedMapId: string;
   locationImgs: string[] = [];
   description: string;
   isShowImgUploader = true;
   showHeader = true;
+  private mapInfo: any = this.navParams.get('mapInfo');
 
   ngOnInit(): void {
     this.getMaps();
   }
   getMaps(): void {
-    this.apiService.getMaps().subscribe(res => {
-      if (res.status == 0) {
-        this.maps = res.result;
-      }
-    });
+    this.storage.get('userId').then(userID => {
+      this.apiService.getUserMaps(userID).subscribe(res => {
+        if (res.status == 0) {
+          this.maps = res.result;
+          if (this.mapInfo) {
+            this.curSelectedMapId = this.mapInfo._id;
+          }
+        }
+      });
+    })
   }
   imgChange(event) {
     this.imgLoading = true;
@@ -71,7 +77,7 @@ export class AddLocModal extends ModalContent {
       key: this.curLocation.name,
       errorMsg: '缺少地理位置信息，请返回重新添加'
     }, {
-      key: this.curMap,
+      key: this.curSelectedMapId,
       errorMsg: '请选择要添加的地图集'
     }, {
       key: this.description,
@@ -98,7 +104,7 @@ export class AddLocModal extends ModalContent {
           creater: userID,
           locationInfo: this.curLocation,
           lnglat: lnglat,
-          mapId: this.curMap,
+          mapId: this.curSelectedMapId,
           imgs: this.locationImgs,
           description: this.description
         }).subscribe((res) => {

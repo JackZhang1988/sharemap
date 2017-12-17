@@ -34,4 +34,8 @@
     <img src="{{img | imagefilter:'mural'  }}" alt="" *ngFor='let img of locationInfo.imgs' class="location-img">
   </ion-card>
   <comment [pageId]="locationParams.id" [toUser]="locationInfo.creater" [inputPosition]="'top'" [from]="'location'"></comment>
+  <div class="edit-btn-action" *ngIf="isOwner">
+    <button class="edit-btn-item" ion-button color="secondary" (click)="editLocation()">编辑地点</button>
+    <button class="edit-btn-item" ion-button color="danger" (click)="delLocation()">删除地点</button>
+  </div>
 </ion-content>

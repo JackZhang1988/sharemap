@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, ViewController, ModalController, NavParams } from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
 
 @IonicPage()
@@ -12,6 +12,7 @@ export class SearchLocModal {
     public viewCtrl: ViewController,
     public zone: NgZone,
     public modalCtrl: ModalController,
+    public navParams: NavParams,
     private gdService: GDMap
   ) { }
   tips: any[] = [];
@@ -22,6 +23,7 @@ export class SearchLocModal {
   hasInitDrag = false;
   loading = true;
   loadingText = '正在定位中...';
+  private mapInfo: any = this.navParams.get('mapInfo');
 
   dismiss() {
     this.viewCtrl.dismiss();
@@ -103,11 +105,12 @@ export class SearchLocModal {
 
   submit() {
     let curModal = this.modalCtrl.create('AddLocModal', {
-        curSelectPlace: this.curSelectPlace
+      curSelectPlace: this.curSelectPlace,
+      mapInfo: this.mapInfo
     })
     curModal.onDidDismiss(data => {
       console.log(data);
-      if(data){
+      if (data) {
         //有数据返回表示添加成功
         this.viewCtrl.dismiss();
       }

@@ -31,7 +31,7 @@ export class MapListPage {
     this.storage.get('userId').then(userId => {
       this.apiService.getUserMaps(userId).subscribe(res => {
         if (res.status == 0) {
-          this.maps = res.result.maps;
+          this.maps = res.result;
         }
       })
     })

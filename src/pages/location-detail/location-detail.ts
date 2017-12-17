@@ -26,6 +26,7 @@ export class LocationDetailPage {
   public locationParams: any = this.navParams.data;
   public mapStaticImg: string;
   public lnglat: Number[];
+  private isOwner = false;
 
   ionViewDidLoad() {
     console.log(this.navParams);
