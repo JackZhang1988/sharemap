@@ -54,6 +54,12 @@ export class ApiService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
+  delLocation(mapId: string): Observable<any> {
+    return this.authHttp.post(this.serverHost + '/map/delLocation', { id: mapId })
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }
+
   signup(userInfo: any): Observable<any> {
     return this.http.post(this.serverHost + '/user/signup', userInfo)
       .map((res: Response) => res.json())

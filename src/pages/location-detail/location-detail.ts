@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, ToastController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, NavParams, AlertController } from 'ionic-angular';
 import { ApiService } from '../../services/api';
+import { Storage } from "@ionic/storage";
 // import { Keyboard } from '@ionic-native/keyboard';
 
 @IonicPage({
@@ -16,6 +17,8 @@ export class LocationDetailPage {
   constructor(
     public navCtrl: NavController,
     public toastCtrl: ToastController,
+    private alertCtrl: AlertController,
+    private storage: Storage,
     public navParams: NavParams,
     private apiService: ApiService,
     // private keyboard: Keyboard
@@ -38,7 +41,46 @@ export class LocationDetailPage {
         console.log(res);
         this.locationInfo = res.result;
         this.lnglat = res.result.lnglat;
+        this.storage.get('userId').then(userID => {
+          this.isOwner = userID == res.result.creater._id;
+        })
       }
     })
+  }
+
+  editLocation() {
+
+  }
+  delLocation() {
+    let confirm = this.alertCtrl.create({
+      title: '确定要删除此地点吗?',
+      message: '删除后不可恢复',
+      buttons: [
+        {
+          text: '取消',
+          handler: () => {
+          }
+        },
+        {
+          text: '确定',
+          handler: () => {
+            this.apiService.delLocation(this.locationParams.id).subscribe(res => {
+              if (res.status == 0) {
+                let toast = this.toastCtrl.create({
+                  message: '删除成功',
+                  duration: 1500,
+                  position: 'bottom'
+                })
+                toast.onDidDismiss(() => {
+                  this.navCtrl.pop();
+                });
+                toast.present();
+              }
+            })
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 }
