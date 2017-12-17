@@ -12,7 +12,7 @@
 </ion-header>
 <ion-content>
   <search-tips class="search-tips" [curTips]="tips" [isShowTipSelecter]="isShowTipSelecter" (tipSelected)="handleTipSelect($event)"></search-tips>
-  <div id="mapContainer" class="item">
+  <div id="mapContainer" class="item map-container">
   </div>
   <ion-item *ngIf="loading">{{loadingText}}</ion-item>
   <ion-item *ngIf="curSelectPlace">{{curSelectPlace.name}}</ion-item>

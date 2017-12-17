@@ -48,7 +48,7 @@
 
     </ion-card>
 
-    <map-view [location]="mapLocations" [viewType]="'map-locations'" [viewTitle]="viewTitle"></map-view>
+    <map-view *ngIf="mapLocations.length" [location]="mapLocations" [viewType]="'map-locations'" [viewTitle]="viewTitle"></map-view>
 
     <ion-card>
       <ion-list>

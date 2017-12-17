@@ -128,6 +128,13 @@ export class MapDetailPage {
     confirm.present();
   }
 
+  addLocation():void {
+    // let addLocationModal = this.modalCtrl.create('addLocationModal', {
+    //   mapInfo: this.mapInfo
+    // });
+    // addLocationModal.present();
+  }
+
   sendLike(): void {
     this.storage.get('userId').then(userID => {
       if (userID) {
