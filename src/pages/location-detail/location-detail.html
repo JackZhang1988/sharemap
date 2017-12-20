@@ -18,21 +18,36 @@
 
 
 <ion-content>
-  <ion-card *ngIf="locationInfo">
-    <ion-card-content>
+  <ion-card class="imgs-info">
+    <ion-item class="user-item">
+      <h2 class="user-name">{{locationInfo.creater?.name}}</h2>
+      <p class="location-desc">
+        {{locationInfo.description}}
+      </p>
+      <ion-avatar item-start class="user-avatar">
+        <img src="{{locationInfo.creater?.avatar | imagefilter:'avatar'}}" *ngIf="locationInfo.creater?.avatar">
+      </ion-avatar>
+    </ion-item>
+    <div class="location-img-list">
+      <div class="img-wrapper" *ngFor='let img of locationInfo.imgs'>
+        <div class="location-img" [style.backgroundImage]="'url('+ (img|imagefilter:'avatar') +')'">
+        </div>
+      </div>
+    </div>
+    <div class="date-info">
+      <ion-icon name="time"></ion-icon>
+      {{locationInfo.addDate| date: 'dd-MM'}}
+    </div>
+  </ion-card>
+  <map-view [location]="lnglat" [viewType]="'location-view'">
+    <div card-header *ngIf="locationInfo">
       <ion-card-title>{{locationInfo.locationInfo?.name}}</ion-card-title>
       <div>
         <ion-icon name="pin"></ion-icon> {{locationInfo.locationInfo?.district + locationInfo.locationInfo?.address}}
       </div>
-      <p class="location-desc">
-        {{locationInfo.description}}
-      </p>
-    </ion-card-content>
-  </ion-card>
-  <map-view [location]="lnglat" [viewType]="'location-view'"></map-view>
-  <ion-card>
-    <img src="{{img | imagefilter:'mural'  }}" alt="" *ngFor='let img of locationInfo.imgs' class="location-img">
-  </ion-card>
+
+    </div>
+  </map-view>
   <comment [pageId]="locationParams.id" [toUser]="locationInfo.creater" [inputPosition]="'top'" [from]="'location'"></comment>
   <div class="edit-btn-action" *ngIf="isOwner">
     <button class="edit-btn-item" ion-button color="secondary" (click)="editLocation()">编辑地点</button>

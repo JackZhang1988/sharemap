@@ -1,5 +1,7 @@
 <ion-card (click)="changeView()" *ngIf="location">
-
+  <ion-card-header>
+    <ng-content select="[card-header]"></ng-content>
+  </ion-card-header>
   <img src="{{mapStaticImg}}" alt="">
   <ion-row>
     <button ion-button icon-left clear>
