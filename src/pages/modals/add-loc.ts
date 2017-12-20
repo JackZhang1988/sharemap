@@ -36,9 +36,16 @@ export class AddLocModal extends ModalContent {
   isShowImgUploader = true;
   showHeader = true;
   private mapInfo: any = this.navParams.get('mapInfo');
+  private locationInfo: any = this.navParams.get('locationInfo');
 
   ngOnInit(): void {
     this.getMaps();
+    if (this.locationInfo) {
+      //编辑地点
+      this.locationImgs = this.locationInfo.imgs;
+      this.description = this.locationInfo.description;
+      this.curLocation = this.locationInfo.locationInfo;
+    }
   }
   getMaps(): void {
     this.storage.get('userId').then(userID => {
@@ -46,6 +53,7 @@ export class AddLocModal extends ModalContent {
         if (res.status == 0) {
           this.maps = res.result;
           if (this.mapInfo) {
+            //在地图集中添加地点
             this.curSelectedMapId = this.mapInfo._id;
           }
         }
@@ -98,6 +106,35 @@ export class AddLocModal extends ModalContent {
       alert.present();
     } else {
       this.storage.get('userId').then(userID => {
+        if (this.locationInfo) {
+          //编辑地点
+          this.apiService.updateLocation({
+            id: this.locationInfo._id,
+            imgs: this.locationImgs,
+            description: this.description
+          }).subscribe((res) => {
+            console.log(res);
+            if (res.status == 0) {
+              let toast = this.toastCtrl.create({
+                message: '更新成功',
+                duration: 1500,
+                position: 'bottom'
+              })
+              toast.onDidDismiss(() => {
+                this.navCtrl.pop();
+              });
+              toast.present();
+            } else {
+              let toast = this.toastCtrl.create({
+                message: '更新失败',
+                duration: 1500,
+                position: 'bottom'
+              })
+              toast.present();
+            }
+          })
+          return;
+        }
         let lnglat = this.curLocation.location ? [this.curLocation.location.lng, this.curLocation.location.lat] : null;
         // delete this.curLocation.location;
         this.apiService.addNewLocation({

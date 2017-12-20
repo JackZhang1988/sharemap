@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, ToastController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { ApiService } from '../../services/api';
 import { Storage } from "@ionic/storage";
 // import { Keyboard } from '@ionic-native/keyboard';
@@ -18,6 +18,7 @@ export class LocationDetailPage {
     public navCtrl: NavController,
     public toastCtrl: ToastController,
     private alertCtrl: AlertController,
+    public modalCtrl: ModalController,
     private storage: Storage,
     public navParams: NavParams,
     private apiService: ApiService,
@@ -49,7 +50,17 @@ export class LocationDetailPage {
   }
 
   editLocation() {
-
+    let curModal = this.modalCtrl.create('AddLocModal', {
+      locationInfo: this.locationInfo,
+      mapInfo: {
+        _id: this.locationInfo.mapId
+      }
+    })
+    curModal.onDidDismiss(data => {
+      console.log(data);
+      this.getLocationData();
+    });
+    curModal.present();
   }
   delLocation() {
     let confirm = this.alertCtrl.create({
