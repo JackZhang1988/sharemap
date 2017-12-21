@@ -1,0 +1,17 @@
+page-sliders {
+  .toolbar-background {
+    background-color: #000;
+  }
+  .bar-button {
+    color: #fff!important;
+  }
+  .full-page-slider {
+    background-color: #000;
+    .swiper-pagination-bullet {
+      background-color: #fff;
+    }
+    .slider-img{
+        width: 100%;
+    }
+  }
+}

@@ -29,7 +29,7 @@
       </ion-avatar>
     </ion-item>
     <div class="location-img-list">
-      <div class="img-wrapper" *ngFor='let img of locationInfo.imgs'>
+      <div class="img-wrapper" *ngFor='let img of locationInfo.imgs;let i = index;' (click)="showSliders(i)">
         <div class="location-img" [style.backgroundImage]="'url('+ (img|imagefilter:'avatar') +')'">
         </div>
       </div>
@@ -53,4 +53,5 @@
     <button class="edit-btn-item" ion-button color="secondary" (click)="editLocation()">编辑地点</button>
     <button class="edit-btn-item" ion-button color="danger" (click)="delLocation()">删除地点</button>
   </div>
+  
 </ion-content>

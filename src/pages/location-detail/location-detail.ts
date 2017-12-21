@@ -31,6 +31,7 @@ export class LocationDetailPage {
   public mapStaticImg: string;
   public lnglat: Number[];
   private isOwner = false;
+  private showSlider = false;
 
   ionViewDidLoad() {
     console.log(this.navParams);
@@ -47,6 +48,17 @@ export class LocationDetailPage {
         })
       }
     })
+  }
+
+  showSliders(index) {
+    let curModal = this.modalCtrl.create('SlidersPage', {
+      imgList: this.locationInfo.imgs,
+      index: index
+    })
+    curModal.onDidDismiss(data => {
+      console.log(data);
+    });
+    curModal.present();
   }
 
   editLocation() {
