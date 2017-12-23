@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
-import { ImagefilterPipe } from "./imagefilter/imagefilter";
+import { ImagefilterPipe } from "./imagefilter";
+import { EscapeHtmlPipe } from "./keep-html";
 
 
 @NgModule({
     declarations: [
         ImagefilterPipe,
+        EscapeHtmlPipe
     ],
     imports: [
 
     ],
     exports: [
-        ImagefilterPipe,
+        ImagefilterPipe, 
+        EscapeHtmlPipe
     ]
 })
 

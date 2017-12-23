@@ -12,14 +12,9 @@ import { Storage, IonicStorageModule } from '@ionic/storage';
 import { JwtHelper, AuthConfig, AuthHttp } from "angular2-jwt";
 
 import { MyApp } from './app.component';
-// import { ProfilePageModule } from '../pages/profile/profile.module';
 import { AuthServiceProvider } from '../providers/auth/auth';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
-
-// import { ComponentsModule } from '../components/components.module';
-// import { SearchLocModal } from '../components/search-loc/search-loc';
-// import { SearchTips } from '../components/search-tips/search-tips';
 export function authHttpServiceFactory(http: Http, options: RequestOptions, storage: Storage) {
   const authConfig = new AuthConfig({
     tokenGetter: (() => storage.get('token')),
@@ -34,9 +29,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, stor
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    // ProfilePageModule,
     HttpModule,
-    // ComponentsModule,
     IonicModule.forRoot(MyApp, { backButtonText: '' }),
     IonicStorageModule.forRoot()
   ],

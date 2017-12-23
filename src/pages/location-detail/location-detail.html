@@ -30,7 +30,7 @@
     </ion-item>
     <div class="location-img-list">
       <div class="img-wrapper" *ngFor='let img of locationInfo.imgs;let i = index;' (click)="showSliders(i)">
-        <div class="location-img" [style.backgroundImage]="'url('+ (img|imagefilter:'avatar') +')'">
+        <div class="location-img" [style.backgroundImage]="'url('+ (img|imagefilter:'thumbnail') +')'">
         </div>
       </div>
     </div>

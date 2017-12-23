@@ -21,8 +21,10 @@
         <img src="{{comment.fromUser.avatar | imagefilter:'avatar'}}">
       </ion-avatar>
       <div class="comment-name">{{comment.fromUser.name}}</div>
-      <p>
-        <span class="replay-name" *ngIf="comment.toUser">回复 {{comment.toUser?.name}} </span>{{comment.content}}</p>
+      <div>
+        <span class="replay-name" *ngIf="comment.toUser">回复 {{comment.toUser?.name}} </span>
+        <p [innerHtml]="comment.content | keepHtml" class="comment-content"></p>
+      </div>
     </ion-item>
   </ion-list>
   <ion-item>
