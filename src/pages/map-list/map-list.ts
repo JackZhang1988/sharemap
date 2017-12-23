@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
 
 import { ApiService } from '../../services/api';
-import { Map } from '../../common/models';
+import { Map, Location } from '../../common/models';
 /**
  * Generated class for the MapListPage page.
  *
@@ -12,37 +12,52 @@ import { Map } from '../../common/models';
  */
 @IonicPage()
 @Component({
-  selector: 'page-map-list',
+  selector: 'page-map-list/:listType/',
   templateUrl: 'map-list.html',
   providers: [ApiService]
 })
 export class MapListPage {
-  maps: Map[];
-
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private apiService: ApiService,
     private storage: Storage
   ) {
   }
 
+  maps: Map[];
+  mapLocations: Location[];
+  listType: string = this.navParams.get('listType') || 'map';
+  title: string = this.navParams.get('title') || '我创建的地图集';
+
   ngOnInit(): void {
     this.storage.get('userId').then(userId => {
-      this.apiService.getUserMaps(userId).subscribe(res => {
-        if (res.status == 0) {
-          this.maps = res.result;
-        }
-      })
+      if (this.listType == 'map') {
+        this.apiService.getUserMaps(userId).subscribe(res => {
+          if (res.status == 0) {
+            this.maps = res.result;
+          }
+        })
+      } else if (this.listType == 'location') {
+        this.apiService.getUserLocations(userId).subscribe(res => {
+          if (res.status == 0) {
+            this.mapLocations = res.result;
+          }
+        })
+      }
     })
   }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapListPage');
   }
   goMapDetail(mapData) {
     this.navCtrl.push('MapDetailPage', {
       id: mapData._id
+    })
+  }
+  goLocationDetail(locationData) {
+    this.navCtrl.push('LocationDetailPage', {
+      id: locationData._id
     })
   }
 }
