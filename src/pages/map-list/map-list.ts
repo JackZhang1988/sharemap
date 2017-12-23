@@ -12,7 +12,7 @@ import { Map, Location } from '../../common/models';
  */
 @IonicPage()
 @Component({
-  selector: 'page-map-list/:listType/',
+  selector: 'page-map-list',
   templateUrl: 'map-list.html',
   providers: [ApiService]
 })

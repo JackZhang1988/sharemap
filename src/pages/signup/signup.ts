@@ -72,7 +72,7 @@ export class SignupPage {
 
   sendMsgCode() {
     if (this.stepOneForm.controls.phoneNum.valid) {
-      if(this.sendMsgCodeBtnText == '发送验证码'){
+      if (this.sendMsgCodeBtnText == '发送验证码') {
         this.apiService.sendMsgCode(this.stepOneForm.controls.phoneNum.value).subscribe(res => {
           if (res.status == 0) {
             let start = 60;
@@ -120,7 +120,8 @@ export class SignupPage {
   imgChange(event) {
     if (!event.srcElement.files[0]) return;
     this.imgLoading = true;
-    this.qiniuService.addImage(event.srcElement.files[0]).subscribe(imgUrl => {
+    let target = event.target || event.srcElement;
+    this.qiniuService.addImage(target.files[0]).subscribe(imgUrl => {
       if (imgUrl) {
         this.imgLoading = false;
         this.avatar = imgUrl;

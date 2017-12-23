@@ -41,7 +41,8 @@ export class AddMapModal extends ModalContent {
 
     public imgChange(event) {
         this.imgLoading = true;
-        this.addImage(event.srcElement.files[0], (imgUrl) => this.coverImg = imgUrl);
+        let target = event.target || event.srcElement;
+        this.addImage(target.files[0], (imgUrl) => this.coverImg = imgUrl);
         // this.qiniuService.addImage(event.srcElement.files[0]).subscribe(imgUrl => {
         //   if (imgUrl) {
         //     this.imgLoading = false;

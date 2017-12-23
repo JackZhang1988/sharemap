@@ -64,7 +64,7 @@ export class AddLocModal extends ModalContent {
     this.imgLoading = true;
     this.addImage(event.srcElement.files[0], (imgUrl) => {
       this.locationImgs.push(imgUrl);
-      if (this.locationImgs.length >= 4) {
+      if (this.locationImgs.length >= 9) {
         this.isShowImgUploader = false;
       }
     });

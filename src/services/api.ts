@@ -137,4 +137,15 @@ export class ApiService {
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
+
+  addFeedback(data: any): Observable<any> {
+    return this.authHttp.post(this.serverHost + '/feedback', data)
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }
+  getUserFeedbacks(userId:string): Observable<any> {
+    return this.authHttp.get(this.serverHost + '/feedback?userId=' + userId)
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }
 }
