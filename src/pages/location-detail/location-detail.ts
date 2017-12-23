@@ -87,18 +87,23 @@ export class LocationDetailPage {
         {
           text: '确定',
           handler: () => {
-            this.apiService.delLocation(this.locationParams.id).subscribe(res => {
-              if (res.status == 0) {
-                let toast = this.toastCtrl.create({
-                  message: '删除成功',
-                  duration: 1500,
-                  position: 'bottom'
-                })
-                toast.onDidDismiss(() => {
-                  this.navCtrl.pop();
-                });
-                toast.present();
-              }
+            this.storage.get('userId').then(userID => {
+              this.apiService.delLocation({
+                userId: userID,
+                id: this.locationParams.id
+              }).subscribe(res => {
+                if (res.status == 0) {
+                  let toast = this.toastCtrl.create({
+                    message: '删除成功',
+                    duration: 1500,
+                    position: 'bottom'
+                  })
+                  toast.onDidDismiss(() => {
+                    this.navCtrl.pop();
+                  });
+                  toast.present();
+                }
+              })
             })
           }
         }

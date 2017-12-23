@@ -109,6 +109,7 @@ export class AddLocModal extends ModalContent {
         if (this.locationInfo) {
           //编辑地点
           this.apiService.updateLocation({
+            userId: userID,
             id: this.locationInfo._id,
             imgs: this.locationImgs,
             description: this.description
@@ -138,7 +139,7 @@ export class AddLocModal extends ModalContent {
         let lnglat = this.curLocation.location ? [this.curLocation.location.lng, this.curLocation.location.lat] : null;
         // delete this.curLocation.location;
         this.apiService.addNewLocation({
-          creater: userID,
+          userId: userID,
           locationInfo: this.curLocation,
           lnglat: lnglat,
           mapId: this.curSelectedMapId,

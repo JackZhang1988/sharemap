@@ -22,7 +22,7 @@ export class AddMapModal extends ModalContent {
     ) {
         super(viewCtrl);
     }
-    // private imgLoading = false;
+
     public coverImg: string;
     public title: string;
     public description: string;
@@ -43,18 +43,12 @@ export class AddMapModal extends ModalContent {
         this.imgLoading = true;
         let target = event.target || event.srcElement;
         this.addImage(target.files[0], (imgUrl) => this.coverImg = imgUrl);
-        // this.qiniuService.addImage(event.srcElement.files[0]).subscribe(imgUrl => {
-        //   if (imgUrl) {
-        //     this.imgLoading = false;
-        //     this.coverImg = imgUrl;
-        //   }
-        // })
     }
     public submit() {
         console.log(this.coverImg, this.title, this.description);
         this.storage.get('userId').then(userID => {
             this.apiService.addNewMap({
-                creater: userID,
+                userId: userID,
                 coverImg: this.coverImg,
                 title: this.title,
                 description: this.description,
@@ -77,7 +71,6 @@ export class AddMapModal extends ModalContent {
                     })
                     toast.present();
                 }
-                //   this.viewCtrl.dismiss();
             })
         })
 

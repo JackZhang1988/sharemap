@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { AuthHttp } from "angular2-jwt";
-
-import { Map, Location } from '../common/models';
 import { ENV } from '@app/env';
 
 @Injectable()
@@ -36,19 +34,19 @@ export class ApiService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
-  addNewMap(map: Map): Observable<any> {
+  addNewMap(map: any): Observable<any> {
     return this.authHttp.post(this.serverHost + '/map', map)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
-  delMap(mapId: string): Observable<any> {
-    return this.authHttp.post(this.serverHost + '/map/del', { id: mapId })
+  delMap(data: any): Observable<any> {
+    return this.authHttp.post(this.serverHost + '/map/del', data)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
-  addNewLocation(location: Location): Observable<any> {
+  addNewLocation(location: any): Observable<any> {
     return this.authHttp.post(this.serverHost + '/map/location', location)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
@@ -60,8 +58,8 @@ export class ApiService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
 
-  delLocation(mapId: string): Observable<any> {
-    return this.authHttp.post(this.serverHost + '/map/delLocation', { id: mapId })
+  delLocation(data: any): Observable<any> {
+    return this.authHttp.post(this.serverHost + '/map/delLocation', data)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }

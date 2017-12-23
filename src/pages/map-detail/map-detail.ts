@@ -108,18 +108,23 @@ export class MapDetailPage {
         {
           text: '确定',
           handler: () => {
-            this.apiService.delMap(this.mapParams.id).subscribe(res => {
-              if (res.status == 0) {
-                let toast = this.toastCtrl.create({
-                  message: '删除成功',
-                  duration: 1500,
-                  position: 'bottom'
-                })
-                toast.onDidDismiss(() => {
-                  this.navCtrl.pop();
-                });
-                toast.present();
-              }
+            this.storage.get('userId').then(userID => {
+              this.apiService.delMap({
+                id: this.mapParams.id,
+                userId: userID
+              }).subscribe(res => {
+                if (res.status == 0) {
+                  let toast = this.toastCtrl.create({
+                    message: '删除成功',
+                    duration: 1500,
+                    position: 'bottom'
+                  })
+                  toast.onDidDismiss(() => {
+                    this.navCtrl.pop();
+                  });
+                  toast.present();
+                }
+              })
             })
           }
         }
@@ -128,7 +133,7 @@ export class MapDetailPage {
     confirm.present();
   }
 
-  addLocation():void {
+  addLocation(): void {
     let addLocationModal = this.modalCtrl.create('SearchLocModal', {
       mapInfo: this.mapInfo
     });
@@ -141,7 +146,7 @@ export class MapDetailPage {
         this.apiService.sendLike({
           targetId: this.mapParams.id,
           targetType: 'map',
-          creater: userID,
+          userId: userID,
           hasLiked: this.hasLiked
         }).subscribe(res => {
           if (res.status == 0) {

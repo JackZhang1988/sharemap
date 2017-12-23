@@ -101,7 +101,7 @@ export class CommentComponent {
           return;
         }
         this.apiService.sendComment({
-          fromUser: userID,
+          userId: userID,
           toUser: this.commentToUser,
           content: postCommentContent,
           pageId: this.pageId,
@@ -150,7 +150,7 @@ export class CommentComponent {
         this.apiService.sendLike({
           targetId: this.pageId,
           targetType: this.from,
-          creater: userID,
+          userId: userID,
           hasLiked: this.hasLiked
         }).subscribe(res => {
           if (res.status == 0) {
