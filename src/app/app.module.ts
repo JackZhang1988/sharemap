@@ -12,7 +12,7 @@ import { Storage, IonicStorageModule } from '@ionic/storage';
 import { JwtHelper, AuthConfig, AuthHttp } from "angular2-jwt";
 
 import { MyApp } from './app.component';
-import { AuthServiceProvider } from '../providers/auth/auth';
+import { AuthServiceProvider } from '../providers/auth';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions, storage: Storage) {

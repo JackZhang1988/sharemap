@@ -2,7 +2,7 @@ import { Component, Input, Output, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { ApiService } from '../../services/api';
 import { Storage } from "@ionic/storage";
-import { AuthServiceProvider } from '../../providers/auth/auth';
+import { AuthServiceProvider } from '../../providers/auth';
 
 /**
  * Generated class for the CommentComponent component.

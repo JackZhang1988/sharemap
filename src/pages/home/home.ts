@@ -4,7 +4,7 @@ import { OnInit } from '@angular/core';
 import { IonicPage, ModalController, NavController, FabContainer } from 'ionic-angular';
 import { Map } from '../../common/models';
 import { ApiService } from '../../services/api';
-import { AuthServiceProvider } from '../../providers/auth/auth';
+import { AuthServiceProvider } from '../../providers/auth';
 
 @IonicPage({
   name: 'home'

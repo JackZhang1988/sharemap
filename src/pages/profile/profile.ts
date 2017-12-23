@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
 
 import { ApiService } from '../../services/api';
-import { AuthServiceProvider } from '../../providers/auth/auth';
+import { AuthServiceProvider } from '../../providers/auth';
 
 @IonicPage()
 @Component({
