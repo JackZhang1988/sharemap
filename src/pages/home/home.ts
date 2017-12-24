@@ -68,4 +68,9 @@ export class HomePage implements OnInit {
       this.navCtrl.push('LoginPage');
     })
   }
+
+  goSearchPage(e) {
+    e.stopPropagation();
+    this.navCtrl.push('SearchPage');
+  }
 }
