@@ -26,6 +26,7 @@ export class FeedbackPage {
   imgLoading: boolean = false;
   feedbackContent: string;
   feedbackList: any[] = [];
+  email: string;
 
   ngOnInit() {
     this.getFeedbacks();
@@ -57,11 +58,12 @@ export class FeedbackPage {
       this.apiService.addFeedback({
         userId: userID,
         imgs: this.feedbackImgs,
-        content: this.feedbackContent
+        content: this.feedbackContent,
+        email: this.email
       }).subscribe(res => {
         if (res.status == 0) {
           let toast = this.toastCtrl.create({
-            message: '提交成功',
+            message: '提交成功，感谢您的反馈',
             duration: 1500,
             position: 'bottom'
           })

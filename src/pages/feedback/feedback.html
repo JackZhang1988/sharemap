@@ -1,9 +1,3 @@
-<!--
-  Generated template for the FeedbackPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -14,27 +8,38 @@
 
 
 <ion-content padding>
-  <div class="item item-img-add">
-    <ul class="img-prev">
-      <li class="prev-item" *ngFor="let img of feedbackImgs">
-        <img class="prev-img" src="{{img | imagefilter:'thumbnail'}}">
-      </li>
-    </ul>
-    <ion-spinner class="img-spinner" [hidden]="!imgLoading"></ion-spinner>
-    <span class="img-add-block">
-      <ion-icon name="add" class="img-add-icon"></ion-icon>
-      <div class="img-input-wrap" [hidden]="!isShowImgUploader">
-        <form enctype="multipart/form-data" class="img-add-input" method="post">
-          <input name="token" type="hidden">
-          <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input">
-          <input type="submit">
-        </form>
-      </div>
-    </span>
-  </div>
+  <!-- <div class="feedback-list">
+    <ion-card class="feedback-card" *ngFor="let feedback of feedbackList">
+      <p class="feedback-content">{{feedback.content}}</p>
+      <img class="feedback-img" src="{{img | imagefilter:'mural' }}" *ngFor="let img of feedback.imgs" />
+    </ion-card>
+  </div> -->
+  <div class="feedback-submit">
+    <div class="item item-img-add">
+      <ul class="img-prev">
+        <li class="prev-item" *ngFor="let img of feedbackImgs">
+          <img class="prev-img" src="{{img | imagefilter:'thumbnail'}}">
+        </li>
+      </ul>
+      <ion-spinner class="img-spinner" [hidden]="!imgLoading"></ion-spinner>
+      <span class="img-add-block">
+        <ion-icon name="add" class="img-add-icon"></ion-icon>
+        <div class="img-input-wrap" [hidden]="!isShowImgUploader">
+          <form enctype="multipart/form-data" class="img-add-input" method="post">
+            <input name="token" type="hidden">
+            <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input">
+            <input type="submit">
+          </form>
+        </div>
+      </span>
+    </div>
 
-  <ion-item class="no-padding-left">
-    <ion-textarea class="feed-input" row="5" placeholder="请留下您的问题" [(ngModel)]="feedbackContent"></ion-textarea>
-  </ion-item>
-  <button ion-button block (click)="submit()">确定</button>
+    <ion-item class="no-padding-left">
+      <ion-textarea class="feed-input" row="5" placeholder="请留下您的问题" [(ngModel)]="feedbackContent"></ion-textarea>
+    </ion-item>
+    <ion-item class="no-padding-left">
+      <ion-input placeholder="留下您的邮箱以方便我们联系您" type="text" [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <button ion-button block (click)="submit()" class="submit-btn">确定</button>
+  </div>
 </ion-content>
