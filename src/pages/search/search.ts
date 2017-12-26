@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the SearchPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ApiService } from '../../services/api';
 
 @IonicPage({
   defaultHistory: ['home']
@@ -14,15 +8,32 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 @Component({
   selector: 'page-search',
   templateUrl: 'search.html',
+  providers: [ApiService],
 })
 export class SearchPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public apiService: ApiService,
+  ) {
   }
   searchType = 'map';
-  
+  searchWords: string;
+  searchResult: any[] = [];
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchPage');
   }
 
+  search() {
+    this.apiService.search({
+      searchType: this.searchType,
+      searchWords: this.searchWords
+    }).subscribe(res => {
+      if (res.status == 0) {
+        this.searchResult = res.result;
+      }
+    })
+  }
 }

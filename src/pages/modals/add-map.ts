@@ -52,7 +52,7 @@ export class AddMapModal extends ModalContent {
                 coverImg: this.coverImg,
                 title: this.title,
                 description: this.description,
-                id: this.mapInfo._id
+                id: this.mapInfo ? this.mapInfo._id : null
             }).subscribe(res => {
                 console.log(res);
                 if (res.status == 0) {

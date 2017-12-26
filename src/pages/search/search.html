@@ -10,7 +10,7 @@
       <ion-option value="map">地图集</ion-option>
       <ion-option value="user">用户</ion-option>
     </ion-select>
-    <ion-input placeholder="搜索地图集、地点、用户" class="searchbar"></ion-input>
+    <ion-input placeholder="搜索地图集、用户" class="searchbar" type="search" [(ngModel)]="searchWords"></ion-input>
     <ion-buttons end>
       <button ion-button icon-only (click)="search()">
         <ion-icon name="search"></ion-icon>

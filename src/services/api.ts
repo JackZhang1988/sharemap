@@ -10,6 +10,13 @@ export class ApiService {
 
   constructor(private http: Http, private authHttp: AuthHttp) { }
 
+  search(params): Observable<any> {
+    return this.http.get(this.serverHost + '/search', {
+      params: params
+    })
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
+  }
   getMaps(): Observable<any> {
     return this.http.get(this.serverHost + '/map/list')
       .map((res: Response) => res.json())
@@ -141,7 +148,7 @@ export class ApiService {
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
-  getUserFeedbacks(userId:string): Observable<any> {
+  getUserFeedbacks(userId: string): Observable<any> {
     return this.authHttp.get(this.serverHost + '/feedback?userId=' + userId)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
