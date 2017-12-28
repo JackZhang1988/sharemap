@@ -75,6 +75,7 @@
 .inline_b {
   display: inline-block;
 }
+
 @mixin ellipsis {
   overflow: hidden;
   white-space: nowrap;
@@ -88,35 +89,33 @@
   height: $width;
   overflow: hidden;
   @if $hoverColor !=none {
-      &:hover {
-          &::after,
-          &::before {
-              background: $hoverColor;
-          }
+    &:hover {
+      &::after,
+      &::before {
+        background: $hoverColor;
       }
+    }
   }
-
   &::after,
   &::before {
-      content: '';
-      position: absolute;
-      height: $thick;
-      width: 100%;
-      top: 50%;
-      left: 0;
-      margin-top: -1px;
-      background: $background;
+    content: '';
+    position: absolute;
+    height: $thick;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    margin-top: -1px;
+    background: $background;
   }
-
   &::before {
-      transform: rotate(45deg);
+    transform: rotate(45deg);
   }
-
   &::after {
-      transform: rotate(-45deg);
+    transform: rotate(-45deg);
   }
 }
-@mixin arrow($width:10px,$color:#5d5d5d,$rotate:135deg) {
+
+@mixin arrow($width:10px, $color:#5d5d5d, $rotate:135deg) {
   content: "";
   width: $width;
   height: $width;
@@ -131,14 +130,44 @@
   -o-transform: rotate($rotate);
   transform: rotate($rotate);
 }
-@mixin max-line($num,$isShowEllipsis:true) {
+
+@mixin max-line($num, $isShowEllipsis:true) {
   display: -webkit-box;
   -webkit-line-clamp: $num;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
-  @if isShowEllipsis == 'false'{
-      color: transparent; // 隐藏ellipsis
+  @if isShowEllipsis=='false' {
+    color: transparent; // 隐藏ellipsis
+  }
+}
+
+.card-background-page {
+  .map-card {
+    position: relative;
+    text-align: center;
+    max-height: 220px;
+  }
+  .map-wrapper {
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  .card-title {
+    position: absolute;
+    top: 36%;
+    font-size: 2.0em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+  }
+  .card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
   }
 }

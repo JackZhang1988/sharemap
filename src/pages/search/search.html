@@ -6,11 +6,11 @@
 -->
 <ion-header>
   <ion-navbar color="primary" class="search-navbar">
-    <ion-select [(ngModel)]="searchType" interface="popover" class="search-type-selecter">
+    <!-- <ion-select [(ngModel)]="searchType" interface="popover" class="search-type-selecter">
       <ion-option value="map">地图集</ion-option>
       <ion-option value="user">用户</ion-option>
-    </ion-select>
-    <ion-input placeholder="搜索地图集、用户" class="searchbar" type="search" [(ngModel)]="searchWords"></ion-input>
+    </ion-select> -->
+    <ion-input placeholder="搜索地图集" class="searchbar" type="search" [(ngModel)]="searchWords"></ion-input>
     <ion-buttons end>
       <button ion-button icon-only (click)="search()">
         <ion-icon name="search"></ion-icon>
@@ -21,6 +21,13 @@
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content class="card-background-page">
+  <div *ngIf="curType == 'map'">
+    <ion-card class="map-card" *ngFor='let map of searchResult' (click)="goMapDetail(map)">
+      <div class="map-wrapper"></div>
+      <img src="{{map.coverImg | imagefilter:'mural' }}" />
+      <div class="card-title">{{map.title}}</div>
+      <div class="card-subtitle">{{map.description}}</div>
+    </ion-card>
+  </div>
 </ion-content>

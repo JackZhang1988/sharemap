@@ -19,6 +19,7 @@ export class SearchPage {
   ) {
   }
   searchType = 'map';
+  curType: string = 'map';
   searchWords: string;
   searchResult: any[] = [];
 
@@ -27,6 +28,7 @@ export class SearchPage {
   }
 
   search() {
+    this.curType = this.searchType;
     this.apiService.search({
       searchType: this.searchType,
       searchWords: this.searchWords
@@ -34,6 +36,12 @@ export class SearchPage {
       if (res.status == 0) {
         this.searchResult = res.result;
       }
+    })
+  }
+
+  goMapDetail(mapData) {
+    this.navCtrl.push('MapDetailPage', {
+      id: mapData._id
     })
   }
 }
