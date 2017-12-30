@@ -16,7 +16,9 @@ import { AuthServiceProvider } from '../../providers/auth';
 })
 export class HomePage implements OnInit {
 
-  maps: Map[];
+  maps: Map[] = [];
+  hasMore: boolean = true;
+  pageSize: Number = 10;
 
   constructor(
     public modalCtrl: ModalController,
@@ -25,12 +27,16 @@ export class HomePage implements OnInit {
     private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.getMaps();
+    this.getMaps({ pageSize: this.pageSize });
   }
-  getMaps(): void {
-    this.apiService.getMaps().subscribe(res => {
+  getMaps(param?, callback?): void {
+    this.apiService.getMaps(param).subscribe(res => {
       if (res.status == 0) {
-        this.maps = res.result;
+        this.maps = this.maps.concat(res.result);
+        if (res.result.length < this.pageSize) {
+          this.hasMore = false;
+          callback && callback()
+        }
       }
     });
   }
@@ -76,8 +82,9 @@ export class HomePage implements OnInit {
 
   doInfinite(infiniteScroll) {
     console.log('Begin async operation');
-    setTimeout(() => {
-      infiniteScroll.complete();
-    }, 1000);
+    this.getMaps({
+      pageSize: this.pageSize,
+      lastItemDate: this.maps[this.maps.length - 1].addDate
+    })
   }
 }

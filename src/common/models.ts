@@ -18,6 +18,7 @@ export interface Map {
   coverImg: string;
   title: string;
   description: string;
+  addDate: string;
 }
 
 export interface Position {

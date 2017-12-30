@@ -17,8 +17,10 @@ export class ApiService {
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
-  getMaps(): Observable<any> {
-    return this.http.get(this.serverHost + '/map/list')
+  getMaps(params?): Observable<any> {
+    return this.http.get(this.serverHost + '/map/list', {
+      params: params
+    })
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'))
   }
