@@ -24,7 +24,7 @@
       <p class="location-desc">
         {{locationInfo.description}}
       </p>
-      <ion-avatar item-start class="user-avatar">
+      <ion-avatar item-start class="user-avatar" nav-user-profile [userId]="locationInfo.creater?._id">
         <img src="{{locationInfo.creater?.avatar | imagefilter:'avatar'}}" *ngIf="locationInfo.creater?.avatar">
       </ion-avatar>
     </ion-item>
@@ -53,5 +53,5 @@
     <button class="edit-btn-item" ion-button color="secondary" (click)="editLocation()">编辑地点</button>
     <button class="edit-btn-item" ion-button color="danger" (click)="delLocation()">删除地点</button>
   </div>
-  
+
 </ion-content>

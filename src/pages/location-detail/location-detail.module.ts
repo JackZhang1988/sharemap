@@ -4,7 +4,7 @@ import { ComponentsModule } from '../../components/components.module';
 import { LocationDetailPage } from './location-detail';
 import { PipesModule } from '../../pipes/pipes.module';
 import { CommentComponentModule } from '../../components/comment/comment.module';
-
+import { DirectivesModule } from '../../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +14,7 @@ import { CommentComponentModule } from '../../components/comment/comment.module'
     ComponentsModule,
     CommentComponentModule,
     PipesModule,
+    DirectivesModule,
     IonicPageModule.forChild(LocationDetailPage),
   ],
 })

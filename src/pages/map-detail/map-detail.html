@@ -20,7 +20,7 @@
         <div class="img-wrap"></div>
         <ion-row class="map-info">
           <ion-item class="info-item map-user-info no-padding-left">
-            <ion-avatar item-start class="avatar">
+            <ion-avatar item-start class="avatar" nav-user-profile [userId]="mapInfo.creater?._id">
               <img src="{{mapInfo.creater?.avatar | imagefilter:'avatar'}}" *ngIf="mapInfo.creater?.avatar">
             </ion-avatar>
             <div>{{mapInfo.creater?.name}}</div>
@@ -65,8 +65,8 @@
   </div>
   <div class="edit-btn-action" *ngIf="isOwner">
     <button class="edit-btn-item" ion-button (click)="addLocation()">添加地点</button>
-      <button class="edit-btn-item" ion-button color="secondary" (click)="editMap()">编辑地图集</button>
-      <button class="edit-btn-item" ion-button color="danger" (click)="delMap()">删除地图集</button>
+    <button class="edit-btn-item" ion-button color="secondary" (click)="editMap()">编辑地图集</button>
+    <button class="edit-btn-item" ion-button color="danger" (click)="delMap()">删除地图集</button>
   </div>
 
 </ion-content>

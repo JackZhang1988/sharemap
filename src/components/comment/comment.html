@@ -10,14 +10,14 @@
   </ion-item> -->
   <div class="like-list" *ngIf="likeList?.length">
     <ion-icon name="ios-heart-outline" class="left-icon"></ion-icon>
-    <ion-avatar item-start *ngFor="let likeItem of likeList" class="like-item">
+    <ion-avatar item-start *ngFor="let likeItem of likeList" class="like-item" nav-user-profile [userId]="likeItem.creater._id">
       <img src="{{likeItem.creater.avatar | imagefilter:'avatar'}}" class="like-avatar">
     </ion-avatar>
   </div>
   <ion-list class="comment-list">
     <ion-icon name="ios-text-outline" class="left-icon"></ion-icon>
     <ion-item class="comment-item" *ngFor="let comment of commentList" (click)="replyComment(commentInput, comment.fromUser)">
-      <ion-avatar item-start>
+      <ion-avatar item-start nav-user-profile [userId]="comment.fromUser._id">
         <img src="{{comment.fromUser.avatar | imagefilter:'avatar'}}">
       </ion-avatar>
       <div class="comment-name">{{comment.fromUser.name}}</div>

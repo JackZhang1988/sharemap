@@ -23,10 +23,19 @@ export class ProfilePage {
   }
   private avatar: string;
   private userInfo: any;
+  navUserId: string = this.navParams.get('userId');
+  isMe: boolean = true;
 
   ngOnInit(): void {
+
     this.storage.get('userId').then(userId => {
-      this.apiService.getUserInfo(userId).subscribe(res => {
+      let user = userId;
+      if (this.navUserId && this.navUserId != userId) {
+        //查看其它用户
+        this.isMe = false;
+        user = this.navUserId;
+      }
+      this.apiService.getUserInfo(user).subscribe(res => {
         if (res.status == 0) {
           this.userInfo = res.result.userInfo;
           this.avatar = res.result.userInfo.avatar;
