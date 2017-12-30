@@ -73,4 +73,11 @@ export class HomePage implements OnInit {
     e.stopPropagation();
     this.navCtrl.push('SearchPage');
   }
+
+  doInfinite(infiniteScroll) {
+    console.log('Begin async operation');
+    setTimeout(() => {
+      infiniteScroll.complete();
+    }, 1000);
+  }
 }
