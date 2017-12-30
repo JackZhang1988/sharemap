@@ -22,6 +22,8 @@ export class SearchPage {
   curType: string = 'map';
   searchWords: string;
   searchResult: any[] = [];
+  loading: boolean = false;
+  showEmpty: boolean = false;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchPage');
@@ -29,12 +31,19 @@ export class SearchPage {
 
   search() {
     this.curType = this.searchType;
+    this.loading = true;
     this.apiService.search({
       searchType: this.searchType,
       searchWords: this.searchWords
     }).subscribe(res => {
       if (res.status == 0) {
+        this.loading = false;
         this.searchResult = res.result;
+        if (this.searchResult.length) {
+          this.showEmpty = false;
+        } else {
+          this.showEmpty = true;
+        }
       }
     })
   }

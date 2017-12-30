@@ -22,6 +22,10 @@
 
 
 <ion-content class="card-background-page">
+  <div class="empty" *ngIf="showEmpty">
+    <p>没有找到相应结果</p>
+  </div>
+  <ion-spinner class="search-spinner" [hidden]="!loading"></ion-spinner>
   <div *ngIf="curType == 'map'">
     <ion-card class="map-card" *ngFor='let map of searchResult' (click)="goMapDetail(map)">
       <div class="map-wrapper"></div>

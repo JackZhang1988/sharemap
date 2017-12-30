@@ -41,4 +41,14 @@ page-search {
       }
     }
   }
+  .search-spinner {
+    margin: 20px auto;
+    display: block;
+  }
+  .empty {
+    text-align: center;
+    margin: 20px;
+    color: #444;
+    font-size: 16px;
+  }
 }
