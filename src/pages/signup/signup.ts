@@ -34,7 +34,8 @@ import { QiniuService } from '../../services/qiniu';
 })
 export class SignupPage {
 
-  private signStep = 0;
+  private signStep = this.navParams.get('signStep') || 0;
+  private editUserInfo = this.navParams.get('userInfo');
   private submitAttempt: boolean = false;
   private stepTwoAttempt: boolean = false;
   public stepOneForm: FormGroup;
@@ -67,7 +68,13 @@ export class SignupPage {
     });
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SignupPage');
+    if (this.editUserInfo) {
+      //从profile传来的编辑用户信息
+      this.avatar = this.editUserInfo.avatar;
+      this.stepTwoForm.controls.userName.setValue(this.editUserInfo.name);
+      this.stepTwoForm.controls.sex.setValue(this.editUserInfo.sex);
+      this.stepTwoForm.controls.signature.setValue(this.editUserInfo.signature);
+    }
   }
 
   sendMsgCode() {
@@ -142,8 +149,9 @@ export class SignupPage {
             signature: this.stepTwoForm.controls.signature.value
           }).subscribe(res => {
             if (res.status == 0) {
+              let succMsg = this.editUserInfo ? '更新成功' : '注册成功';
               let toast = this.toastCtrl.create({
-                message: '注册成功',
+                message: succMsg,
                 duration: 2000,
                 position: 'bottom'
               })
