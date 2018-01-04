@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { ENV } from '@app/env';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -12,7 +13,8 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class QiniuService {
-  private tokenApi = 'http://localhost:3000/qiniu/token';
+  private serverHost = ENV.API_URL;
+  private tokenApi = this.serverHost + '/qiniu/token';
 
   constructor(private http: Http, @Inject('IMGURL') private ImgUrl: any, private transfer: FileTransfer) { }
   public fileTransfer: FileTransferObject = this.transfer.create();

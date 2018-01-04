@@ -27,7 +27,7 @@
         <div class="img-input-wrap" [hidden]="!isShowImgUploader">
           <form enctype="multipart/form-data" class="img-add-input" method="post">
             <input name="token" type="hidden">
-            <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input">
+            <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input" tappable>
             <input type="submit">
           </form>
         </div>

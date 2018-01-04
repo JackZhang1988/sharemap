@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content class="card-background-page">
-  <ion-card class="map-card" *ngFor='let map of maps' (click)="goMapDetail(map)">
+  <ion-card class="map-card" *ngFor='let map of maps' (click)="goMapDetail(map)" tappable>
     <div class="map-wrapper"></div>
     <img src="{{map.coverImg | imagefilter:'mural' }}"/>
     <div class="card-title">{{map.title}}</div>
