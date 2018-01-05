@@ -4,8 +4,13 @@
     <ion-buttons start>
       <button ion-button (click)="dismiss()">
         <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
-          <span color="primary" showWhen="ios">关闭</span>
-        </button>
+        <span color="primary" showWhen="ios">关闭</span>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-only color="royal" (click)="openPathSelect($event)">
+        <ion-icon name="ios-navigate"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

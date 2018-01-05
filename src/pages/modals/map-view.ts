@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, ViewController, NavController, NavParams, Slides } from 'ionic-angular';
+import { IonicPage, ViewController, NavController, PopoverController, NavParams, Slides } from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
-
+// import { PathPlanPopOverComponent } from '../../components/path-plan-pop-over/path-plan-pop-over';
 @IonicPage()
 @Component({
     templateUrl: 'map-view.html',
@@ -12,6 +12,7 @@ export class MapViewModal {
     constructor(
         public viewCtrl: ViewController,
         public navCtrl: NavController,
+        public popoverCtrl: PopoverController,
         public navParams: NavParams,
         private gdService: GDMap
     ) {
@@ -25,13 +26,19 @@ export class MapViewModal {
     public markerList: any[] = [];
     private preMarker: any;
     private curMarker: any;
-    
+    private pathPlanType: string;
+
     //使用动态id，方式生成多个modal时id重复
-    private randomMapId:string = 'mapContainer-'+(new Date()).getTime().toString(32);
-    
+    private randomMapId: string = 'mapContainer-' + (new Date()).getTime().toString(32);
+
     ionViewDidLoad() {
         this.gdService.initMap(this.randomMapId);
-        
+        this.gdService.initGeolocation({
+            panToLocation: false,
+            zoomToAccuracy: false,
+            buttonOffset: new AMap.Pixel(10, 120)
+        });
+
         let markList = [];
         for (let item of this.mapLocations) {
             markList.push(item.lnglat);
@@ -52,6 +59,7 @@ export class MapViewModal {
     dismiss() {
         this.viewCtrl.dismiss();
     }
+
     goLocationDetail(locationData) {
         this.navCtrl.push('LocationDetailPage', {
             id: locationData._id
@@ -78,5 +86,16 @@ export class MapViewModal {
             this.gdService.unHighlightMarker(this.preMarker);
             //  this.preMarker.setIconStyle('blue')
         }
+    }
+
+    openPathSelect(ev: UIEvent) {
+        let popover = this.popoverCtrl.create('PathPlanPopOverPage');
+        popover.present({
+            ev: ev
+        });
+    }
+
+    pathChange(event, pathPlanType) {
+
     }
 }

@@ -29,7 +29,7 @@ export class SearchLocModal {
     this.viewCtrl.dismiss();
   }
   ngOnInit(): void {
-    this.gdService.initMap();
+    // this.gdService.initMap();
     this.gdService.initLocateMap({}, (curLocalResult) => {
       this.zone.run(() => {
         if (curLocalResult.addressComponent) {

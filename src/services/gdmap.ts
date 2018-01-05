@@ -16,8 +16,9 @@ export class GDMap {
   city: String;
   curAddedMarker: any;
   geocoder: any;
+  pathPlan: any = {}
 
-  getStaticMapKey(){
+  getStaticMapKey() {
     return STATIC_MAP_KEY;
   }
 
@@ -31,6 +32,7 @@ export class GDMap {
       zoom: 15,
     });
   }
+
   initLocateMap(options: any = {}, callback: any, errorCallback: any): any {
     let self = this;
     options = Object.assign(options, { container: 'mapContainer' });
@@ -48,7 +50,7 @@ export class GDMap {
         maximumAge: 0, //定位结果缓存0毫秒，默认：0
         convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
         showButton: true, //显示定位按钮，默认：true
-        buttonPosition: 'RB', //定位按钮停靠位置，默认：'LB'，左下角
+        buttonPosition: 'LB', //定位按钮停靠位置，默认：'LB'，左下角
         buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
         showMarker: false, //定位成功后在定位到的位置显示点标记，默认：true
         markerOptions: {
@@ -84,22 +86,19 @@ export class GDMap {
       self.geocoder = new AMap.Geocoder();
     })
   }
-  initGeolocation(onComplete?, onError?): void {
+  initGeolocation(ops: any = {}, onComplete?, onError?): void {
     let self = this;
     self.gdMap.plugin('AMap.Geolocation', function () {
-      let geolocation = new AMap.Geolocation({
+      let geolocation = new AMap.Geolocation(Object.assign({
         enableHighAccuracy: true, //是否使用高精度定位，默认:true
         timeout: 5000, //超过5秒后停止定位，默认：无穷大
         maximumAge: 0, //定位结果缓存0毫秒，默认：0
         convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
         showButton: true, //显示定位按钮，默认：true
-        buttonPosition: 'RB', //定位按钮停靠位置，默认：'LB'，左下角
-        buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-        showMarker: true, //定位成功后在定位到的位置显示点标记，默认：true
-        showCircle: true, //定位成功后用圆圈表示定位精度范围，默认：true
+        buttonPosition: 'LB', //定位按钮停靠位置，默认：'LB'，左下角
         panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
-        zoomToAccuracy: true //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-      });
+        zoomToAccuracy: true //定位成功且显示精度范围时，是否把地图视野调整到正好显示精度范围，默认：false,
+      }, ops));
       self.gdMap.addControl(geolocation);
       geolocation.getCurrentPosition();
       AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
@@ -118,6 +117,33 @@ export class GDMap {
     //     self.placeSearch.setCity(e.poi.adcode);
     //     self.placeSearch.search(e.poi.name);  //关键字查询查询
     // }
+  }
+
+  /**
+   * 初始化路径规划功能
+   */
+  initPathPlan(ops: any = {}, pannel): void {
+    let self = this;
+    self.gdMap.plugin(['AMap.Driving', 'AMap.Transfer', 'AMap.Walking '], function () {
+      self.pathPlan.driving = new AMap.Driving({
+        map: self.gdMap,
+        panel: pannel
+      });
+      self.pathPlan.transfer = new AMap.Transfer({
+        map: self.gdMap,
+        panel: pannel,
+      })
+      self.pathPlan.walking = new AMap.Walking({
+        map: self.gdMap,
+        panel: pannel
+      });
+    })
+  }
+
+  pathSearch(type: string, fromLngLat: Number[], toLngLat: Number[]) {
+    if(this.pathPlan[type]){
+      this.pathPlan[type].search(fromLngLat,toLngLat);
+    }
   }
 
   autoSearch(keyword: String, callback: any): void {
@@ -257,7 +283,7 @@ export class GDMap {
         this.curAddedMarker.show();
       }
       this.geocoder.getAddress(position, (status, result) => {
-        if(result){
+        if (result) {
           result.regeocode.location = position;
           onSelected && onSelected(result.regeocode);
         }
