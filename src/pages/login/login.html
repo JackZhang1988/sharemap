@@ -14,19 +14,33 @@
 
 
 <ion-content>
-  <ion-list>
-    <ion-item>
-      <ion-input placeholder="手机号" type="number" [(ngModel)]="phone"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-input placeholder="密码" type="password" [(ngModel)]="password"></ion-input>
-    </ion-item>
-    <!-- <button small ion-button clear>忘记密码？</button> -->
-  </ion-list>
+    <ion-segment [(ngModel)]="loginType" class="login-segment">
+      <ion-segment-button value="password">
+        密码登录
+      </ion-segment-button>
+      <ion-segment-button value="msgCode">
+        短信验证码登录
+      </ion-segment-button>
+    </ion-segment>
+    <div [ngSwitch]="loginType">
+      <ion-list>
+        <ion-item>
+          <ion-input placeholder="手机号" type="number" [(ngModel)]="phone"></ion-input>
+        </ion-item>
+    
+        <ion-item *ngSwitchCase="'password'">
+          <ion-input placeholder="密码" type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+        <ion-item *ngSwitchCase="'msgCode'">
+            <ion-input placeholder="短信验证码" type="text" [(ngModel)]="msgCode"></ion-input>
+            <button ion-button outline item-right class="send-code-btn" (click)="sendMsgCode()">{{sendMsgCodeBtnText}}</button>
+        </ion-item>
+        <!-- <button small ion-button clear>忘记密码？</button> -->
+      </ion-list>
+    </div>
 
   <div padding>
-    <button ion-button block [disabled]="!phone || !password" (click)="login()">登录</button>
+    <button ion-button block [disabled]="!phone || (!password && !msgCode)" (click)="login()">登录</button>
     <button ion-button block navPush="SignupPage" color="secondary">注册</button>
   </div>
 </ion-content>
