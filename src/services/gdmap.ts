@@ -17,7 +17,8 @@ export class GDMap {
   curAddedMarker: any;
   geocoder: any;
   pathPlan: any = {}
-  pathPlanInstance:any;
+  pathPlanInstance: any;
+  lastSearchPathType: string;
 
   getStaticMapKey() {
     return STATIC_MAP_KEY;
@@ -145,11 +146,25 @@ export class GDMap {
     })
   }
 
-  pathSearch(pathPlatType: string, fromLngLat: Number[], toLngLat: Number[]) {
-    if (this.pathPlan[pathPlatType]) {
-      this.pathPlanInstance = this.pathPlan[pathPlatType];
+  pathSearch(pathPlanType: string, fromLngLat: Number[], toLngLat: Number[]) {
+    if (this.pathPlan[pathPlanType]) {
+      this.lastSearchPathType = pathPlanType;
+      this.pathPlanInstance = this.pathPlan[pathPlanType];
       this.pathPlanInstance.clear();
-      this.pathPlan[pathPlatType].search(fromLngLat, toLngLat);
+      this.pathPlan[pathPlanType].search(fromLngLat, toLngLat);
+    }
+  }
+
+  clearPathSearch(pathPlanType: string) {
+    if (this.pathPlan[pathPlanType]) {
+      this.pathPlan[pathPlanType].clear();
+    }
+  }
+
+  clearLastPathSearch() {
+    if (this.lastSearchPathType) {
+      //清空上一个导航的地图路线
+      this.pathPlan[this.lastSearchPathType].clear();
     }
   }
 

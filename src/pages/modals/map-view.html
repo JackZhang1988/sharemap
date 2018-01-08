@@ -20,7 +20,8 @@
   <div id="mapView" [hidden]="curView=='list'">
     <div [attr.id]="randomMapId" class="item full-map map-container">
     </div>
-    <div id="pathPannel" style="display:none" #pathPannel></div>
+    <div class="path-plan-pannel-trigger" *ngIf="pathSearchTrigger" [@enterAnimation] (click)="openPathPannel()">{{showPathPanel?'关闭':'查看'}}导航详情</div>
+    <div id="pathPannel" #pathPannel [ngClass]="{'slideInUp':showPathPanel,'slideOutDown':!showPathPanel}"></div>
     <!-- <div id="mapDetail">
       <div class="user-info">
         <img class="avatar" src="{{(mapInfo.creater?.avatar || 'http://okyb0e40i.bkt.clouddn.com/FmYuiaXcxOee_nLJmouPS5C-m2uM') | imagefilter:'avatar'}}">

@@ -179,9 +179,67 @@ img {
 
 .map-slider {
   background-color: #fff;
-  margin-left: 20px; 
+  margin-left: 20px;
 }
 
 .content-add {
   min-height: 70vh;
+}
+
+.path-plan-pannel-trigger {
+  position: absolute;
+  z-index: 1;
+  background-color: #ffffff;
+  top: 20px;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  text-align: center;
+  border-radius: 6px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  width: 150px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+#pathPannel {
+  width: 95%;
+  background-color: transparent;
+  position: absolute;
+  top: 120px;
+  z-index: 11;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  display: none;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+#pathPannel.slideInUp {
+  display: block;
+  animation-name: slideInUp;
+  animation-duration: 1s;
+}
+
+@keyframes slideOutDown {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    display: none;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+#pathPannel.slideOutDown {
+  animation-name: slideOutDown;
+  animation-duration: 1s;
 }

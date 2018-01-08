@@ -1,11 +1,24 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, trigger, state, style, transition, animate } from '@angular/core';
 import { IonicPage, ViewController, NavController, PopoverController, NavParams, Slides } from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
 // import { PathPlanPopOverComponent } from '../../components/path-plan-pop-over/path-plan-pop-over';
+
 @IonicPage()
 @Component({
     templateUrl: 'map-view.html',
-    providers: [GDMap]
+    providers: [GDMap],
+    animations: [
+        trigger('enterAnimation', [
+            transition(':enter', [
+                style({ transform: 'translate3d(0, -100%, 0)', opacity: 0 }),
+                animate('500ms', style({ transform: 'translateX(0)', opacity: 1 }))
+            ]),
+            transition(':leave', [
+                style({ transform: 'none', opacity: 1 }),
+                animate('500ms', style({ transform: 'translateX(100%)', opacity: 0 }))
+            ])
+        ])
+    ]
 })
 export class MapViewModal {
 
@@ -18,7 +31,7 @@ export class MapViewModal {
     ) {
     }
     @ViewChild(Slides) slides: Slides;
-    @ViewChild('pathPanel', {read: ElementRef}) pathPanel: ElementRef;
+    @ViewChild('pathPannel', { read: ElementRef }) pathPannel: ElementRef;
 
     public type: string = this.navParams.get('type');
     public title: string = this.navParams.get('title');
@@ -29,6 +42,8 @@ export class MapViewModal {
     private curMarker: any;
     private pathPlanType: string;
     private curPosition: any;
+    private pathSearchTrigger: boolean = false;
+    private showPathPanel: boolean = false;
 
     //使用动态id，方式生成多个modal时id重复
     private randomMapId: string = 'mapContainer-' + (new Date()).getTime().toString(32);
@@ -95,18 +110,24 @@ export class MapViewModal {
     }
 
     openPathSelect(ev: UIEvent) {
-        // this.pathPanel
         let popover = this.popoverCtrl.create('PathPlanPopOverPage', {
             curPosition: this.curPosition,
             curMarker: this.curMarker,
             gdService: this.gdService,
+            pathPannel: this.pathPannel,
+            pathSearchTrigger: this.pathSearchTrigger,
         });
         popover.present({
             ev: ev
         });
+        popover.onDidDismiss(data => {
+            if (data) {
+                this.pathSearchTrigger = data.pathSearchTrigger;
+            }
+        })
     }
 
-    pathChange(event, pathPlanType) {
-
+    openPathPannel() {
+        this.showPathPanel = !this.showPathPanel;
     }
 }

@@ -13,6 +13,7 @@ export class PathPlanPopOverPage {
   curPosition = this.navParams.get('curPosition');
   curMarker = this.navParams.get('curMarker');
   gdService = this.navParams.get('gdService');
+  pathPannel = this.navParams.get('pathPannel');
 
   constructor(
     public viewCtrl: ViewController,
@@ -23,11 +24,18 @@ export class PathPlanPopOverPage {
 
   pathPlan(pathPlanType) {
     console.log(this.curPosition, this.curMarker);
-    if (this.curPosition && this.curMarker) {
+    if (this.curPosition && this.curMarker && this.gdService) {
       let curPosition = [this.curPosition.position.lng, this.curPosition.position.lat];
       let curMarker = [this.curMarker.getPosition().lng, this.curMarker.getPosition().lat];
+      if (this.pathPannel) {
+        //清空之前的pathPannel记录
+        this.pathPannel.nativeElement.innerHTML = '';
+      }
+      this.gdService.clearLastPathSearch();
       this.gdService.pathSearch(pathPlanType, curPosition, curMarker)
     }
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss({
+      pathSearchTrigger: true
+    });
   }
 }
