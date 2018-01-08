@@ -35,7 +35,8 @@ export class PathPlanPopOverPage {
       this.gdService.pathSearch(pathPlanType, curPosition, curMarker)
     }
     this.viewCtrl.dismiss({
-      pathSearchTrigger: true
+      pathSearchTrigger: true,
+      curPathPlanType:pathPlanType
     });
   }
 }

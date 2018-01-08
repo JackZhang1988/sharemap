@@ -40,7 +40,7 @@ export class MapViewModal {
     public markerList: any[] = [];
     private preMarker: any;
     private curMarker: any;
-    private pathPlanType: string;
+    private curPathPlanType: string;
     private curPosition: any;
     private pathSearchTrigger: boolean = false;
     private showPathPanel: boolean = false;
@@ -107,6 +107,21 @@ export class MapViewModal {
             this.gdService.unHighlightMarker(this.preMarker);
             //  this.preMarker.setIconStyle('blue')
         }
+        //slider滑动时更新导航信息
+        this.pathSearch();
+    }
+
+    pathSearch() {
+        if (this.curPosition && this.curMarker && this.gdService && this.curPathPlanType) {
+            let curPosition = [this.curPosition.position.lng, this.curPosition.position.lat];
+            let curMarker = [this.curMarker.getPosition().lng, this.curMarker.getPosition().lat];
+            if (this.pathPannel) {
+                //清空之前的pathPannel记录
+                this.pathPannel.nativeElement.innerHTML = '';
+            }
+            this.gdService.clearLastPathSearch();
+            this.gdService.pathSearch(this.curPathPlanType, curPosition, curMarker)
+        }
     }
 
     openPathSelect(ev: UIEvent) {
@@ -122,6 +137,7 @@ export class MapViewModal {
         });
         popover.onDidDismiss(data => {
             if (data) {
+                this.curPathPlanType = data.curPathPlanType;
                 this.pathSearchTrigger = data.pathSearchTrigger;
             }
         })
