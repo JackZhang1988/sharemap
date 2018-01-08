@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, ViewController, NavController, PopoverController, NavParams, Slides } from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
 // import { PathPlanPopOverComponent } from '../../components/path-plan-pop-over/path-plan-pop-over';
@@ -18,6 +18,7 @@ export class MapViewModal {
     ) {
     }
     @ViewChild(Slides) slides: Slides;
+    @ViewChild('pathPanel', {read: ElementRef}) pathPanel: ElementRef;
 
     public type: string = this.navParams.get('type');
     public title: string = this.navParams.get('title');
@@ -27,6 +28,7 @@ export class MapViewModal {
     private preMarker: any;
     private curMarker: any;
     private pathPlanType: string;
+    private curPosition: any;
 
     //使用动态id，方式生成多个modal时id重复
     private randomMapId: string = 'mapContainer-' + (new Date()).getTime().toString(32);
@@ -36,8 +38,11 @@ export class MapViewModal {
         this.gdService.initGeolocation({
             panToLocation: false,
             zoomToAccuracy: false,
-            buttonOffset: new AMap.Pixel(10, 120)
+            buttonOffset: new AMap.Pixel(10, 100)
+        }, (result) => {
+            this.curPosition = result;
         });
+        this.gdService.initPathPlan('pathPannel');
 
         let markList = [];
         for (let item of this.mapLocations) {
@@ -45,6 +50,7 @@ export class MapViewModal {
         }
         this.gdService.addSimpleMarkers(markList, (markerList) => {
             this.markerList = markerList;
+            this.curMarker = markerList[0];
             //默认高亮第一个marker
             this.gdService.highlightMarker(markerList[0]);
         });
@@ -89,7 +95,12 @@ export class MapViewModal {
     }
 
     openPathSelect(ev: UIEvent) {
-        let popover = this.popoverCtrl.create('PathPlanPopOverPage');
+        // this.pathPanel
+        let popover = this.popoverCtrl.create('PathPlanPopOverPage', {
+            curPosition: this.curPosition,
+            curMarker: this.curMarker,
+            gdService: this.gdService,
+        });
         popover.present({
             ev: ev
         });

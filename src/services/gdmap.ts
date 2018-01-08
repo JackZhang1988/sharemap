@@ -17,6 +17,7 @@ export class GDMap {
   curAddedMarker: any;
   geocoder: any;
   pathPlan: any = {}
+  pathPlanInstance:any;
 
   getStaticMapKey() {
     return STATIC_MAP_KEY;
@@ -122,17 +123,21 @@ export class GDMap {
   /**
    * 初始化路径规划功能
    */
-  initPathPlan(ops: any = {}, pannel): void {
+  initPathPlan(pannel?, ops: any = {}): void {
     let self = this;
-    self.gdMap.plugin(['AMap.Driving', 'AMap.Transfer', 'AMap.Walking '], function () {
+    AMap.service('AMap.Driving', function () {
       self.pathPlan.driving = new AMap.Driving({
         map: self.gdMap,
         panel: pannel
       });
+    })
+    AMap.service('AMap.Transfer', function () {
       self.pathPlan.transfer = new AMap.Transfer({
         map: self.gdMap,
-        panel: pannel,
-      })
+        panel: pannel
+      });
+    })
+    AMap.service('AMap.Walking', function () {
       self.pathPlan.walking = new AMap.Walking({
         map: self.gdMap,
         panel: pannel
@@ -140,9 +145,11 @@ export class GDMap {
     })
   }
 
-  pathSearch(type: string, fromLngLat: Number[], toLngLat: Number[]) {
-    if(this.pathPlan[type]){
-      this.pathPlan[type].search(fromLngLat,toLngLat);
+  pathSearch(pathPlatType: string, fromLngLat: Number[], toLngLat: Number[]) {
+    if (this.pathPlan[pathPlatType]) {
+      this.pathPlanInstance = this.pathPlan[pathPlatType];
+      this.pathPlanInstance.clear();
+      this.pathPlan[pathPlatType].search(fromLngLat, toLngLat);
     }
   }
 
