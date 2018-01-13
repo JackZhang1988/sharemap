@@ -14,6 +14,7 @@ import { JwtHelper, AuthConfig, AuthHttp } from "angular2-jwt";
 import { MyApp } from './app.component';
 import { AuthServiceProvider } from '../providers/auth';
 import { FileTransfer } from '@ionic-native/file-transfer';
+import { ShareProvider } from '../providers/share';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions, storage: Storage) {
   const authConfig = new AuthConfig({
@@ -49,6 +50,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, stor
       useFactory: authHttpServiceFactory,
       deps: [Http, RequestOptions, Storage]
     },
+    ShareProvider,
   ]
 })
 export class AppModule { }

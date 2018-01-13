@@ -1,28 +1,37 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, ModalController, NavParams, Slides, AlertController, ToastController } from 'ionic-angular';
-import { ApiService } from '../../services/api';
+import { Component, ViewChild } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  ModalController,
+  NavParams,
+  Slides,
+  AlertController,
+  ToastController
+} from "ionic-angular";
+import { ApiService } from "../../services/api";
+import { ShareProvider } from "../../providers/share";
 import { Storage } from "@ionic/storage";
 
 @IonicPage({
-  segment: '/map-detail/:id',
-  defaultHistory: ['home']
+  segment: "/map-detail/:id",
+  defaultHistory: ["home"]
 })
 @Component({
-  selector: 'page-map-detail',
-  templateUrl: 'map-detail.html',
-  providers: [ApiService]
+  selector: "page-map-detail",
+  templateUrl: "map-detail.html",
+  providers: [ApiService, ShareProvider]
 })
 export class MapDetailPage {
-
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
     private storage: Storage,
     private apiService: ApiService,
+    private shareProvider: ShareProvider,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController,
-  ) {
-  }
+    private toastCtrl: ToastController
+  ) {}
   @ViewChild(Slides) slides: Slides;
 
   public mapInfo: any = {};
@@ -40,19 +49,23 @@ export class MapDetailPage {
     this.getMapLikeInfo();
   }
 
+  initShare() {
+    this.shareProvider.showSharePanel();
+  }
+
   getMapData(): void {
-    console.log(this.mapParams)
+    console.log(this.mapParams);
     this.apiService.getMapById(this.mapParams.id).subscribe(res => {
       console.log(res.result);
       if (res.status == 0) {
         this.mapInfo = res.result.map;
         this.mapLocations = res.result.locations;
         this.viewTitle = this.mapInfo.title;
-        this.storage.get('userId').then(userID => {
+        this.storage.get("userId").then(userID => {
           this.isOwner = userID == res.result.map.creater._id;
-        })
+        });
       }
-    })
+    });
   }
 
   getMapCommentCount() {
@@ -61,35 +74,35 @@ export class MapDetailPage {
         console.log(res);
         this.mapCommentCount = res.result;
       }
-    })
+    });
   }
 
   getMapLikeInfo() {
-    this.storage.get('userId').then(userID => {
+    this.storage.get("userId").then(userID => {
       this.apiService.getLikeInfo(this.mapParams.id, userID).subscribe(res => {
         if (res.status == 0) {
           console.log(res);
           this.likeCount = res.result.count;
           this.hasLiked = res.result.hasLiked;
         }
-      })
-    })
+      });
+    });
   }
 
   goLocationDetail(locationData) {
-    this.navCtrl.push('LocationDetailPage', {
+    this.navCtrl.push("LocationDetailPage", {
       id: locationData._id
-    })
+    });
   }
 
   goMapComments(): void {
-    this.navCtrl.push('MapCommentsPage', {
+    this.navCtrl.push("MapCommentsPage", {
       mapId: this.mapParams.id,
-      creater: this.mapInfo.creater,
-    })
+      creater: this.mapInfo.creater
+    });
   }
   editMap(): void {
-    let addMapModal = this.modalCtrl.create('AddMapModal', {
+    let addMapModal = this.modalCtrl.create("AddMapModal", {
       mapInfo: this.mapInfo
     });
     addMapModal.present();
@@ -97,35 +110,36 @@ export class MapDetailPage {
 
   delMap(): void {
     let confirm = this.alertCtrl.create({
-      title: '确定要删除此地图集吗?',
-      message: '删除后不可恢复',
+      title: "确定要删除此地图集吗?",
+      message: "删除后不可恢复",
       buttons: [
         {
-          text: '取消',
-          handler: () => {
-          }
+          text: "取消",
+          handler: () => {}
         },
         {
-          text: '确定',
+          text: "确定",
           handler: () => {
-            this.storage.get('userId').then(userID => {
-              this.apiService.delMap({
-                id: this.mapParams.id,
-                userId: userID
-              }).subscribe(res => {
-                if (res.status == 0) {
-                  let toast = this.toastCtrl.create({
-                    message: '删除成功',
-                    duration: 1500,
-                    position: 'bottom'
-                  })
-                  toast.onDidDismiss(() => {
-                    this.navCtrl.pop();
-                  });
-                  toast.present();
-                }
-              })
-            })
+            this.storage.get("userId").then(userID => {
+              this.apiService
+                .delMap({
+                  id: this.mapParams.id,
+                  userId: userID
+                })
+                .subscribe(res => {
+                  if (res.status == 0) {
+                    let toast = this.toastCtrl.create({
+                      message: "删除成功",
+                      duration: 1500,
+                      position: "bottom"
+                    });
+                    toast.onDidDismiss(() => {
+                      this.navCtrl.pop();
+                    });
+                    toast.present();
+                  }
+                });
+            });
           }
         }
       ]
@@ -134,38 +148,39 @@ export class MapDetailPage {
   }
 
   addLocation(): void {
-    let addLocationModal = this.modalCtrl.create('SearchLocModal', {
+    let addLocationModal = this.modalCtrl.create("SearchLocModal", {
       mapInfo: this.mapInfo
     });
     addLocationModal.present();
   }
 
   sendLike(): void {
-    this.storage.get('userId').then(userID => {
+    this.storage.get("userId").then(userID => {
       if (userID) {
-        this.apiService.sendLike({
-          targetId: this.mapParams.id,
-          targetType: 'map',
-          userId: userID,
-          hasLiked: this.hasLiked
-        }).subscribe(res => {
-          if (res.status == 0) {
-            this.hasLiked = res.result.hasLiked;
-            if (res.result.hasLiked) {
-              this.likeCount++;
-            } else {
-              this.likeCount--;
+        this.apiService
+          .sendLike({
+            targetId: this.mapParams.id,
+            targetType: "map",
+            userId: userID,
+            hasLiked: this.hasLiked
+          })
+          .subscribe(res => {
+            if (res.status == 0) {
+              this.hasLiked = res.result.hasLiked;
+              if (res.result.hasLiked) {
+                this.likeCount++;
+              } else {
+                this.likeCount--;
+              }
             }
-          }
-        })
+          });
       } else {
-        this.navCtrl.push('LoginPage', {
+        this.navCtrl.push("LoginPage", {
           callback: () => {
-            this.navCtrl.push('ProfilePage')
+            this.navCtrl.push("ProfilePage");
           }
         });
       }
-
-    })
+    });
   }
 }

@@ -48,6 +48,7 @@
         "cordova-plugin-file-transfer": "^1.6.3",
         "cordova-plugin-splashscreen": "~4.0.1",
         "cordova-plugin-statusbar": "~2.2.1",
+        "cordova-plugin-wechat": "^2.1.0",
         "cordova-plugin-whitelist": "~1.3.1",
         "cordova-sqlite-storage": "~2.0.4",
         "ioc": "^0.1.0",
@@ -96,6 +97,9 @@
             "cordova-plugin-camera": {
                 "CAMERA_USAGE_DESCRIPTION": " ",
                 "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
+            },
+            "cordova-plugin-wechat": {
+                "WECHATAPPID": "wx6b9a1a289bfdc718"
             }
         }
     }
