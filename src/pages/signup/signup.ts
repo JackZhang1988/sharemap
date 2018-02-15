@@ -43,6 +43,7 @@ export class SignupPage {
   private imgLoading: boolean = false;
   private avatar: string;
   private sendMsgCodeBtnText: string = '发送验证码';
+  public title: string = '注册';
 
   constructor(
     public navCtrl: NavController,
@@ -70,6 +71,7 @@ export class SignupPage {
   ionViewDidLoad() {
     if (this.editUserInfo) {
       //从profile传来的编辑用户信息
+      this.title = '修改资料';
       this.avatar = this.editUserInfo.avatar;
       this.stepTwoForm.controls.userName.setValue(this.editUserInfo.name);
       this.stepTwoForm.controls.sex.setValue(this.editUserInfo.sex);

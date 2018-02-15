@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>注册</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -78,6 +78,8 @@
         </ion-item>
       </ion-list>
     </form>
-    <button ion-button block color="secondary" (click)="updateUser()">提交</button>
+    <ion-item-group padding>
+      <button ion-button block color="secondary" (click)="updateUser()">提交</button>
+    </ion-item-group>
   </div>
 </ion-content>
