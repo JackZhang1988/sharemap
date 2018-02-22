@@ -64,6 +64,12 @@ export class MapDetailPage {
         this.storage.get("userId").then(userID => {
           this.isOwner = userID == res.result.map.creater._id;
         });
+        this.shareProvider.initShareContent({
+          title: this.mapInfo.title,
+          shareDesc: this.mapInfo.description,
+          shareImg: this.mapInfo.coverImg + "?imageView2/0/w/200/h/200/q/75",
+          shareUrl: "map/" + this.mapInfo._id,
+        });
       }
     });
   }
