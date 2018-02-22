@@ -52,7 +52,7 @@ export class ShareProvider {
             Wechat.share(
               {
                 message: {
-                  title: this.shareImg,
+                  title: this.title,
                   description: this.shareDesc,
                   thumb: this.shareImg,
                   media: {
@@ -89,7 +89,7 @@ export class ShareProvider {
             Wechat.share(
               {
                 message: {
-                  title: this.shareImg,
+                  title: this.title,
                   description: this.shareDesc,
                   thumb: this.shareImg,
                   media: {
