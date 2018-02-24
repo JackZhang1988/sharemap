@@ -41,7 +41,7 @@
     </div>
     <div class="date-info">
       <ion-icon name="time"></ion-icon>
-      {{locationInfo.addDate| date: 'dd-MM'}}
+      {{locationInfo.addDate| date: 'MM-dd'}}
     </div>
   </ion-card>
   <map-view [location]="lnglat" [viewType]="'location-view'">

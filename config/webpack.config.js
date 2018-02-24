@@ -1,12 +1,16 @@
-var path = require('path');
-var useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
+var path = require("path");
+var useDefaultConfig = require("@ionic/app-scripts/config/webpack.config.js");
+var envTarget = process.env.BUILD_ENV ? process.env.BUILD_ENV : "dev";
 
-// console.log('custom webpack run');
-console.log('开始构建'+process.env.IONIC_ENV+'环境');
+console.log('custom webpack config run');
+console.log("开始构建" + envTarget + "环境");
 
-module.exports = function () {
+
+module.exports = function() {
   useDefaultConfig.resolve.alias = {
-    "@app/env": path.resolve('./src/environments/environment' + (process.env.IONIC_ENV === 'prod' ? '' : '.' + process.env.IONIC_ENV) + '.ts')
+    "@app/env": path.resolve(
+      "./src/environments/environment." + envTarget + ".ts"
+    )
   };
 
   return useDefaultConfig;
