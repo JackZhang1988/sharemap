@@ -33,7 +33,7 @@
           <div class="img-input-wrap" [hidden]="!isShowImgUploader">
               <form enctype="multipart/form-data" class="img-add-input" method="post">
                   <input name="token" type="hidden">
-                  <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input" tappable>
+                  <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input" tappable multiple>
                   <input type="submit">
               </form>
           </div>
@@ -41,7 +41,7 @@
     </div>
 
     <ion-item class="no-padding-left">
-      <ion-textarea placeholder="分享下你对这里的评级和感受吧..." [(ngModel)]="description"></ion-textarea>
+      <ion-textarea placeholder="分享下你对这里的感受吧..." [(ngModel)]="description" class="status-textarea"></ion-textarea>
     </ion-item>
   </div>
 

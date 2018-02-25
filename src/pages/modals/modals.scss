@@ -1,5 +1,5 @@
-$img-add-size:70px;
-$img-add-border-color:#ccc;
+$img-add-size: 70px;
+$img-add-border-color: #ccc;
 img {
   width: 100%;
 }
@@ -26,7 +26,7 @@ img {
       position: absolute;
       top: 0;
       left: 0;
-      background-color: rgba(0, 0, 0, .1);
+      background-color: rgba(0, 0, 0, 0.1);
       height: 100%;
     }
     .cover-add-title {
@@ -107,7 +107,7 @@ img {
     border-bottom: 1px solid #c8c7cc;
     line-height: 20px;
     &:last-child {
-      border-bottom: 0
+      border-bottom: 0;
     }
     .tip-title {
       font-size: 16px;
@@ -132,7 +132,7 @@ img {
   height: 32px;
   left: -11px;
   top: -33px;
-  position: absolute
+  position: absolute;
 }
 
 #mapView {
@@ -242,4 +242,7 @@ img {
 #pathPannel.slideOutDown {
   animation-name: slideOutDown;
   animation-duration: 1s;
+}
+.status-textarea .text-input {
+  min-height: 200px;
 }
