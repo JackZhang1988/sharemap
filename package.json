@@ -49,6 +49,7 @@
         "cordova-plugin-device": "~1.1.4",
         "cordova-plugin-file": "^4.3.3",
         "cordova-plugin-file-transfer": "^1.6.3",
+        "cordova-plugin-ionic-webview": "^1.1.16",
         "cordova-plugin-splashscreen": "~4.0.1",
         "cordova-plugin-statusbar": "~2.2.1",
         "cordova-plugin-wechat": "^2.1.0",
@@ -109,7 +110,8 @@
             "cordova-plugin-wechat": {
                 "WECHATAPPID": "wx6b9a1a289bfdc718"
             },
-            "cordova-plugin-browsersync": {}
+            "cordova-plugin-browsersync": {},
+            "cordova-plugin-ionic-webview": {}
         }
     }
 }
