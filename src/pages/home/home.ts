@@ -68,6 +68,17 @@ export class HomePage implements OnInit {
       } else {
         curModal = this.modalCtrl.create('SearchLocModal');
       }
+      curModal.onDidDismiss(callbackData=>{
+        if(callbackData && callbackData.status == 'add-map-done'){
+          //表示添加地图集成功
+          this.goMapDetail(callbackData.data);
+        }else if(callbackData && callbackData.status == 'add-location-done'){
+          //添加地点成功
+          this.navCtrl.push("LocationDetailPage", {
+            id: callbackData.data._id
+          });
+        }
+      })
       curModal.present();
 
     }, () => {

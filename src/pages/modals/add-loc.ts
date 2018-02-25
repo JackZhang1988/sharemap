@@ -192,7 +192,10 @@ export class AddLocModal extends ModalContent {
                 this.navCtrl.push("LocationDetailPage", {
                   id: res.result._id
                 });
-                this.viewCtrl.dismiss(res.result);
+                this.viewCtrl.dismiss({
+                  status: "add-location-done",
+                  data: res.result
+                });
               });
               toast.present();
             } else {
