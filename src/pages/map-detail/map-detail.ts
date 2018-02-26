@@ -68,7 +68,7 @@ export class MapDetailPage {
           title: '来看看我分享的地图集【'+this.mapInfo.title+'】',
           shareDesc: this.mapInfo.description,
           shareImg: this.mapInfo.coverImg + "?imageView2/0/w/200/h/200/q/75",
-          shareUrl: "map/" + this.mapInfo._id,
+          shareUrl: "map.html?mapId=" + this.mapInfo._id,
         });
       }
     });

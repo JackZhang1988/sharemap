@@ -66,7 +66,7 @@ export class LocationDetailPage {
           shareDesc: this.locationInfo.description,
           shareImg:
             this.locationInfo.imgs[0] + "?imageView2/0/w/200/h/200/q/75",
-          shareUrl: "location/" + this.locationInfo._id
+          shareUrl: "location.html?locationId=" + this.locationInfo._id
         });
       }
     });
