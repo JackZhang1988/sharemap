@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { AddLocModal } from './add-loc';
 import { PipesModule } from '../../pipes/pipes.module';
-import { RichTextAddModule } from '../../components/rich-text-add/rich-text-add.module';
+// import { RichTextAddModule } from '../../components/rich-text-add/rich-text-add.module';
 
 @NgModule({
     declarations: [
@@ -10,7 +10,7 @@ import { RichTextAddModule } from '../../components/rich-text-add/rich-text-add.
     ],
     imports: [
         PipesModule,
-        RichTextAddModule,
+        // RichTextAddModule,
         IonicPageModule.forChild(AddLocModal)
     ],
     exports: [
