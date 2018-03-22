@@ -33,4 +33,7 @@ page-home {
       position: relative;
     }
   }
+  ion-fab[bottom] {
+    bottom: 20px;
+  }
 }
