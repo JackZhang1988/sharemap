@@ -53,12 +53,6 @@ export class MapDetailPage {
     this.shareProvider.showSharePanel();
   }
 
-  doRefresh(refresher) {
-    // this.getMapData(() => {
-    //   refresher.complete();
-    // }, true);
-  }
-
   getMapData(): void {
     console.log(this.mapParams);
     this.apiService.getMapById(this.mapParams.id).subscribe(res => {
@@ -71,10 +65,10 @@ export class MapDetailPage {
           this.isOwner = userID == res.result.map.creater._id;
         });
         this.shareProvider.initShareContent({
-          title: "来看看我分享的地图集【" + this.mapInfo.title + "】",
+          title: '来看看我分享的地图集【'+this.mapInfo.title+'】',
           shareDesc: this.mapInfo.description,
           shareImg: this.mapInfo.coverImg + "?imageView2/0/w/200/h/200/q/75",
-          shareUrl: "map.html?mapId=" + this.mapInfo._id
+          shareUrl: "map.html?mapId=" + this.mapInfo._id,
         });
       }
     });
