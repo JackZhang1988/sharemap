@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { LngLat } from '../common/models';
+import { LngLat } from "../common/models";
 
 // let singleInstance = false;
-const STATIC_MAP_KEY = 'c3b4477c4c2ad477141ee0358e4d1c82';
+const STATIC_MAP_KEY = "c3b4477c4c2ad477141ee0358e4d1c82";
 @Injectable()
 export class GDMap {
-
-  constructor() { }
+  constructor() {}
 
   gdMap: any;
   auto: any;
@@ -16,7 +15,7 @@ export class GDMap {
   city: String;
   curAddedMarker: any;
   geocoder: any;
-  pathPlan: any = {}
+  pathPlan: any = {};
   pathPlanInstance: any;
   lastSearchPathType: string;
 
@@ -24,95 +23,103 @@ export class GDMap {
     return STATIC_MAP_KEY;
   }
 
-  initMap(container: string = 'mapContainer'): any {
+  initMap(container: string = "mapContainer"): any {
     let self = this;
     self.gdMap = new AMap.Map(container, {
       rotateEnable: true,
       dragEnable: true,
       zoomEnable: true,
       zooms: [3, 18],
-      zoom: 15,
+      zoom: 15
     });
   }
 
   initLocateMap(options: any = {}, callback: any, errorCallback: any): any {
     let self = this;
-    options = Object.assign(options, { container: 'mapContainer' });
+    options = Object.assign(options, { container: "mapContainer" });
     self.gdMap = new AMap.Map(options.container, {
       rotateEnable: true,
       dragEnable: true,
       zoomEnable: true,
       zooms: [3, 18],
-      zoom: 15,
+      zoom: 15
     });
-    self.gdMap.plugin(['AMap.Geolocation', 'AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.CitySearch', 'AMap.Marker', 'AMap.Geocoder'], function () {
-      let geolocation = new AMap.Geolocation({
-        enableHighAccuracy: true, //是否使用高精度定位，默认:true
-        timeout: 5000, //超过5秒后停止定位，默认：无穷大
-        maximumAge: 0, //定位结果缓存0毫秒，默认：0
-        convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
-        showButton: true, //显示定位按钮，默认：true
-        buttonPosition: 'LB', //定位按钮停靠位置，默认：'LB'，左下角
-        buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-        showMarker: false, //定位成功后在定位到的位置显示点标记，默认：true
-        markerOptions: {
-          icon: "//webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
-        },
-        showCircle: false, //定位成功后用圆圈表示定位精度范围，默认：true
-        panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
-        zoomToAccuracy: true //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false,
-      });
-      self.gdMap.addControl(geolocation);
-      geolocation.getCurrentPosition();
+    self.gdMap.plugin(
+      ["AMap.Geolocation", "AMap.Autocomplete", "AMap.PlaceSearch", "AMap.CitySearch", "AMap.Marker", "AMap.Geocoder"],
+      function() {
+        let geolocation = new AMap.Geolocation({
+          enableHighAccuracy: true, //是否使用高精度定位，默认:true
+          timeout: 5000, //超过5秒后停止定位，默认：无穷大
+          maximumAge: 0, //定位结果缓存0毫秒，默认：0
+          convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+          showButton: true, //显示定位按钮，默认：true
+          buttonPosition: "LB", //定位按钮停靠位置，默认：'LB'，左下角
+          buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+          showMarker: false, //定位成功后在定位到的位置显示点标记，默认：true
+          markerOptions: {
+            icon: "//webapi.amap.com/theme/v1.3/markers/n/mark_b.png"
+          },
+          showCircle: false, //定位成功后用圆圈表示定位精度范围，默认：true
+          panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
+          zoomToAccuracy: true //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false,
+        });
+        self.gdMap.addControl(geolocation);
+        geolocation.getCurrentPosition();
 
-      AMap.event.addListener(geolocation, 'complete', (result) => {
-        console.log(result);
-        callback && callback(result);
-      }); //返回定位信息
-      AMap.event.addListener(geolocation, 'error', (err) => {
-        errorCallback && errorCallback(err)
-      }); //返回定位出错信息
+        AMap.event.addListener(geolocation, "complete", result => {
+          console.log(result);
+          callback && callback(result);
+        }); //返回定位信息
+        AMap.event.addListener(geolocation, "error", err => {
+          errorCallback && errorCallback(err);
+        }); //返回定位出错信息
 
-      self.citySearch = new AMap.CitySearch();
-      self.citySearch.getLocalCity((status, citySearchResult) => {
-        if (status == 'complete') {
-          console.log(citySearchResult);
-          self.city = citySearchResult.city;
-          self.initAutoSearch({
-            city: citySearchResult.city
-          });
-          self.placeSearch = new AMap.PlaceSearch({ map: self.gdMap });
-          self.placeSearch.setCity(citySearchResult.city);
-        }
-      })
-      self.geocoder = new AMap.Geocoder();
-    })
+        self.citySearch = new AMap.CitySearch();
+        self.citySearch.getLocalCity((status, citySearchResult) => {
+          if (status == "complete") {
+            console.log(citySearchResult);
+            self.city = citySearchResult.city;
+            self.initAutoSearch({
+              city: citySearchResult.city
+            });
+            self.placeSearch = new AMap.PlaceSearch({ map: self.gdMap });
+            self.placeSearch.setCity(citySearchResult.city);
+          }
+        });
+        self.geocoder = new AMap.Geocoder();
+      }
+    );
   }
   initGeolocation(ops: any = {}, onComplete?, onError?): void {
     let self = this;
-    self.gdMap.plugin('AMap.Geolocation', function () {
-      let geolocation = new AMap.Geolocation(Object.assign({
-        enableHighAccuracy: true, //是否使用高精度定位，默认:true
-        timeout: 5000, //超过5秒后停止定位，默认：无穷大
-        maximumAge: 0, //定位结果缓存0毫秒，默认：0
-        convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
-        showButton: true, //显示定位按钮，默认：true
-        buttonPosition: 'LB', //定位按钮停靠位置，默认：'LB'，左下角
-        panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
-        zoomToAccuracy: true //定位成功且显示精度范围时，是否把地图视野调整到正好显示精度范围，默认：false,
-      }, ops));
+    self.gdMap.plugin("AMap.Geolocation", function() {
+      let geolocation = new AMap.Geolocation(
+        Object.assign(
+          {
+            enableHighAccuracy: true, //是否使用高精度定位，默认:true
+            timeout: 5000, //超过5秒后停止定位，默认：无穷大
+            maximumAge: 0, //定位结果缓存0毫秒，默认：0
+            convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+            showButton: true, //显示定位按钮，默认：true
+            buttonPosition: "LB", //定位按钮停靠位置，默认：'LB'，左下角
+            panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
+            zoomToAccuracy: true //定位成功且显示精度范围时，是否把地图视野调整到正好显示精度范围，默认：false,
+          },
+          ops
+        )
+      );
       self.gdMap.addControl(geolocation);
       geolocation.getCurrentPosition();
-      AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
-      AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
+      AMap.event.addListener(geolocation, "complete", onComplete); //返回定位信息
+      AMap.event.addListener(geolocation, "error", onError); //返回定位出错信息
     });
   }
   initAutoSearch(autoOptions?: any): void {
     let self = this;
     autoOptions = autoOptions || {};
-    self.gdMap.plugin('AMap.Autocomplete', function () {
+    self.gdMap.plugin("AMap.Autocomplete", function() {
       self.auto = new AMap.Autocomplete(autoOptions);
-    })
+    });
     //构造地点查询类
     // AMap.event.addListener(self.auto, "select", selectCallback);//注册监听，当选中某条记录时会触发
     // function select(e) {
@@ -126,24 +133,24 @@ export class GDMap {
    */
   initPathPlan(pannel?, ops: any = {}): void {
     let self = this;
-    AMap.service('AMap.Driving', function () {
+    AMap.service("AMap.Driving", function() {
       self.pathPlan.driving = new AMap.Driving({
         map: self.gdMap,
         panel: pannel
       });
-    })
-    AMap.service('AMap.Transfer', function () {
+    });
+    AMap.service("AMap.Transfer", function() {
       self.pathPlan.transfer = new AMap.Transfer({
         map: self.gdMap,
         panel: pannel
       });
-    })
-    AMap.service('AMap.Walking', function () {
+    });
+    AMap.service("AMap.Walking", function() {
       self.pathPlan.walking = new AMap.Walking({
         map: self.gdMap,
         panel: pannel
       });
-    })
+    });
   }
 
   pathSearch(pathPlanType: string, fromLngLat: Number[], toLngLat: Number[]) {
@@ -174,10 +181,11 @@ export class GDMap {
   }
 
   searchPlace(keyword: String, callback: any) {
-    let plSearch = new AMap.PlaceSearch({ //构造地点查询类
+    let plSearch = new AMap.PlaceSearch({
+      //构造地点查询类
       pageSize: 5,
       pageIndex: 1,
-      city: this.city//城市
+      city: this.city //城市
     });
     plSearch.search(keyword, callback);
   }
@@ -192,7 +200,7 @@ export class GDMap {
       this.curAddedMarker = new AMap.Marker({
         map: this.gdMap,
         position: position
-      })
+      });
       this.gdMap.setFitView();
       callback && callback();
     }
@@ -202,13 +210,15 @@ export class GDMap {
     if (markList.length) {
       let markerList = [];
       markList.forEach(pos => {
-        markerList.push(new AMap.Marker({
-          map: this.gdMap,
-          // icon: marker.icon,
-          position: pos,
-          // offset: new AMap.Pixel(-12, -36)
-        }));
-      })
+        markerList.push(
+          new AMap.Marker({
+            map: this.gdMap,
+            // icon: marker.icon,
+            position: pos
+            // offset: new AMap.Pixel(-12, -36)
+          })
+        );
+      });
       if (isFitView) {
         this.gdMap.setFitView();
       }
@@ -218,10 +228,10 @@ export class GDMap {
 
   addSimpleMarkers(posList: any[], callback?: any, options?: any) {
     if (posList && posList.length) {
-      options = Object.assign({ iconStyle: 'blue' }, options);
+      options = Object.assign({ iconStyle: "blue" }, options);
       let markerList = [];
       let curMap = this.gdMap;
-      AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
+      AMapUI.loadUI(["overlay/SimpleMarker"], function(SimpleMarker) {
         posList.forEach((pos, index) => {
           //创建SimpleMarker实例
           let tt = new SimpleMarker({
@@ -229,7 +239,7 @@ export class GDMap {
             iconLabel: {
               innerHTML: index + 1,
               style: {
-                color: '#fff'//设置文字颜色
+                color: "#fff" //设置文字颜色
               }
             },
             //背景图标样式
@@ -240,33 +250,33 @@ export class GDMap {
             position: pos
           });
           markerList.push(tt);
-        })
+        });
         curMap.setFitView();
         //点标记自适应的视图过大，重新定义点标记自适应的缩放级别
         curMap.setZoom(curMap.getZoom() - 1);
 
-        callback && callback(markerList)
+        callback && callback(markerList);
       });
     }
   }
 
   getStaticMapImg(paramStr) {
-    return 'http://restapi.amap.com/v3/staticmap?' + paramStr + '&key=' + STATIC_MAP_KEY;
+    return "http://restapi.amap.com/v3/staticmap?" + paramStr + "&key=" + STATIC_MAP_KEY;
   }
 
   highlightMarker(marker: any) {
     if (marker) {
-      marker.setIconStyle('red');
+      marker.setIconStyle("red");
     }
   }
 
   unHighlightMarker(marker: any) {
     if (marker) {
-      marker.setIconStyle('blue');
+      marker.setIconStyle("blue");
     }
   }
 
-  setZoomAndCenter(lnglat: Number[], zoom: number = 14, ) {
+  setZoomAndCenter(lnglat: Number[], zoom: number = 14) {
     if (lnglat && lnglat.length) {
       this.gdMap.setZoomAndCenter(zoom, lnglat);
     }
@@ -277,9 +287,9 @@ export class GDMap {
   }
 
   initDragLocate(onSelected?: any) {
-    let content = document.createElement('div');
+    let content = document.createElement("div");
     content.innerHTML = "<img src='http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png'>";
-    content.className = 'customControl';
+    content.className = "customControl";
     let customControl = {
       dom: content,
       addTo: () => {
@@ -292,12 +302,18 @@ export class GDMap {
           curCtn.removeChild(customControl.dom);
         }
       }
-    }
-    this.gdMap.on('dragstart', () => {
+    };
+    let isDrag = false; //标示是否是drag状态
+    this.gdMap.on("dragstart", () => {
+      isDrag = true;
       this.curAddedMarker.hide();
       this.gdMap.addControl(customControl);
-    })
-    this.gdMap.on('moveend', () => {
+    });
+    this.gdMap.on("moveend", () => {
+      if (!isDrag) {
+        // 非drag行为不触发moveend事件处理
+        return;
+      }
       this.gdMap.removeControl(customControl);
       let position = this.gdMap.getCenter();
       if (this.curAddedMarker) {
@@ -309,9 +325,7 @@ export class GDMap {
           result.regeocode.location = position;
           onSelected && onSelected(result.regeocode);
         }
-      })
-
-    })
+      });
+    });
   }
-
 }

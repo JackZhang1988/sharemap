@@ -1,6 +1,5 @@
 // http://ionicframework.com/docs/v2/theming/
 
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -16,6 +15,10 @@
 // automatically applied to the <body> element in the app.
 @import "./normalize.scss";
 
-ion-item.no-padding-left{
-    padding-left: 0;
+ion-item.no-padding-left {
+  padding-left: 0;
+}
+
+.card-header {
+  white-space: normal;
 }
