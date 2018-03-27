@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>我的</ion-title>
+    <ion-title>{{pageTitle}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -22,8 +22,8 @@
       <button ion-item navPush="SignupPage" [navParams]="{signStep:1,userInfo:userInfo}">修改资料</button>
     </ion-item-group>
     <ion-item-group>
-      <button ion-item navPush="MapListPage" [navParams]="{navUserId:navUserId,listType:'map',title:'我创建的地图集'}">我创建的地图集</button>
-      <button ion-item navPush="MapListPage" [navParams]="{navUserId:navUserId,listType:'location',title:'我创建的地点'}">我创建的地点</button>
+      <button ion-item navPush="MapListPage" [navParams]="{navUserId:navUserId,listType:'map',title:callTitle+'创建的地图集'}">{{callTitle}}创建的地图集</button>
+      <button ion-item navPush="MapListPage" [navParams]="{navUserId:navUserId,listType:'location',title:callTitle+'创建的地点'}">{{callTitle}}创建的地点</button>
     </ion-item-group>
     <ion-item-group *ngIf="isMe">
       <ion-item-divider color="light"></ion-item-divider>
