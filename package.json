@@ -97,9 +97,6 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-wechat": {
-        "WECHATAPPID": "wx6b9a1a289bfdc718"
-      },
       "cordova-plugin-browsersync": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-splashscreen": {},
@@ -110,6 +107,9 @@
       "cordova-plugin-camera": {},
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "分享地图在浏览地图集、添加地点时会使用您的位置"
+      },
+      "cordova-plugin-wechat": {
+        "WECHATAPPID": "wx6b9a1a289bfdc718"
       }
     }
   }
