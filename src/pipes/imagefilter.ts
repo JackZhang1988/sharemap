@@ -14,6 +14,11 @@ export class ImagefilterPipe implements PipeTransform {
    * Takes a value and makes it lowercase.
    */
   transform(url: string, ...args) {
+    if(!url){
+      // 如果url为空，返回默认图片
+      // todo: 根据imgType返回不同类型的默认图片
+      return 'http://okyb0e40i.bkt.clouddn.com/Fg8nsEKje42ddsAbqWQ6WRkP-wft';
+    }
     let imgType = args[0];
     switch (imgType) {
       case 'avatar':
