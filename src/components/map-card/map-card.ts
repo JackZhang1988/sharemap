@@ -10,6 +10,7 @@ import { GDMap } from '../../services/gdmap';
 export class MapCardComponent {
     @Input() mapStaticImg: string;
     @Input() viewTitle: string;
+    @Input() count?: Number;
     @Input() dataSource?: any;
     @Input() viewType: string; //表示map-card展示类型
 
@@ -86,6 +87,7 @@ export class MapCardComponent {
         let mapViewModal = this.modalCtrl.create('MapViewModal', {
             type: this.viewType,
             title: this.viewTitle,
+            count: this.count,
             mapLocations: mapModalData
         });
         mapViewModal.present();

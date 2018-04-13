@@ -14,6 +14,7 @@ export class GDMap {
   citySearch: any;
   city: String;
   curAddedMarker: any;
+  mass: any;
   geocoder: any;
   pathPlan: any = {};
   pathPlanInstance: any;
@@ -156,6 +157,35 @@ export class GDMap {
         map: self.gdMap,
         panel: pannel
       });
+    });
+  }
+
+  addMassMarks(marks, ops: any = {}) {
+    let self = this;
+    self.gdMap.plugin('AMap.MassMarks', function() {
+      self.mass = new AMap.MassMarks(
+        marks,
+        Object.assign(
+          {
+            opacity: 0.8,
+            zIndex: 111,
+            cursor: 'pointer',
+            style: {
+              url: 'http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
+              anchor: new AMap.Pixel(0, 0), // 图标显示位置偏移量，以图标的左上角为基准点（0,0）
+              size: new AMap.Size(20, 21) // 图标的尺寸
+            }
+          },
+          ops
+        )
+      );
+      var marker = new AMap.Marker({ content: ' ', map: self.gdMap });
+      self.mass.on('click', function(e) {
+        marker.setPosition(e.data.lnglat);
+        marker.setLabel({ content: e.data.name });
+        self.gdMap.setZoomAndCenter(13, e.data.lnglat);
+      });
+      self.mass.setMap(self.gdMap);
     });
   }
 

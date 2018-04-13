@@ -50,6 +50,15 @@ export class ApiService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getMapAllLocations(params): Observable<any> {
+    return this.http
+      .get(this.serverHost + '/map/allLocations', {
+        params: params
+      })
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   addNewMap(map: any): Observable<any> {
     return this.authHttp
       .post(this.serverHost + '/map', map)

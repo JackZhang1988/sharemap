@@ -1,12 +1,13 @@
 import { Component, ViewChild, ElementRef, trigger, state, style, transition, animate } from '@angular/core';
 import { IonicPage, ViewController, NavController, PopoverController, NavParams, Slides } from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
+import { ApiService } from '../../services/api';
 // import { PathPlanPopOverComponent } from '../../components/path-plan-pop-over/path-plan-pop-over';
 
 @IonicPage()
 @Component({
   templateUrl: 'map-view.html',
-  providers: [GDMap],
+  providers: [ApiService, GDMap],
   animations: [
     trigger('enterAnimation', [
       transition(':enter', [
@@ -26,6 +27,7 @@ export class MapViewModal {
     public navCtrl: NavController,
     public popoverCtrl: PopoverController,
     public navParams: NavParams,
+    public apiService: ApiService,
     private gdService: GDMap
   ) {}
   @ViewChild(Slides) slides: Slides;
@@ -35,6 +37,7 @@ export class MapViewModal {
   public type: string = this.navParams.get('type');
   public title: string = this.navParams.get('title');
   public mapInfo: any = this.navParams.get('mapInfo');
+  public count: Number = this.navParams.get('count'); // 判断marker总个数
   public mapLocations: any[] = this.navParams.get('mapLocations');
   public markerList: any[] = [];
   private preMarker: any;
@@ -43,6 +46,7 @@ export class MapViewModal {
   private curPosition: any;
   private pathSearchTrigger: boolean = false;
   private showPathPanel: boolean = false;
+  private isMass: boolean = false;
 
   //使用动态id，方式生成多个modal时id重复
   private randomMapId: string = 'mapContainer-' + new Date().getTime().toString(32);
@@ -69,16 +73,50 @@ export class MapViewModal {
     this.gdService.initPathPlan('pathPannel');
 
     let markList = [];
-    for (let item of this.mapLocations) {
-      markList.push(item.lnglat);
+    if (this.type == 'map-locations' && this.count >= 10) {
+      //获取map下所有location
+      let mapId = this.mapLocations[0].mapId;
+      this.apiService.getMapAllLocations({ mapId: mapId }).subscribe(res => {
+        if (res.status == 0) {
+          this.mapLocations = res.result.locations;
+          if (res.result.locations.length > 100) {
+            this.isMass = true;
+            markList = res.result.locations.map(item => {
+              return {
+                lnglat: item.lnglat,
+                name: item.description
+              };
+            });
+            //数量庞大的marker使用massMarks
+            this.gdService.addMassMarks(markList);
+            // let mock =  [{"lnglat":[116.258446,37.686622],"name":"景县","style":2},{"lnglat":[113.559954,22.124049],"name":"圣方济各堂区","style":2},{"lnglat":[116.366794,39.915309],"name":"西城区","style":2},{"lnglat":[116.486409,39.921489],"name":"朝阳区","style":2},{"lnglat":[116.286968,39.863642],"name":"丰台区","style":2},{"lnglat":[116.195445,39.914601],"name":"石景山区","style":2},{"lnglat":[116.310316,39.956074],"name":"海淀区","style":2},{"lnglat":[116.105381,39.937183],"name":"门头沟区","style":2}];
+            // this.gdService.addMassMarks(mock);
+          } else {
+            markList = res.result.locations.map(item => {
+              return item.lnglat;
+            });
+            this.gdService.addSimpleMarkers(markList, markerList => {
+              this.markerList = markerList;
+              this.curMarker = markerList[0];
+              //默认高亮第一个marker
+              this.gdService.highlightMarker(markerList[0]);
+              this.gdService.setFitView();
+            });
+          }
+        }
+      });
+    } else {
+      for (let item of this.mapLocations) {
+        markList.push(item.lnglat);
+      }
+      this.gdService.addSimpleMarkers(markList, markerList => {
+        this.markerList = markerList;
+        this.curMarker = markerList[0];
+        //默认高亮第一个marker
+        this.gdService.highlightMarker(markerList[0]);
+        this.gdService.setFitView();
+      });
     }
-    this.gdService.addSimpleMarkers(markList, markerList => {
-      this.markerList = markerList;
-      this.curMarker = markerList[0];
-      //默认高亮第一个marker
-      this.gdService.highlightMarker(markerList[0]);
-      this.gdService.setFitView();
-    });
   }
 
   ngAfterViewInit() {

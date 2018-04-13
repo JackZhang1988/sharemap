@@ -39,6 +39,7 @@ export class MapDetailPage {
   public mapLocations: any[] = [];
   public viewTitle: string;
   private mapCommentCount: Number;
+  private locationCount: Number;
   private likeCount = 0;
   public hasLiked = false;
   private isOwner = false;
@@ -65,6 +66,7 @@ export class MapDetailPage {
       if (res.status == 0) {
         this.mapInfo = res.result.map;
         this.mapLocations = res.result.locations;
+        this.locationCount = res.result.count;
         if (res.result.locations.length < this.locationPageSize) {
           this.hasMoreLocations = false;
         }
