@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
-import { MapViewComponent } from './map-view/map-view';
+import { MapCardComponent } from './map-card/map-card';
 @NgModule({
-	declarations: [MapViewComponent],
+	declarations: [MapCardComponent],
 	imports: [IonicModule],
-	exports: [MapViewComponent]
+	exports: [MapCardComponent]
 })
 export class ComponentsModule { }

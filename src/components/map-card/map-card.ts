@@ -1,22 +1,17 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
-/**
- * Generated class for the MapViewComponent component.
- *
- * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- * for more info on Angular Components.
- */
+
 @Component({
-  selector: 'map-view',
-  templateUrl: 'map-view.html',
+  selector: 'map-card',
+  templateUrl: 'map-card.html',
   providers: [GDMap]
 })
-export class MapViewComponent {
+export class MapCardComponent {
   @Input() mapStaticImg: string;
   @Input() viewTitle: string;
   @Input() location?: any;
-  @Input() viewType: string; //表示map-view展示类型
+  @Input() viewType: string; //表示map-card展示类型
 
   private STATIC_MAP_KEY: string;
 
