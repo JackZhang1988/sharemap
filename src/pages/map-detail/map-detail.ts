@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild } from '@angular/core';
 import {
   IonicPage,
   NavController,
@@ -7,18 +7,18 @@ import {
   Slides,
   AlertController,
   ToastController
-} from "ionic-angular";
-import { ApiService } from "../../services/api";
-import { ShareProvider } from "../../providers/share";
-import { Storage } from "@ionic/storage";
+} from 'ionic-angular';
+import { ApiService } from '../../services/api';
+import { ShareProvider } from '../../providers/share';
+import { Storage } from '@ionic/storage';
 
 @IonicPage({
-  segment: "/map-detail/:id",
-  defaultHistory: ["home"]
+  segment: '/map-detail/:id',
+  defaultHistory: ['home']
 })
 @Component({
-  selector: "page-map-detail",
-  templateUrl: "map-detail.html",
+  selector: 'page-map-detail',
+  templateUrl: 'map-detail.html',
   providers: [ApiService, ShareProvider]
 })
 export class MapDetailPage {
@@ -43,6 +43,9 @@ export class MapDetailPage {
   public hasLiked = false;
   private isOwner = false;
   private loading = true;
+  private loadingLocations = false;
+  private hasMoreLocations = true;
+  private locationPageSize = 20;
 
   ionViewDidLoad() {
     this.getMapData();
@@ -58,19 +61,22 @@ export class MapDetailPage {
     console.log(this.mapParams);
     this.apiService.getMapById(this.mapParams.id).subscribe(res => {
       console.log(res.result);
-      // this.loading = false;
+      this.loading = false;
       if (res.status == 0) {
         this.mapInfo = res.result.map;
         this.mapLocations = res.result.locations;
+        if (res.result.locations.length < this.locationPageSize) {
+          this.hasMoreLocations = false;
+        }
         this.viewTitle = this.mapInfo.title;
-        this.storage.get("userId").then(userID => {
+        this.storage.get('userId').then(userID => {
           this.isOwner = userID == res.result.map.creater._id;
         });
         this.shareProvider.initShareContent({
-          title: '来看看我分享的地图集【'+this.mapInfo.title+'】',
+          title: '来看看我分享的地图集【' + this.mapInfo.title + '】',
           shareDesc: this.mapInfo.description,
-          shareImg: this.mapInfo.coverImg + "?imageView2/0/w/200/h/200/q/75",
-          shareUrl: "map.html?mapId=" + this.mapInfo._id,
+          shareImg: this.mapInfo.coverImg + '?imageView2/0/w/200/h/200/q/75',
+          shareUrl: 'map.html?mapId=' + this.mapInfo._id
         });
       }
     });
@@ -86,7 +92,7 @@ export class MapDetailPage {
   }
 
   getMapLikeInfo() {
-    this.storage.get("userId").then(userID => {
+    this.storage.get('userId').then(userID => {
       this.apiService.getLikeInfo(this.mapParams.id, userID).subscribe(res => {
         if (res.status == 0) {
           console.log(res);
@@ -98,19 +104,42 @@ export class MapDetailPage {
   }
 
   goLocationDetail(locationData) {
-    this.navCtrl.push("LocationDetailPage", {
+    this.navCtrl.push('LocationDetailPage', {
       id: locationData._id
     });
   }
 
   goMapComments(): void {
-    this.navCtrl.push("MapCommentsPage", {
+    this.navCtrl.push('MapCommentsPage', {
       mapId: this.mapParams.id,
       creater: this.mapInfo.creater
     });
   }
+
+  loadMoreLocations(): void {
+    let lastItemId = this.mapLocations[this.mapLocations.length - 1]._id;
+    let mapId = this.mapInfo._id;
+    this.loadingLocations = true;
+    this.apiService
+      .getMapLocations({
+        lastItemId: lastItemId,
+        mapId: mapId,
+        pageSize: this.locationPageSize
+      })
+      .subscribe(res => {
+        if (res.status == 0) {
+          this.loadingLocations = false;
+          this.mapLocations = this.mapLocations.concat(res.result.locations);
+
+          if (res.result.locations.length < this.locationPageSize) {
+            this.hasMoreLocations = false;
+          }
+        }
+      });
+  }
+
   editMap(): void {
-    let addMapModal = this.modalCtrl.create("AddMapModal", {
+    let addMapModal = this.modalCtrl.create('AddMapModal', {
       mapInfo: this.mapInfo
     });
     addMapModal.present();
@@ -118,17 +147,17 @@ export class MapDetailPage {
 
   delMap(): void {
     let confirm = this.alertCtrl.create({
-      title: "确定要删除此地图集吗?",
-      message: "删除后不可恢复",
+      title: '确定要删除此地图集吗?',
+      message: '删除后不可恢复',
       buttons: [
         {
-          text: "取消",
+          text: '取消',
           handler: () => {}
         },
         {
-          text: "确定",
+          text: '确定',
           handler: () => {
-            this.storage.get("userId").then(userID => {
+            this.storage.get('userId').then(userID => {
               this.apiService
                 .delMap({
                   id: this.mapParams.id,
@@ -137,9 +166,9 @@ export class MapDetailPage {
                 .subscribe(res => {
                   if (res.status == 0) {
                     let toast = this.toastCtrl.create({
-                      message: "删除成功",
+                      message: '删除成功',
                       duration: 1500,
-                      position: "bottom"
+                      position: 'bottom'
                     });
                     toast.onDidDismiss(() => {
                       this.navCtrl.pop();
@@ -156,19 +185,19 @@ export class MapDetailPage {
   }
 
   addLocation(): void {
-    let addLocationModal = this.modalCtrl.create("SearchLocModal", {
+    let addLocationModal = this.modalCtrl.create('SearchLocModal', {
       mapInfo: this.mapInfo
     });
     addLocationModal.present();
   }
 
   sendLike(): void {
-    this.storage.get("userId").then(userID => {
+    this.storage.get('userId').then(userID => {
       if (userID) {
         this.apiService
           .sendLike({
             targetId: this.mapParams.id,
-            targetType: "map",
+            targetType: 'map',
             userId: userID,
             hasLiked: this.hasLiked
           })
@@ -183,9 +212,9 @@ export class MapDetailPage {
             }
           });
       } else {
-        this.navCtrl.push("LoginPage", {
+        this.navCtrl.push('LoginPage', {
           callback: () => {
-            this.navCtrl.push("ProfilePage");
+            this.navCtrl.push('ProfilePage');
           }
         });
       }

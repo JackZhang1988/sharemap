@@ -69,6 +69,10 @@
           <button ion-button clear item-end>详情</button>
         </button>
       </ion-list>
+      <div class="loadmore-locations-wrap c_txt" [hidden]="!hasMoreLocations">
+        <button ion-button clear block class="loadmore-locations" (click)="loadMoreLocations()" [hidden]="loadingLocations">加载更多</button>
+        <ion-spinner class="locations-spinner" [hidden]="!loadingLocations"></ion-spinner>  
+      </div>
     </ion-card>
   </div>
   <div class="edit-btn-action" *ngIf="isOwner">
