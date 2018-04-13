@@ -237,7 +237,7 @@ export class GDMap {
           let tt = new SimpleMarker({
             //前景文字
             iconLabel: {
-              innerHTML: index + 1,
+              // innerHTML: index + 1,
               style: {
                 color: "#fff" //设置文字颜色
               }
@@ -251,7 +251,9 @@ export class GDMap {
           });
           markerList.push(tt);
         });
-        curMap.setFitView();
+
+        // 取消自适应view，让视图自动适配到定位位置
+        // curMap.setFitView();
         //点标记自适应的视图过大，重新定义点标记自适应的缩放级别
         curMap.setZoom(curMap.getZoom() - 1);
 

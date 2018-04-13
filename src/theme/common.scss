@@ -82,7 +82,7 @@
   text-overflow: ellipsis;
 }
 
-@mixin close($width:22px, $background:#666, $thick:2px, $hoverColor:none) {
+@mixin close($width: 22px, $background: #666, $thick: 2px, $hoverColor: none) {
   position: relative;
   display: inline-block;
   width: $width;
@@ -115,8 +115,8 @@
   }
 }
 
-@mixin arrow($width:10px, $color:#5d5d5d, $rotate:135deg) {
-  content: "";
+@mixin arrow($width: 10px, $color: #5d5d5d, $rotate: 135deg) {
+  content: '';
   width: $width;
   height: $width;
   position: absolute;
@@ -131,14 +131,14 @@
   transform: rotate($rotate);
 }
 
-@mixin max-line($num, $isShowEllipsis:true) {
+@mixin max-line($num, $isShowEllipsis: true) {
   display: -webkit-box;
   -webkit-line-clamp: $num;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
-  @if isShowEllipsis=='false' {
+  @if isShowEllipsis== 'false' {
     color: transparent; // 隐藏ellipsis
   }
 }
@@ -158,16 +158,36 @@
   .card-title {
     position: absolute;
     top: 36%;
-    font-size: 2.0em;
+    font-size: 2em;
     width: 100%;
     font-weight: bold;
     color: #fff;
   }
   .card-subtitle {
-    font-size: 1.0em;
+    font-size: 1em;
     position: absolute;
     top: 52%;
     width: 100%;
     color: #fff;
+  }
+}
+
+.page-loading-wraper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 11;
+  .page-spinner {
+    top: 50%;
+    height: 50px;
+    width: 50px;
+    z-index: 111;
+    margin-top: -50px;
+    left: 50%;
+    margin-left: -25px;
   }
 }

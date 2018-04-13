@@ -42,6 +42,7 @@ export class MapDetailPage {
   private likeCount = 0;
   public hasLiked = false;
   private isOwner = false;
+  private loading = true;
 
   ionViewDidLoad() {
     this.getMapData();
@@ -57,6 +58,7 @@ export class MapDetailPage {
     console.log(this.mapParams);
     this.apiService.getMapById(this.mapParams.id).subscribe(res => {
       console.log(res.result);
+      // this.loading = false;
       if (res.status == 0) {
         this.mapInfo = res.result.map;
         this.mapLocations = res.result.locations;

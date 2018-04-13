@@ -18,7 +18,10 @@
 
 
 <ion-content>
-  <div id="listView" [hidden]="curView=='map'">
+  <div class="page-loading-wraper" [hidden]="!loading">
+    <ion-spinner class="page-spinner"></ion-spinner>  
+  </div>
+  <div id="listView" [hidden]="curView=='map'" [hidden]="loading">
     <ion-card>
       <div class="map-main-wrap">
         <img src="{{mapInfo.coverImg | imagefilter:'mural'}}" *ngIf="mapInfo.coverImg" />

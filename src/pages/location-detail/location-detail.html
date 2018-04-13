@@ -23,7 +23,10 @@
 
 
 <ion-content>
-  <ion-card class="imgs-info">
+  <div class="page-loading-wraper" [hidden]="!loading">
+    <ion-spinner class="page-spinner"></ion-spinner>
+  </div>
+  <ion-card class="imgs-info" [hidden]="loading">
     <ion-item class="user-item">
       <h2 class="user-name">{{locationInfo.creater?.name}}</h2>
       <p class="location-desc">

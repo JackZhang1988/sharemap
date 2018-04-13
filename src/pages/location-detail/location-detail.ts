@@ -39,6 +39,7 @@ export class LocationDetailPage {
   public lnglat: Number[];
   private isOwner = false;
   private showSlider = false;
+  private loading = true;
 
   ionViewDidLoad() {
     console.log(this.navParams);
@@ -51,6 +52,7 @@ export class LocationDetailPage {
 
   getLocationData() {
     this.apiService.getLocationById(this.locationParams.id).subscribe(res => {
+      this.loading = false;
       if (res.status == 0) {
         console.log(res);
         this.locationInfo = res.result;

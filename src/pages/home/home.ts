@@ -108,7 +108,7 @@ export class HomePage implements OnInit {
     console.log("Begin async operation");
     this.getMaps({
       pageSize: this.pageSize,
-      lastItemDate: this.maps[this.maps.length - 1].addDate
+      lastItemId: this.maps[this.maps.length - 1]._id
     });
   }
   doRefresh(refresher) {
