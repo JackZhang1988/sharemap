@@ -29,7 +29,7 @@
       </div>
       <div class="map-intro">{{mapInfo.description}}</div>
     </div> -->
-    <ion-slides *ngIf="type=='map-locations'" id="slideContainer" [pager]=true (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()">
+    <ion-slides *ngIf="type=='map-locations'" id="slideContainer" [pager]=false (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()">
       <ion-slide *ngFor='let item of mapLocations' class="map-slider">
         <button ion-item (click)="goLocationDetail(item)">
           <ion-thumbnail item-start>
