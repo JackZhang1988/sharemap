@@ -29,8 +29,7 @@
   <ion-card class="imgs-info" [hidden]="loading">
     <ion-item class="user-item">
       <h2 class="user-name">{{locationInfo.creater?.name}}</h2>
-      <p class="location-desc">
-        {{locationInfo.description}}
+      <p class="location-desc" [innerHtml]="locationInfo.description | keepHtml">
       </p>
       <ion-avatar item-start class="user-avatar" nav-user-profile [userId]="locationInfo.creater?._id">
         <img src="{{locationInfo.creater?.avatar | imagefilter:'avatar'}}" *ngIf="locationInfo.creater?.avatar">
@@ -51,7 +50,7 @@
     <div card-header *ngIf="locationInfo">
       <ion-card-title>{{locationInfo.locationInfo?.name}}</ion-card-title>
       <div>
-        <ion-icon name="pin"></ion-icon> {{locationInfo.locationInfo?.district + locationInfo.locationInfo?.address}}
+        <ion-icon name="pin"></ion-icon> {{locationInfo.locationInfo?.address}}
       </div>
 
     </div>
