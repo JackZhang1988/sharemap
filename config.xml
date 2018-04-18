@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.fenxiangditu.sharemap" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.fenxiangditu.sharemap" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>分享地图</name>
     <description>创建、分享你的地图集</description>
     <author email="sharemap@yeah.net" href="http://fenxiangditu.com/">分享地图团队</author>
@@ -37,13 +37,13 @@
             <string>分享地图在浏览地图集、添加地点时会使用您的位置</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
-            <string>分享地图想要访问您的相机</string>
+            <string>分享地图在添加地图图片时想要访问您的相机</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
-            <string>分享地图想要访问您的相册</string>
+            <string>分享地图在添加地图图片时想要访问您的相册</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryAddUsageDescription">
-            <string>分享地图想要访问您的相册</string>
+            <string>分享地图在添加地图图片时想要访问您的相册</string>
         </edit-config>
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
