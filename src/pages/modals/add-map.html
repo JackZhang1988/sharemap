@@ -15,7 +15,10 @@
   <div class="item-img-add cover">
     <img class="nearlib-cover" [src]="coverImg" *ngIf="coverImg">
     <ion-spinner class="cover-spinner" [hidden]="!imgLoading"></ion-spinner>
-    <div class="img-add-block cover" tappable>
+    <div class="img-add-block get-camera" (click)="getPicture()">
+      <div class="cover-add-title">点击添加封面</div>
+    </div>
+    <!-- <div class="img-add-block cover" tappable>
       <div class="cover-add-title">点击添加封面</div>
       <div class="img-input-wrap">
         <form enctype="multipart/form-data" class="img-add-input" method="post">
@@ -24,7 +27,7 @@
           <input type="submit">
         </form>
       </div>
-    </div>
+    </div> -->
   </div>
 
 
