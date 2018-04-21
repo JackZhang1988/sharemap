@@ -15,6 +15,7 @@ export class GDMap {
     city: String;
     curAddedMarker: any;
     mass: any;
+    markerCluster: any;
     geocoder: any;
     pathPlan: any = {};
     pathPlanInstance: any;
@@ -51,60 +52,54 @@ export class GDMap {
             zooms: [3, 18],
             zoom: 15
         });
-        self.gdMap.plugin(
-            [
-                'AMap.Geolocation',
-                'AMap.Autocomplete',
-                'AMap.PlaceSearch',
-                'AMap.CitySearch',
-                'AMap.Marker',
-                'AMap.Geocoder'
-            ],
-            function() {
-                let geolocation = new AMap.Geolocation({
-                    enableHighAccuracy: true, //是否使用高精度定位，默认:true
-                    timeout: 5000, //超过5秒后停止定位，默认：无穷大
-                    maximumAge: 0, //定位结果缓存0毫秒，默认：0
-                    convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
-                    showButton: true, //显示定位按钮，默认：true
-                    buttonPosition: 'LB', //定位按钮停靠位置，默认：'LB'，左下角
-                    buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-                    showMarker: false, //定位成功后在定位到的位置显示点标记，默认：true
-                    markerOptions: {
-                        icon: '//webapi.amap.com/theme/v1.3/markers/n/mark_b.png'
-                    },
-                    showCircle: false, //定位成功后用圆圈表示定位精度范围，默认：true
-                    panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
-                    zoomToAccuracy: true //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false,
-                });
-                self.gdMap.addControl(geolocation);
-                geolocation.getCurrentPosition((status, result) => {
-                    console.log(status, result);
-                });
-
-                AMap.event.addListener(geolocation, 'complete', result => {
-                    console.log(result);
-                    callback && callback(result);
-                }); //返回定位信息
-                AMap.event.addListener(geolocation, 'error', err => {
-                    errorCallback && errorCallback(err);
-                }); //返回定位出错信息
-
-                self.citySearch = new AMap.CitySearch();
-                self.citySearch.getLocalCity((status, citySearchResult) => {
-                    if (status == 'complete') {
-                        console.log(citySearchResult);
-                        self.city = citySearchResult.city;
-                        self.initAutoSearch({
-                            city: citySearchResult.city
-                        });
+        AMap.plugin('AMap.Geolocation', () => {
+            let geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true, //是否使用高精度定位，默认:true
+                timeout: 5000, //超过5秒后停止定位，默认：无穷大
+                maximumAge: 0, //定位结果缓存0毫秒，默认：0
+                convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+                showButton: true, //显示定位按钮，默认：true
+                buttonPosition: 'LB', //定位按钮停靠位置，默认：'LB'，左下角
+                buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                showMarker: false, //定位成功后在定位到的位置显示点标记，默认：true
+                markerOptions: {
+                    icon: '//webapi.amap.com/theme/v1.3/markers/n/mark_b.png'
+                },
+                showCircle: false, //定位成功后用圆圈表示定位精度范围，默认：true
+                panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
+                zoomToAccuracy: true //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false,
+            });
+            self.gdMap.addControl(geolocation);
+            geolocation.getCurrentPosition((status, result) => {
+                console.log(status, result);
+            });
+            AMap.event.addListener(geolocation, 'complete', result => {
+                console.log(result);
+                callback && callback(result);
+            }); //返回定位信息
+            AMap.event.addListener(geolocation, 'error', err => {
+                errorCallback && errorCallback(err);
+            }); //返回定位出错信息
+        });
+        AMap.plugin('AMap.CitySearch', () => {
+            self.citySearch = new AMap.CitySearch();
+            self.citySearch.getLocalCity((status, citySearchResult) => {
+                if (status == 'complete') {
+                    console.log(citySearchResult);
+                    self.city = citySearchResult.city;
+                    self.initAutoSearch({
+                        city: citySearchResult.city
+                    });
+                    AMap.plugin('AMap.PlaceSearch', () => {
                         self.placeSearch = new AMap.PlaceSearch({ map: self.gdMap });
                         self.placeSearch.setCity(citySearchResult.city);
-                    }
-                });
-                self.geocoder = new AMap.Geocoder();
-            }
-        );
+                    });
+                }
+            });
+        });
+        AMap.plugin('AMap.Geocoder', () => {
+            self.geocoder = new AMap.Geocoder();
+        });
     }
     initGeolocation(ops: any = {}, onComplete?, onError?): void {
         let self = this;
@@ -173,30 +168,42 @@ export class GDMap {
 
     addMassMarks(marks, ops: any = {}) {
         let self = this;
-        self.gdMap.plugin('AMap.MassMarks', function() {
-            self.mass = new AMap.MassMarks(
-                marks,
-                Object.assign(
-                    {
-                        opacity: 0.8,
-                        zIndex: 111,
-                        cursor: 'pointer',
-                        style: {
-                            url: 'http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
-                            anchor: new AMap.Pixel(0, 0), // 图标显示位置偏移量，以图标的左上角为基准点（0,0）
-                            size: new AMap.Size(20, 21) // 图标的尺寸
-                        }
-                    },
-                    ops
-                )
-            );
-            var marker = new AMap.Marker({ content: ' ', map: self.gdMap });
-            self.mass.on('click', function(e) {
-                marker.setPosition(e.data.lnglat);
-                // marker.setLabel({ content: e.data.info.location });
-                self.gdMap.setZoomAndCenter(13, e.data.lnglat);
+        self.mass = new AMap.MassMarks(
+            marks,
+            Object.assign(
+                {
+                    opacity: 0.8,
+                    zIndex: 111,
+                    cursor: 'pointer',
+                    style: {
+                        url: 'http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
+                        anchor: new AMap.Pixel(0, 0), // 图标显示位置偏移量，以图标的左上角为基准点（0,0）
+                        size: new AMap.Size(16, 21) // 图标的尺寸
+                    }
+                },
+                ops
+            )
+        );
+        var marker = new AMap.Marker({ content: ' ', map: self.gdMap });
+        self.mass.on('click', function(e) {
+            marker.setPosition(e.data.lnglat);
+            // marker.setLabel({ content: e.data.info.location });
+            self.gdMap.setZoomAndCenter(15, e.data.lnglat);
+            ops.markerClick && ops.markerClick(e.data);
+        });
+        self.mass.setMap(self.gdMap);
+    }
+
+    addMarkerClusterer(markers, ops: any = {}) {
+        let self = this;
+        AMap.plugin('AMap.MarkerClusterer', () => {
+            self.markerCluster = new AMap.MarkerClusterer(self.gdMap, markers, {
+                styles: {
+                    url: 'http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
+                    anchor: new AMap.Pixel(0, 0), // 图标显示位置偏移量，以图标的左上角为基准点（0,0）
+                    size: new AMap.Size(20, 21) // 图标的尺寸
+                }
             });
-            self.mass.setMap(self.gdMap);
         });
     }
 

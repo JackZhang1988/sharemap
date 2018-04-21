@@ -95,6 +95,8 @@ export class MapViewModal {
                         });
                         //数量庞大的marker使用massMarks
                         this.gdService.addMassMarks(markList);
+
+                        // this.gdService.addMarkerClusterer(markList)
                         // let mock =  [{"lnglat":[116.258446,37.686622],"name":"景县","style":2},{"lnglat":[113.559954,22.124049],"name":"圣方济各堂区","style":2},{"lnglat":[116.366794,39.915309],"name":"西城区","style":2},{"lnglat":[116.486409,39.921489],"name":"朝阳区","style":2},{"lnglat":[116.286968,39.863642],"name":"丰台区","style":2},{"lnglat":[116.195445,39.914601],"name":"石景山区","style":2},{"lnglat":[116.310316,39.956074],"name":"海淀区","style":2},{"lnglat":[116.105381,39.937183],"name":"门头沟区","style":2}];
                         // this.gdService.addMassMarks(mock);
                     } else {
