@@ -90,7 +90,7 @@ export class MapViewModal {
                         markList = res.result.locations.map(item => {
                             return {
                                 lnglat: item.lnglat,
-                                name: item.description
+                                info: item
                             };
                         });
                         //数量庞大的marker使用massMarks

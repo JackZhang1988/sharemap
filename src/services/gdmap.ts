@@ -193,7 +193,7 @@ export class GDMap {
             var marker = new AMap.Marker({ content: ' ', map: self.gdMap });
             self.mass.on('click', function(e) {
                 marker.setPosition(e.data.lnglat);
-                marker.setLabel({ content: e.data.name });
+                // marker.setLabel({ content: e.data.info.location });
                 self.gdMap.setZoomAndCenter(13, e.data.lnglat);
             });
             self.mass.setMap(self.gdMap);
