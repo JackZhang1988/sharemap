@@ -23,9 +23,9 @@ export class SearchPage {
         console.log('ionViewDidLoad SearchPage');
     }
 
-    ionViewWillEnter() {
-        typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#387ef5');
-    }
+    // ionViewWillEnter() {
+    //     typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#387ef5');
+    // }
 
     search() {
         this.curType = this.searchType;

@@ -25,9 +25,9 @@ export class SearchLocModal {
     loadingText = '正在定位中...';
     private mapInfo: any = this.navParams.get('mapInfo');
 
-    ionViewWillEnter() {
-        typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#f8f8f8');
-    }
+    // ionViewWillEnter() {
+    //     typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#f8f8f8');
+    // }
 
     dismiss() {
         this.viewCtrl.dismiss();

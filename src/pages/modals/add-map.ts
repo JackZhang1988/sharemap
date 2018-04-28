@@ -39,12 +39,12 @@ export class AddMapModal extends ModalContent {
         }
     }
 
-    ionViewWillEnter() {
-        typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#f8f8f8');
-    }
-    ionViewWillLeave() {
-        typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#387ef5');
-    }
+    // ionViewWillEnter() {
+    //     typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#f8f8f8');
+    // }
+    // ionViewWillLeave() {
+    //     typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#387ef5');
+    // }
 
     public imgChange(event) {
         this.imgLoading = true;

@@ -30,12 +30,12 @@ export class HomePage implements OnInit {
         this.getMaps({ pageSize: this.pageSize });
     }
 
-    ionViewWillEnter() {
-        typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#387ef5');
-    }
-    ionViewWillLeave() {
-        typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#f8f8f8');
-    }
+    // ionViewWillEnter() {
+    //     typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#387ef5');
+    // }
+    // ionViewWillLeave() {
+    //     typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#f8f8f8');
+    // }
 
     getMaps(param?, callback?, isRefresh = false): void {
         this.apiService.getMaps(param).subscribe(res => {
@@ -86,7 +86,7 @@ export class HomePage implements OnInit {
                     curModal = this.modalCtrl.create('SearchLocModal');
                 }
                 curModal.onDidDismiss(callbackData => {
-                    typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#387ef5');
+                    // typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#387ef5');
                     if (callbackData && callbackData.status == 'add-map-done') {
                         //表示添加地图集成功
                         this.goMapDetail(callbackData.data);

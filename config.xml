@@ -95,7 +95,7 @@
     <preference name="FadeSplashScreenDuration" value="300" />
     <preference name="CameraUsesGeolocation" value="true" />
     <preference name="KeyboardDisplayRequiresUserAction" value="false" />
-    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarOverlaysWebView" value="true" />
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
