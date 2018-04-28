@@ -15,3 +15,4 @@ declare module '*';
 declare var AMap:any;
 declare var AMapUI:any;
 declare var Wechat:any;
+declare var StatusBar:any;
