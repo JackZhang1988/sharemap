@@ -31,10 +31,10 @@ export class HomePage implements OnInit {
     }
 
     ionViewWillEnter() {
-        StatusBar && StatusBar.backgroundColorByHexString('#387ef5');
+        typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#387ef5');
     }
     ionViewWillLeave() {
-        StatusBar && StatusBar.backgroundColorByHexString('#f8f8f8');
+        typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#f8f8f8');
     }
 
     getMaps(param?, callback?, isRefresh = false): void {
@@ -69,6 +69,11 @@ export class HomePage implements OnInit {
             id: mapData._id
         });
     }
+    goLocationDetail(locationData) {
+        this.navCtrl.push('LocationDetailPage', {
+            id: locationData._id
+        });
+    }
 
     openAddModal(type, fab: FabContainer) {
         fab.close();
@@ -81,15 +86,13 @@ export class HomePage implements OnInit {
                     curModal = this.modalCtrl.create('SearchLocModal');
                 }
                 curModal.onDidDismiss(callbackData => {
-                    // StatusBar && StatusBar.backgroundColorByHexString('#387ef5');
+                    typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#387ef5');
                     if (callbackData && callbackData.status == 'add-map-done') {
                         //表示添加地图集成功
                         this.goMapDetail(callbackData.data);
                     } else if (callbackData && callbackData.status == 'add-location-done') {
                         //添加地点成功
-                        this.navCtrl.push('LocationDetailPage', {
-                            id: callbackData.data._id
-                        });
+                        this.goLocationDetail(callbackData.data);
                     }
                 });
                 curModal.present();

@@ -178,13 +178,19 @@ export class AddLocModal extends ModalContent {
                                 position: 'bottom'
                             });
                             toast.onDidDismiss(() => {
-                                this.navCtrl.push('LocationDetailPage', {
-                                    id: res.result._id
-                                });
-                                this.viewCtrl.dismiss({
-                                    status: 'add-location-done',
-                                    data: res.result
-                                });
+                                // this.navCtrl.push('LocationDetailPage', {
+                                //     id: res.result._id
+                                // });
+                                this.viewCtrl.dismiss(
+                                    {
+                                        status: 'add-location-done',
+                                        data: res.result
+                                    },
+                                    'add-location-done',
+                                    {
+                                        animate: false
+                                    }
+                                );
                             });
                             toast.present();
                         } else {

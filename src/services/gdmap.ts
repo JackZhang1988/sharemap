@@ -75,6 +75,9 @@ export class GDMap {
             });
             AMap.event.addListener(geolocation, 'complete', result => {
                 console.log(result);
+                if (!result.location) {
+                    result.location = result.position;
+                }
                 callback && callback(result);
             }); //返回定位信息
             AMap.event.addListener(geolocation, 'error', err => {
@@ -121,6 +124,9 @@ export class GDMap {
             );
             self.gdMap.addControl(geolocation);
             geolocation.getCurrentPosition((status, result) => {
+                if (!result.location) {
+                    result.location = result.position;
+                }
                 console.log(status, result);
             });
             AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息

@@ -24,7 +24,7 @@ export class SearchPage {
     }
 
     ionViewWillEnter() {
-        StatusBar && StatusBar.backgroundColorByHexString('#387ef5');
+        typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#387ef5');
     }
 
     search() {

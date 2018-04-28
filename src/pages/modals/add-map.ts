@@ -39,6 +39,13 @@ export class AddMapModal extends ModalContent {
         }
     }
 
+    ionViewWillEnter() {
+        typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#f8f8f8');
+    }
+    ionViewWillLeave() {
+        typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#387ef5');
+    }
+
     public imgChange(event) {
         this.imgLoading = true;
         let target = event.target || event.srcElement;
@@ -64,10 +71,16 @@ export class AddMapModal extends ModalContent {
                             position: 'bottom'
                         });
                         toast.onDidDismiss(() =>
-                            this.viewCtrl.dismiss({
-                                status: 'add-map-done',
-                                data: res.result
-                            })
+                            this.viewCtrl.dismiss(
+                                {
+                                    status: 'add-map-done',
+                                    data: res.result
+                                },
+                                'add-map-done',
+                                {
+                                    animate: false
+                                }
+                            )
                         );
                         toast.present();
                     } else {
