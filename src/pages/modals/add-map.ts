@@ -38,6 +38,7 @@ export class AddMapModal extends ModalContent {
             this.title = this.mapInfo.title;
             this.coverImg = this.mapInfo.coverImg;
             this.description = this.mapInfo.description;
+            this.mapProperty = this.mapInfo.mapProperty;
         }
     }
 
