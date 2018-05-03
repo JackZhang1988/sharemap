@@ -36,6 +36,25 @@
     <ion-textarea placeholder="介绍一下你的地图集" [(ngModel)]="description"></ion-textarea>
   </ion-item>
 
+  <ion-list radio-group [(ngModel)]="mapProperty">
+    <ion-list-header>
+      设置地图属性
+      <ion-icon (click)="showPropertyNotice()" name="ios-alert-outline" class="radio-notice"></ion-icon>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>公开地图</ion-label>
+      <ion-radio value="public" checked="true"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>私密地图</ion-label>
+      <ion-radio value="private"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>协同地图</ion-label>
+      <ion-radio value="cooperate"></ion-radio>
+    </ion-item>
+  </ion-list>
+
   <button ion-button block (click)="submit()">确定</button>
 
 </ion-content>

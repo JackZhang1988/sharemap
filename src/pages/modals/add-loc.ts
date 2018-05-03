@@ -110,7 +110,7 @@ export class AddLocModal extends ModalContent {
             }
         ];
         let errorMsg = '';
-        requireField.forEach((item, index) => {
+        requireField.every((item, index) => {
             if (!item.key) {
                 errorMsg = item.errorMsg;
                 return false;

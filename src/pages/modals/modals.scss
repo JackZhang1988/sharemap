@@ -1,248 +1,259 @@
 $img-add-size: 70px;
 $img-add-border-color: #ccc;
 img {
-  width: 100%;
+    width: 100%;
 }
 
 .item-img-add {
-  position: relative;
-  &.cover {
-    height: 230px;
-  }
-  .nearlib-cover {
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .img-add-block {
-    display: inline-block;
-    width: $img-add-size;
-    height: $img-add-size;
     position: relative;
-    border: 1px dashed $img-add-border-color;
     &.cover {
-      width: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      background-color: rgba(0, 0, 0, 0.1);
-      height: 100%;
+        height: 230px;
     }
-    .cover-add-title {
-      text-align: center;
-      line-height: 230px;
-    }
-    .img-add-icon {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: 50%;
-      margin: auto;
-      overflow: auto;
-      height: 50px;
-      font-size: 50px;
-      line-height: 50px;
-      text-align: center;
-      color: $img-add-border-color;
-    }
-    .img-input-wrap {
-      opacity: 0;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 10;
-      overflow: hidden;
-      .img-add-input {
-        width: 100%;
+    .nearlib-cover {
         height: 100%;
-      }
+        position: absolute;
+        top: 0;
+        left: 0;
     }
-  }
-  .img-prev {
-    .prev-item {
-      width: $img-add-size;
-      height: $img-add-size;
-      list-style: none;
-      float: left;
-      margin-right: 5px;
-      .prev-img {
-        width: 100%;
-        height: 100%;
-      }
+    .img-add-block {
+        display: inline-block;
+        width: $img-add-size;
+        height: $img-add-size;
+        position: relative;
+        border: 1px dashed $img-add-border-color;
+        &.cover {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        .cover-add-title {
+            text-align: center;
+            line-height: 230px;
+        }
+        .img-add-icon {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 50%;
+            margin: auto;
+            overflow: auto;
+            height: 50px;
+            font-size: 50px;
+            line-height: 50px;
+            text-align: center;
+            color: $img-add-border-color;
+        }
+        .img-input-wrap {
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            overflow: hidden;
+            .img-add-input {
+                width: 100%;
+                height: 100%;
+            }
+        }
     }
-  }
-  .img-spinner {
-    width: 70px;
-    height: 70px;
-  }
-  .cover-spinner {
-    display: block;
-    text-align: center;
-    line-height: 230px;
-    width: 70px;
-    height: 70px;
-    margin: 0 auto;
-    position: relative;
-    top: 80px;
-  }
-  .spinner svg {
-    width: $img-add-size;
-    height: $img-add-size;
-  }
+    .img-prev {
+        .prev-item {
+            width: $img-add-size;
+            height: $img-add-size;
+            list-style: none;
+            float: left;
+            margin-right: 5px;
+            .prev-img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    .img-spinner {
+        width: 70px;
+        height: 70px;
+    }
+    .cover-spinner {
+        display: block;
+        text-align: center;
+        line-height: 230px;
+        width: 70px;
+        height: 70px;
+        margin: 0 auto;
+        position: relative;
+        top: 80px;
+    }
+    .spinner svg {
+        width: $img-add-size;
+        height: $img-add-size;
+    }
 }
 
 .search-tips {
-  position: absolute;
-  top: 0;
-  z-index: 1;
-  background: #fff;
-  width: 100%;
-  .tip-item {
-    padding: 5px;
-    border-bottom: 1px solid #c8c7cc;
-    line-height: 20px;
-    &:last-child {
-      border-bottom: 0;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    background: #fff;
+    width: 100%;
+    .tip-item {
+        padding: 5px;
+        border-bottom: 1px solid #c8c7cc;
+        line-height: 20px;
+        &:last-child {
+            border-bottom: 0;
+        }
+        .tip-title {
+            font-size: 16px;
+        }
+        .tip-notice {
+            color: #666;
+        }
     }
-    .tip-title {
-      font-size: 16px;
-    }
-    .tip-notice {
-      color: #666;
-    }
-  }
 }
 
 .customControl {
-  width: 0px;
-  height: 0px;
-  overflow: visible;
-  position: absolute;
-  top: 50%;
-  left: 50%;
+    width: 0px;
+    height: 0px;
+    overflow: visible;
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 
 .customControl img {
-  width: 19px;
-  height: 32px;
-  left: -11px;
-  top: -33px;
-  position: absolute;
+    width: 19px;
+    height: 32px;
+    left: -11px;
+    top: -33px;
+    position: absolute;
 }
 
 #mapView {
-  height: 100%;
+    height: 100%;
 }
 
 #slideContainer {
-  height: auto;
-  position: absolute;
-  bottom: 15px;
+    height: auto;
+    position: absolute;
+    bottom: 15px;
 }
 
 .avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 100%;
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
 }
 
 .map-intro {
-  font-size: 16px;
-  padding-left: 20px;
+    font-size: 16px;
+    padding-left: 20px;
 }
 
 .loc-item {
-  display: flex;
-  justify-content: space-between;
-  .location-img {
-    width: 150px;
-    height: 150px;
-  }
-  .location-content {
-    flex: 4;
-    .title {
-      margin-top: 25px;
-      font-size: 22px;
+    display: flex;
+    justify-content: space-between;
+    .location-img {
+        width: 150px;
+        height: 150px;
     }
-    .address {
-      font-size: 16px;
-      max-width: 71%;
-      margin: 10px auto;
+    .location-content {
+        flex: 4;
+        .title {
+            margin-top: 25px;
+            font-size: 22px;
+        }
+        .address {
+            font-size: 16px;
+            max-width: 71%;
+            margin: 10px auto;
+        }
     }
-  }
 }
 
 .map-slider {
-  background-color: #fff;
-  margin-left: 10px;
+    background-color: #fff;
+    margin-left: 10px;
 }
 
 .content-add {
-  min-height: 70vh;
+    min-height: 70vh;
 }
 
 .path-plan-pannel-trigger {
-  position: absolute;
-  z-index: 1;
-  background-color: #ffffff;
-  top: 20px;
-  left: 0;
-  right: 0;
-  padding: 10px;
-  text-align: center;
-  border-radius: 6px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-  width: 150px;
-  text-align: center;
-  margin: 0 auto;
+    position: absolute;
+    z-index: 1;
+    background-color: #ffffff;
+    top: 20px;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    text-align: center;
+    border-radius: 6px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    width: 150px;
+    text-align: center;
+    margin: 0 auto;
 }
 
 #pathPannel {
-  width: 95%;
-  background-color: transparent;
-  position: absolute;
-  top: 120px;
-  z-index: 11;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-  display: none;
+    width: 95%;
+    background-color: transparent;
+    position: absolute;
+    top: 120px;
+    z-index: 11;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    display: none;
 }
 
 @keyframes slideInUp {
-  from {
-    transform: translate3d(0, 100%, 0);
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-  }
+    from {
+        transform: translate3d(0, 100%, 0);
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
 }
 
 #pathPannel.slideInUp {
-  display: block;
-  animation-name: slideInUp;
-  animation-duration: 1s;
+    display: block;
+    animation-name: slideInUp;
+    animation-duration: 1s;
 }
 
 @keyframes slideOutDown {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    display: none;
-    transform: translate3d(0, 100%, 0);
-  }
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        display: none;
+        transform: translate3d(0, 100%, 0);
+    }
 }
 
 #pathPannel.slideOutDown {
-  animation-name: slideOutDown;
-  animation-duration: 1s;
+    animation-name: slideOutDown;
+    animation-duration: 1s;
 }
 textarea {
-  min-height: 140px;
+    min-height: 140px;
+}
+
+.radio-notice {
+    margin-left: 5px;
+    position: relative;
+    top: 2px;
+}
+.notice-alert {
+    .alert-sub-title {
+        text-align: left;
+    }
 }
