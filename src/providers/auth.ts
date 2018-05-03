@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Storage } from "@ionic/storage";
-import { JwtHelper } from "angular2-jwt";
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Injectable()
 export class AuthServiceProvider {
@@ -9,7 +9,7 @@ export class AuthServiceProvider {
 
   constructor(
     private readonly storage: Storage,
-    private readonly jwtHelper: JwtHelper) {
+    private readonly jwtHelper: JwtHelperService) {
   }
 
   checkLogin() {

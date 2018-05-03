@@ -8,18 +8,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Storage, IonicStorageModule } from '@ionic/storage';
-import { JwtHelper, AuthConfig, AuthHttp } from 'angular2-jwt';
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { AuthServiceProvider } from '../providers/auth';
+// import { HttpHeaderInterceptor } from '../providers/http-header';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { ShareProvider } from '../providers/share';
 
-export function authHttpServiceFactory(http: Http, options: RequestOptions, storage: Storage) {
-    const authConfig = new AuthConfig({
-        tokenGetter: () => storage.get('token')
-    });
-    return new AuthHttp(authConfig, http, options);
+export function jwtOptionsFactory(storage) {
+    return {
+        whitelistedDomains: ['localhost:3000'],
+        tokenGetter: () => {
+            return storage.get('token');
+        }
+    };
 }
 
 @NgModule({
@@ -28,6 +32,14 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, stor
         BrowserModule,
         BrowserAnimationsModule,
         HttpModule,
+        HttpClientModule,
+        JwtModule.forRoot({
+            jwtOptionsProvider: {
+                provide: JWT_OPTIONS,
+                useFactory: jwtOptionsFactory,
+                deps: [Storage]
+            }
+        }),
         IonicModule.forRoot(MyApp, { backButtonText: '' }),
         IonicStorageModule.forRoot()
     ],
@@ -36,16 +48,15 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, stor
     providers: [
         { provide: ErrorHandler, useClass: IonicErrorHandler },
         { provide: 'IMGURL', useValue: 'http://okyb0e40i.bkt.clouddn.com/' },
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: HttpHeaderInterceptor,
+        //     multi: true
+        // },
         SplashScreen,
         StatusBar,
         AuthServiceProvider,
         FileTransfer,
-        JwtHelper,
-        {
-            provide: AuthHttp,
-            useFactory: authHttpServiceFactory,
-            deps: [Http, RequestOptions, Storage]
-        },
         ShareProvider
     ]
 })

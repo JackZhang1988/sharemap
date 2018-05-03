@@ -7,7 +7,7 @@ console.log("开始构建" + envTarget + "环境");
 
 
 module.exports = function() {
-  useDefaultConfig.resolve.alias = {
+  useDefaultConfig[envTarget].resolve.alias = {
     "@app/env": path.resolve(
       "./src/environments/environment." + envTarget + ".ts"
     )
