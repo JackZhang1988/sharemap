@@ -13,7 +13,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { AuthServiceProvider } from '../providers/auth';
-// import { HttpHeaderInterceptor } from '../providers/http-header';
+import { HttpHeaderInterceptor } from '../providers/http-header';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { ShareProvider } from '../providers/share';
 
@@ -48,11 +48,11 @@ export function jwtOptionsFactory(storage) {
     providers: [
         { provide: ErrorHandler, useClass: IonicErrorHandler },
         { provide: 'IMGURL', useValue: 'http://okyb0e40i.bkt.clouddn.com/' },
-        // {
-        //     provide: HTTP_INTERCEPTORS,
-        //     useClass: HttpHeaderInterceptor,
-        //     multi: true
-        // },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpHeaderInterceptor,
+            multi: true
+        },
         SplashScreen,
         StatusBar,
         AuthServiceProvider,

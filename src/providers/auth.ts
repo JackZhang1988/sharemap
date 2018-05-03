@@ -31,8 +31,8 @@ export class AuthServiceProvider {
     });
   }
 
-  getUserInfo() {
-    return this.storage.get('user')
+  getUserId() {
+    return this.storage.get('userId')
   }
 
   logout() {
