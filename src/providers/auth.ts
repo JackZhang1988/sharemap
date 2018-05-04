@@ -31,8 +31,8 @@ export class AuthServiceProvider {
     });
   }
 
-  getUserId() {
-    return this.storage.get('userId')
+  async getUserId() {
+    return await this.storage.get('userId')
   }
 
   logout() {

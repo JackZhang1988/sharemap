@@ -1,17 +1,35 @@
-var path = require("path");
-var useDefaultConfig = require("@ionic/app-scripts/config/webpack.config.js");
-var envTarget = process.env.BUILD_ENV ? process.env.BUILD_ENV : "dev";
+var chalk = require('chalk');
+var fs = require('fs');
+var path = require('path');
+var useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
 
-console.log('custom webpack config run');
-console.log("开始构建" + envTarget + "环境");
+var env = process.env.BUILD_ENV;
 
+useDefaultConfig.prod.resolve.alias = {
+    '@app/env': path.resolve(environmentPath('prod'))
+};
+
+useDefaultConfig.dev.resolve.alias = {
+    '@app/env': path.resolve(environmentPath('dev'))
+};
+
+if (env !== 'prod' && env !== 'dev') {
+    // Default to dev config
+    useDefaultConfig[env] = useDefaultConfig.dev;
+    useDefaultConfig[env].resolve.alias = {
+        '@app/env': path.resolve(environmentPath(env))
+    };
+}
+
+function environmentPath(env) {
+    var filePath = './src/environments/environment' + (env ? '.' + env : '.dev') + '.ts';
+    if (!fs.existsSync(filePath)) {
+        console.log(chalk.red('\n' + filePath + ' does not exist!'));
+    } else {
+        return filePath;
+    }
+}
 
 module.exports = function() {
-  useDefaultConfig[envTarget].resolve.alias = {
-    "@app/env": path.resolve(
-      "./src/environments/environment." + envTarget + ".ts"
-    )
-  };
-
-  return useDefaultConfig;
+    return useDefaultConfig;
 };
