@@ -80,6 +80,17 @@ export class MapDetailPage {
                     shareImg: this.mapInfo.coverImg + '?imageView2/0/w/200/h/200/q/75',
                     shareUrl: 'map.html?mapId=' + this.mapInfo._id
                 });
+            }else if(res.status == 2){
+                // 私密地图集
+                let toast = this.toastCtrl.create({
+                    message: '您无权查看此地图集',
+                    duration: 1000,
+                    position: 'center'
+                });
+                toast.onDidDismiss(() => {
+                    this.navCtrl.pop();
+                });
+                toast.present();
             }
         });
     }
