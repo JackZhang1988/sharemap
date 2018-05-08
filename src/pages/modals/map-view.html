@@ -8,7 +8,7 @@
       </button>
     </ion-buttons>
     <ion-buttons end>
-      <button ion-button icon-only color="royal" (click)="openPathSelect($event)">
+      <button ion-button icon-only color="royal" (click)="openPathSelect($event)" [disabled]="!canOpenPathSelect">
         <ion-icon name="ios-navigate"></ion-icon>
       </button>
     </ion-buttons>

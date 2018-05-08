@@ -48,6 +48,7 @@ export class MapViewModal {
     private showPathPanel: boolean = false;
     private isMass: boolean = false;
     private showSlides: boolean = false;
+    private canOpenPathSelect: boolean = false;
     private slidesData: any[] = [];
 
     //使用动态id，方式生成多个modal时id重复
@@ -97,15 +98,21 @@ export class MapViewModal {
                             };
                         });
                         //数量庞大的marker使用massMarks
-                        this.gdService.addMassMarks(markList, {
-                            markerClick: async locData => {
-                                this.slidesData = [locData.info];
-                                this.curMarker = await this.gdService.posToMarker([locData.lnglat.lng, locData.lnglat.lat]);
-                                console.log(this.curMarker);
+                        // this.gdService.addMassMarks(markList, {
+                        //     markerClick: async locData => {
+                        //         this.slidesData = [locData.info];
+                        //         this.curMarker = await this.gdService.posToMarker([locData.lnglat.lng, locData.lnglat.lat]);
+                        //         console.log(this.curMarker);
+                        //     }
+                        // });
+
+                        this.gdService.renderCluserMarker(markList, {
+                            markerClick: curMarker => {
+                                this.curMarker = curMarker;
+                                this.canOpenPathSelect = true;
+                                this.slidesData = [curMarker.getExtData().info];
                             }
                         });
-
-                        // this.gdService.addMarkerClusterer(markList)
                         // let mock =  [{"lnglat":[116.258446,37.686622],"name":"景县","style":2},{"lnglat":[113.559954,22.124049],"name":"圣方济各堂区","style":2},{"lnglat":[116.366794,39.915309],"name":"西城区","style":2},{"lnglat":[116.486409,39.921489],"name":"朝阳区","style":2},{"lnglat":[116.286968,39.863642],"name":"丰台区","style":2},{"lnglat":[116.195445,39.914601],"name":"石景山区","style":2},{"lnglat":[116.310316,39.956074],"name":"海淀区","style":2},{"lnglat":[116.105381,39.937183],"name":"门头沟区","style":2}];
                         // this.gdService.addMassMarks(mock);
                     } else {
@@ -116,6 +123,7 @@ export class MapViewModal {
                         this.gdService.addSimpleMarkers(markList, markerList => {
                             this.markerList = markerList;
                             this.curMarker = markerList[0];
+                            this.canOpenPathSelect = true;
                             //默认高亮第一个marker
                             this.gdService.highlightMarker(markerList[0]);
                             this.gdService.setFitView();
