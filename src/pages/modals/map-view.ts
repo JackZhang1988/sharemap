@@ -98,8 +98,10 @@ export class MapViewModal {
                         });
                         //数量庞大的marker使用massMarks
                         this.gdService.addMassMarks(markList, {
-                            markerClick: locData => {
+                            markerClick: async locData => {
                                 this.slidesData = [locData.info];
+                                this.curMarker = await this.gdService.posToMarker([locData.lnglat.lng, locData.lnglat.lat]);
+                                console.log(this.curMarker);
                             }
                         });
 

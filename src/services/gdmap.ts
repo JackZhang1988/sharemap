@@ -286,6 +286,32 @@ export class GDMap {
         }
     }
 
+     posToMarker(pos: any[], options?: any) {
+        options = Object.assign({ iconStyle: 'blue' }, options);
+        if (pos && pos.length) {
+            return new Promise((resolve, reject) =>{
+                AMapUI.loadUI(['overlay/SimpleMarker'], SimpleMarker => {
+                    let result = new SimpleMarker({
+                        //前景文字
+                        iconLabel: {
+                            // innerHTML: index + 1,
+                            style: {
+                                color: '#fff' //设置文字颜色
+                            }
+                        },
+                        //背景图标样式
+                        iconStyle: options.iconStyle,
+    
+                        //...其他Marker选项...，不包括content
+                        map: this.gdMap,
+                        position: pos
+                    });
+                    resolve(result);
+                });
+            })
+        }
+    }
+
     addSimpleMarkers(posList: any[], callback?: any, options?: any) {
         if (posList && posList.length) {
             options = Object.assign({ iconStyle: 'blue' }, options);
