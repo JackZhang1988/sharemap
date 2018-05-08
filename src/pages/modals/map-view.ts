@@ -106,6 +106,7 @@ export class MapViewModal {
                         //     }
                         // });
 
+                        // 使用点聚合地图
                         this.gdService.renderCluserMarker(markList, {
                             markerClick: curMarker => {
                                 this.curMarker = curMarker;

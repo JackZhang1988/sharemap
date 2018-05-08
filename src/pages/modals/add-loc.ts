@@ -52,7 +52,15 @@ export class AddLocModal extends ModalContent {
             this.apiService.getUserMaps(userID).subscribe(res => {
                 if (res.status == 0) {
                     this.maps = res.result;
+                    if (this.maps.length == 1) {
+                        this.curSelectedMapId = this.maps[0]._id;
+                    }
                     if (this.mapInfo) {
+                        this.maps = [this.mapInfo];
+                        // if (this.mapInfo.creater !== userID) {
+                        //     // 协同地图
+                        //     this.maps.push(this.mapInfo);
+                        // }
                         //在地图集中添加地点
                         this.curSelectedMapId = this.mapInfo._id;
                     }

@@ -48,6 +48,9 @@ export class MapDetailPage {
     private hasMoreLocations = true;
     private locationPageSize = 20;
 
+    // 控制地图操作权限
+    public actionProperty: any;
+
     ionViewDidLoad() {
         this.getMapData();
         this.getMapCommentCount();
@@ -73,6 +76,28 @@ export class MapDetailPage {
                 this.viewTitle = this.mapInfo.title;
                 this.storage.get('userId').then(userID => {
                     this.isOwner = userID == res.result.map.creater._id;
+                    console.log('mapPropertry', res.result.map.mapProperty, this.isOwner);
+                    if (res.result.map.mapProperty == 'cooperate' && !this.isOwner) {
+                        // 协作地图并且非作者，可以添加地点，无法删除、编辑地图集
+                        this.actionProperty = {
+                            showAddBtn: true,
+                            showDelBtn: false,
+                            showEditBtn: false
+                        };
+                    } else if (this.isOwner) {
+                        // 地图集作者拥有所有权限
+                        this.actionProperty = {
+                            showAddBtn: true,
+                            showDelBtn: true,
+                            showEditBtn: true
+                        };
+                    } else {
+                        this.actionProperty = {
+                            showAddBtn: false,
+                            showEditBtn: false,
+                            showDelBtn: false
+                        };
+                    }
                 });
                 this.shareProvider.initShareContent({
                     title: '来看看我分享的地图集【' + this.mapInfo.title + '】',
@@ -80,7 +105,7 @@ export class MapDetailPage {
                     shareImg: this.mapInfo.coverImg + '?imageView2/0/w/200/h/200/q/75',
                     shareUrl: 'map.html?mapId=' + this.mapInfo._id
                 });
-            }else if(res.status == 2){
+            } else if (res.status == 2) {
                 // 私密地图集
                 let toast = this.toastCtrl.create({
                     message: '您无权查看此地图集',
