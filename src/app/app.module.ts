@@ -19,7 +19,7 @@ import { ShareProvider } from '../providers/share';
 
 export function jwtOptionsFactory(storage) {
     return {
-        whitelistedDomains: ['localhost:3000'],
+        whitelistedDomains: ['localhost:3000','fendxiangditu.com','renrenmap.cn','renrenmap.com'],
         tokenGetter: () => {
             return storage.get('token');
         }
