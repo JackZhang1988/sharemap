@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.fenxiangditu.sharemap" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>分享地图</name>
-    <description>创建、分享你的地图集</description>
-    <author email="sharemap@yeah.net" href="http://fenxiangditu.com/">分享地图团队</author>
+    <name>人人地图</name>
+    <description>创建你自己的地图集</description>
+    <author email="sharemap@yeah.net" href="http://renrenmap.cn/">人人地图团队</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -34,16 +34,16 @@
     </platform>
     <platform name="ios">
         <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
-            <string>分享地图在浏览地图集、添加地点时会使用您的位置</string>
+            <string>人人地图在浏览地图集、添加地点时会使用您的位置</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
-            <string>分享地图在添加地图图片时想要访问您的相机</string>
+            <string>人人地图在添加图片时想要访问您的相机</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
-            <string>分享地图在添加地图图片时想要访问您的相册</string>
+            <string>人人地图在添加图片时想要访问您的相册</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryAddUsageDescription">
-            <string>分享地图在添加地图图片时想要访问您的相册</string>
+            <string>人人地图在添加图片时想要访问您的相册</string>
         </edit-config>
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
@@ -100,26 +100,29 @@
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
     <preference name="SplashScreenDelay" value="3000" />
+    <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
+        <string>人人地图在浏览地图集、添加地点时会使用您的位置</string>
+    </edit-config>
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashShowOnlyFirstTime" value="false" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
     <plugin name="cordova-plugin-whitelist" spec="~1.3.1" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.6.3" />
     <plugin name="cordova-plugin-browsersync" spec="~0.1.1" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
-    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
-    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
-    <plugin name="cordova-plugin-device" spec="^2.0.1" />
-    <plugin name="cordova-plugin-compat" spec="^1.2.0" />
-    <plugin name="cordova-plugin-camera" spec="^4.0.2" />
-    <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
-        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="分享地图在浏览地图集、添加地点时会使用您的位置" />
-    </plugin>
-    <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
-        <string>分享地图在浏览地图集、添加地点时会使用您的位置</string>
-    </edit-config>
     <plugin name="cordova-plugin-wechat" spec="^2.1.0">
         <variable name="WECHATAPPID" value="wx6b9a1a289bfdc718" />
     </plugin>
+    <plugin name="cordova-plugin-ionic-webview" spec="~1.1.16" />
+    <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
+    <plugin name="cordova-plugin-device" spec="~2.0.1" />
+    <plugin name="cordova-plugin-compat" spec="~1.2.0" />
+    <plugin name="cordova-plugin-camera" spec="^4.0.2" />
+    <plugin name="cordova-plugin-geolocation" spec="~4.0.1">
+        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="分享地图在浏览地图集、添加地点时会使用您的位置" />
+    </plugin>
+    <plugin name="cordova-plugin-statusbar" spec="~2.4.2" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <engine name="android" spec="7.0.0" />
-    <engine name="ios" spec="4.5.4" />
     <engine name="browser" spec="5.0.3" />
+    <engine name="ios" spec="4.5.4" />
 </widget>
