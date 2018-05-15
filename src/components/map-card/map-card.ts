@@ -76,11 +76,7 @@ export class MapCardComponent {
     changeView() {
         let mapModalData;
         if (this.viewType == 'location-view') {
-            mapModalData = [
-                {
-                    lnglat: this.dataSource
-                }
-            ];
+            mapModalData = [{ lnglat: this.dataSource }];
         } else {
             mapModalData = this.dataSource;
         }

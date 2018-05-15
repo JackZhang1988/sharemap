@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, ViewChild, ElementRef, trigger, state, style, transition, animate, NgZone } from '@angular/core';
 import { IonicPage, ViewController, NavController, PopoverController, NavParams, Slides } from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
 import { ApiService } from '../../services/api';
@@ -25,6 +25,7 @@ export class MapViewModal {
     constructor(
         public viewCtrl: ViewController,
         public navCtrl: NavController,
+        public zone: NgZone,
         public popoverCtrl: PopoverController,
         public navParams: NavParams,
         public apiService: ApiService,
@@ -47,7 +48,7 @@ export class MapViewModal {
     private pathSearchTrigger: boolean = false;
     private showPathPanel: boolean = false;
     private isMass: boolean = false;
-    private showSlides: boolean = false;
+    private showSlides: boolean = true;
     private canOpenPathSelect: boolean = false;
     private slidesData: any[] = [];
 
@@ -71,71 +72,88 @@ export class MapViewModal {
                 buttonOffset: new AMap.Pixel(10, 10)
             },
             result => {
-                this.curPosition = result;
+                this.zone.run((()=>{
+                    this.curPosition = result;
+                    // 首次加载时不根据定位调整定位视图，用户点击定位按钮后调整
+                    if (geoTime) {
+                        this.gdService.gdMap.setZoomAndCenter(13, result.position);
+                    }
+                    geoTime++;
+                }))
 
-                // 首次加载时不根据定位调整定位视图，用户点击定位按钮后调整
-                if (geoTime) {
-                    this.gdService.gdMap.setZoomAndCenter(13, result.position);
-                }
-                geoTime++;
             }
         );
         this.gdService.initPathPlan('pathPannel');
 
         let markList = [];
-        if (this.type == 'map-locations' && this.count >= 10) {
+        if (this.type == 'map-locations') {
             //获取map下所有location
             let mapId = this.mapLocations[0].mapId;
-            this.apiService.getMapAllLocations({ mapId: mapId }).subscribe(res => {
-                if (res.status == 0) {
-                    this.mapLocations = res.result.locations;
-                    if (res.result.locations.length > 100) {
-                        this.isMass = true;
-                        markList = res.result.locations.map(item => {
-                            return {
-                                lnglat: item.lnglat,
-                                info: item
-                            };
-                        });
-                        //数量庞大的marker使用massMarks
-                        // this.gdService.addMassMarks(markList, {
-                        //     markerClick: async locData => {
-                        //         this.slidesData = [locData.info];
-                        //         this.curMarker = await this.gdService.posToMarker([locData.lnglat.lng, locData.lnglat.lat]);
-                        //         console.log(this.curMarker);
-                        //     }
-                        // });
+            if (this.count >= 10) {
+                // 说明该地图位置数据需要从接口里取
+                this.apiService.getMapAllLocations({ mapId: mapId }).subscribe(res => {
+                    if (res.status == 0) {
+                        this.mapLocations = res.result.locations;
+                        if (res.result.locations.length > 100) {
+                            this.isMass = true;
+                            markList = res.result.locations.map(item => {
+                                return {
+                                    lnglat: item.lnglat,
+                                    info: item
+                                };
+                            });
+                            //数量庞大的marker使用massMarks
+                            // this.gdService.addMassMarks(markList, {
+                            //     markerClick: async locData => {
+                            //         this.slidesData = [locData.info];
+                            //         this.curMarker = await this.gdService.posToMarker([locData.lnglat.lng, locData.lnglat.lat]);
+                            //         console.log(this.curMarker);
+                            //     }
+                            // });
 
-                        // 使用点聚合地图
-                        this.gdService.renderCluserMarker(markList, {
-                            markerClick: curMarker => {
-                                this.curMarker = curMarker;
+                            // 使用点聚合地图
+                            this.gdService.renderCluserMarker(markList, {
+                                markerClick: curMarker => {
+                                    this.curMarker = curMarker;
+                                    this.canOpenPathSelect = true;
+                                    this.slidesData = [curMarker.getExtData().info];
+                                }
+                            });
+                            // let mock =  [{"lnglat":[116.258446,37.686622],"name":"景县","style":2},{"lnglat":[113.559954,22.124049],"name":"圣方济各堂区","style":2},{"lnglat":[116.366794,39.915309],"name":"西城区","style":2},{"lnglat":[116.486409,39.921489],"name":"朝阳区","style":2},{"lnglat":[116.286968,39.863642],"name":"丰台区","style":2},{"lnglat":[116.195445,39.914601],"name":"石景山区","style":2},{"lnglat":[116.310316,39.956074],"name":"海淀区","style":2},{"lnglat":[116.105381,39.937183],"name":"门头沟区","style":2}];
+                            // this.gdService.addMassMarks(mock);
+                        } else {
+                            this.slidesData = this.mapLocations;
+                            markList = res.result.locations.map(item => {
+                                return item.lnglat;
+                            });
+                            this.gdService.addSimpleMarkers(markList, markerList => {
+                                this.markerList = markerList;
+                                this.curMarker = markerList[0];
                                 this.canOpenPathSelect = true;
-                                this.slidesData = [curMarker.getExtData().info];
-                            }
-                        });
-                        // let mock =  [{"lnglat":[116.258446,37.686622],"name":"景县","style":2},{"lnglat":[113.559954,22.124049],"name":"圣方济各堂区","style":2},{"lnglat":[116.366794,39.915309],"name":"西城区","style":2},{"lnglat":[116.486409,39.921489],"name":"朝阳区","style":2},{"lnglat":[116.286968,39.863642],"name":"丰台区","style":2},{"lnglat":[116.195445,39.914601],"name":"石景山区","style":2},{"lnglat":[116.310316,39.956074],"name":"海淀区","style":2},{"lnglat":[116.105381,39.937183],"name":"门头沟区","style":2}];
-                        // this.gdService.addMassMarks(mock);
-                    } else {
-                        this.slidesData = this.mapLocations;
-                        markList = res.result.locations.map(item => {
-                            return item.lnglat;
-                        });
-                        this.gdService.addSimpleMarkers(markList, markerList => {
-                            this.markerList = markerList;
-                            this.curMarker = markerList[0];
-                            this.canOpenPathSelect = true;
-                            //默认高亮第一个marker
-                            this.gdService.highlightMarker(markerList[0]);
-                            this.gdService.setFitView();
-                        });
+                                //默认高亮第一个marker
+                                this.gdService.highlightMarker(markerList[0]);
+                                this.gdService.setFitView();
+                            });
+                        }
+                        // this.initSlideWidth();
                     }
-                    // this.initSlideWidth();
+                });
+            } else {
+                this.slidesData = this.mapLocations;
+                for (let item of this.mapLocations) {
+                    markList.push(item.lnglat);
                 }
-            });
+                this.gdService.addSimpleMarkers(markList, markerList => {
+                    this.markerList = markerList;
+                    this.curMarker = markerList[0];
+                    //默认高亮第一个marker
+                    this.gdService.highlightMarker(markerList[0]);
+                    this.gdService.setFitView();
+                });
+            }
         } else {
-            this.slidesData = this.mapLocations;
-            // this.initSlideWidth();
+            // location detail页不显示slide
+            this.showSlides = false;
             for (let item of this.mapLocations) {
                 markList.push(item.lnglat);
             }
@@ -146,9 +164,11 @@ export class MapViewModal {
                 this.gdService.highlightMarker(markerList[0]);
                 this.gdService.setFitView();
             });
+            // this.slidesData = this.mapLocations;
+            // this.initSlideWidth();
         }
         if (this.type == 'map-locations') {
-            this.slides.width = window.screen.width * 0.95;
+            this.slides.width = window.screen.width * 0.9;
         }
     }
 
@@ -163,7 +183,9 @@ export class MapViewModal {
         });
     }
 
-    slideWillChange(): void {}
+    slideWillChange(): void {
+        // this.slides.width = window.screen.width * 0.95;
+    }
 
     slideDidChange(): void {
         let curMarkerInfo = this.mapLocations[this.slides.getActiveIndex()];

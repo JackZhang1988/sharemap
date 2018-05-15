@@ -8,7 +8,7 @@
       </button>
     </ion-buttons>
     <ion-buttons end>
-      <button ion-button icon-only color="royal" (click)="openPathSelect($event)" [disabled]="!canOpenPathSelect">
+      <button ion-button icon-only color="royal" (click)="openPathSelect($event)" [disabled]="!curMarker || !curPosition">
         <ion-icon name="ios-navigate"></ion-icon>
       </button>
     </ion-buttons>
@@ -29,8 +29,8 @@
       </div>
       <div class="map-intro">{{mapInfo.description}}</div>
     </div> -->
-    <ion-slides id="slideContainer" [pager]=false (ionSlideDidChange)="slideDidChange()"
-      (ionSlideWillChange)="slideWillChange()">
+    <ion-slides id="slideContainer" [pager]=false (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()"
+      *ngIf="showSlides">
       <ion-slide *ngFor='let item of slidesData' class="map-slider">
         <button ion-item (click)="goLocationDetail(item)">
           <ion-thumbnail item-start>
