@@ -111,17 +111,19 @@ export class AddLocModal extends ModalContent {
             {
                 key: this.curSelectedMapId,
                 errorMsg: '请选择要添加的地图集'
-            },
-            {
-                key: this.description,
-                errorMsg: '请填写位置描述'
             }
+            // {
+            //     key: this.description,
+            //     errorMsg: '请填写位置描述'
+            // }
         ];
         let errorMsg = '';
         requireField.every((item, index) => {
             if (!item.key) {
                 errorMsg = item.errorMsg;
                 return false;
+            } else {
+                return true;
             }
         });
         if (errorMsg) {

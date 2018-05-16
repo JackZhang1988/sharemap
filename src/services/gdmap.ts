@@ -47,7 +47,7 @@ export class GDMap {
         let self = this;
         options = Object.assign({ container: 'mapContainer' }, options);
         self.gdMap = new AMap.Map(options.container, {
-            rotateEnable: true,
+            rotateEnable: false,
             dragEnable: true,
             zoomEnable: true,
             zooms: [3, 18],

@@ -75,6 +75,8 @@ export class AddMapModal extends ModalContent {
             if (!item.key) {
                 errorMsg = item.errorMsg;
                 return false;
+            } else {
+                return true;
             }
         });
         if (errorMsg) {
