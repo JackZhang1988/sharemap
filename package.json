@@ -8,10 +8,10 @@
   },
   "scripts": {
     "build": "ionic-app-scripts build",
-    "run:browser": "sudo BUILD_ENV=prod ionic cordova run browser --prod --relese",
+    "run:browser": "sudo BUILD_ENV=prod ionic cordova run browser --prod --release",
     "prepare:prod": "sudo BUILD_ENV=prod ionic cordova prepare ios --prod",
     "prepare:remote": "sudo BUILD_ENV=remote ionic cordova prepare ios --prod",
-    "build:prod": "sudo BUILD_ENV=prod ionic cordova build ios --release",
+    "build:prod": "sudo BUILD_ENV=prod ionic cordova build android --release --prod",
     "build:remote": "sudo BUILD_ENV=remote ionic cordova build ios --release",
     "watch": "ionic-app-scripts watch",
     "serve:before": "watch",

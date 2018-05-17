@@ -5,12 +5,11 @@ var useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
 
 var env = process.env.BUILD_ENV;
 
-useDefaultConfig.prod.resolve.alias = {
-    '@app/env': path.resolve(environmentPath('prod'))
-};
-
 useDefaultConfig.dev.resolve.alias = {
     '@app/env': path.resolve(environmentPath('dev'))
+};
+useDefaultConfig.prod.resolve.alias = {
+    '@app/env': path.resolve(environmentPath('prod'))
 };
 
 if (env !== 'prod' && env !== 'dev') {
@@ -30,6 +29,7 @@ function environmentPath(env) {
     }
 }
 
+console.log('开始替换环境变量', env);
 module.exports = function() {
     return useDefaultConfig;
 };
