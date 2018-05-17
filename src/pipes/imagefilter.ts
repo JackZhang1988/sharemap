@@ -21,6 +21,8 @@ export class ImagefilterPipe implements PipeTransform {
     }
     let imgType = args[0];
     switch (imgType) {
+      case 'pin':
+        return url + '?imageView2/1/w/20/h/20';
       case 'avatar':
         return url + '?imageView2/0/w/100/h/100/q/75';
       case 'thumbnail':
