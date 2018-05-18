@@ -9,15 +9,22 @@ page-home {
         bottom: 0;
         left: 0;
         background-color: rgba(64, 64, 64, 0.3);
+        .add-fab-container{
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            right: 0;
+            width: 100%;
+        }
         .add-fab-btn {
             width: 70px;
             height: 70px;
             border-radius: 50%;
             text-align: center;
             margin: 10px auto;
-            top: 65%;
-            position: relative;
-            font-size: 16px;
+            // top: 65%;
+            // position: relative;
+            // font-size: 16px;
         }
     }
     .search-wrapper {
