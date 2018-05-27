@@ -91,6 +91,10 @@ export class AddLocModal extends ModalContent {
         }
         target.value = '';
     }
+    removeImg(index: number) {
+        console.log(index);
+        this.locationImgs.splice(index, 1);
+    }
     // showMapModal() {
     //   let curModal;
     //   curModal = this.modalCtrl.create('SearchLocModal');

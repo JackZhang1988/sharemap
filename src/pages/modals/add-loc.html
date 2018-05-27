@@ -23,20 +23,22 @@
   <div class="content-add status" *ngSwitchCase="'status'">
     <div class="item item-img-add">
       <ul class="img-prev">
-        <li class="prev-item" *ngFor="let img of locationImgs">
+        <li class="prev-item" *ngFor="let img of locationImgs;index as i;">
+          <ion-icon name="ios-close-circle" class="remove-icon" (click)="removeImg(i)"></ion-icon>
           <img class="prev-img" src="{{img | imagefilter:'thumbnail'}}">
         </li>
       </ul>
       <ion-spinner class="img-spinner" [hidden]="!imgLoading"></ion-spinner>
       <span class="img-add-block">
-          <ion-icon name="add" class="img-add-icon"></ion-icon>
-          <div class="img-input-wrap" [hidden]="!isShowImgUploader">
-              <form enctype="multipart/form-data" class="img-add-input" method="post">
-                  <input name="token" type="hidden">
-                  <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input" tappable multiple>
-                  <input type="submit">
-              </form>
-          </div>
+        <ion-icon name="add" class="img-add-icon"></ion-icon>
+        <div class="img-input-wrap" [hidden]="!isShowImgUploader">
+          <form enctype="multipart/form-data" class="img-add-input" method="post">
+            <input name="token" type="hidden">
+            <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input" tappable
+              multiple>
+            <input type="submit">
+          </form>
+        </div>
       </span>
     </div>
 
@@ -50,7 +52,7 @@
 
   </div> -->
 
-  <ion-item class="no-padding-left">
+  <ion-item class="no-padding-left" *ngIf="!locationInfo">
     <ion-label>添加到我的地图集：</ion-label>
     <ion-select [(ngModel)]="curSelectedMapId">
       <ion-option *ngFor='let map of maps' value="{{map._id}}">{{map.title}}</ion-option>
