@@ -29,7 +29,7 @@ export class GDMap {
     initMap(container: string = 'mapContainer'): any {
         let self = this;
         self.gdMap = new AMap.Map(container, {
-            rotateEnable: true,
+            rotateEnable: false,
             dragEnable: true,
             zoomEnable: true,
             zooms: [3, 18],
