@@ -29,9 +29,9 @@
         </li>
       </ul>
       <ion-spinner class="img-spinner" [hidden]="!imgLoading"></ion-spinner>
-      <span class="img-add-block">
+      <span class="img-add-block" [hidden]="locationImgs.length==9">
         <ion-icon name="add" class="img-add-icon"></ion-icon>
-        <div class="img-input-wrap" [hidden]="!isShowImgUploader">
+        <div class="img-input-wrap">
           <form enctype="multipart/form-data" class="img-add-input" method="post">
             <input name="token" type="hidden">
             <input type="file" (change)="imgChange($event)" accept="image/x-png, image/gif, image/jpeg" class="img-add-input" tappable

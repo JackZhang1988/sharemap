@@ -32,7 +32,7 @@ export class AddLocModal extends ModalContent {
     curSelectedMapId: string;
     locationImgs: string[] = [];
     description: string;
-    isShowImgUploader = true;
+    // isShowImgUploader = true;
     showHeader = true;
     private mapInfo: any = this.navParams.get('mapInfo');
     private locationInfo: any = this.navParams.get('locationInfo');
@@ -76,9 +76,9 @@ export class AddLocModal extends ModalContent {
                 let file = event.srcElement.files[i];
                 this.addImage(file, imgUrl => {
                     this.locationImgs.push(imgUrl);
-                    if (this.locationImgs.length >= 9) {
-                        this.isShowImgUploader = false;
-                    }
+                    // if (this.locationImgs.length >= 9) {
+                    //     this.isShowImgUploader = false;
+                    // }
                 });
             }
         } else {
