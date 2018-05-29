@@ -36,7 +36,7 @@ export class AuthServiceProvider {
   }
 
   logout() {
-    return this.storage.remove('token');
+    return this.storage.clear();
   }
 
 }

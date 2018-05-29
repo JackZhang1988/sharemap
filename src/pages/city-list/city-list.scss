@@ -1,4 +1,7 @@
 page-city-list {
+    .hidden {
+        display: none;
+    }
     .clearfix:after {
         content: '\0020';
         height: 0;
@@ -6,185 +9,207 @@ page-city-list {
         clear: both;
         visibility: hidden;
     }
-    .pg-setting .about_content .logo {
-        text-align: center;
-        padding-top: 90px;
-        background: url('/img/logo_05.png?v=4349d9ef') no-repeat center center;
-        background-size: 65px 65px;
-        margin-bottom: 25px;
-        color: #666;
+
+    .J_commonInput {
+        font-size: 16px;
     }
-    .pg-setting .about_content .about_info + .about_info {
-        border-top: 1px solid #ddd;
+
+    .pg-setting {
+        .about_content {
+            .logo {
+                text-align: center;
+                padding-top: 90px;
+                background-size: 65px 65px;
+                margin-bottom: 25px;
+                color: #666;
+            }
+            .about_info + .about_info {
+                border-top: 1px solid #ddd;
+            }
+            h4,
+            .subinfo {
+                margin: 10px 0;
+            }
+            h4 {
+                color: #494949;
+            }
+            .subinfo {
+                color: #4b90f9;
+                display: block;
+            }
+        }
+        .spellgroup .items_list_re {
+            padding: 8px 22px 8px 8px;
+        }
+        .spellgroup_re {
+            position: relative;
+        }
+        .spellgroup {
+            .citylist {
+                .item_re {
+                    color: #333;
+                    font-size: 16px;
+                    width: 33%;
+                    box-sizing: border-box;
+                    float: left;
+                    span {
+                        display: block;
+                        text-align: center;
+                        margin: 8px;
+                        height: 36px;
+                        line-height: 36px;
+                        border: 1px solid #b0adad;
+                        border-radius: 4px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+                }
+                .item {
+                    margin-right: 20px;
+                    padding-left: 15px;
+                }
+            }
+            .title {
+                background-color: #efefef;
+                color: #666;
+                height: 30px;
+                line-height: 30px;
+                padding-left: 15px;
+                font-size: 16px;
+            }
+        }
+        .fixedTitle {
+            background-color: #efefef;
+            color: #666;
+            height: 30px;
+            line-height: 30px;
+            padding-left: 15px;
+            font-size: 16px;
+        }
+        .spellgroup {
+            .title_re {
+                color: #666;
+            }
+            .currentcity {
+                font-size: 0.75em;
+                color: #8f9396;
+            }
+        }
+        .fixedTitle {
+            position: fixed;
+            top: 92px;
+            left: 0;
+            right: 0;
+            z-index: 99999;
+            display: none;
+        }
+        .city_anchor {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            width: 50px;
+            margin-top: -147px;
+            z-index: 2000;
+            a {
+                display: block;
+                padding-left: 30px;
+                height: 16px;
+                font-size: 0.75em;
+                margin: 0;
+                text-align: center;
+            }
+        }
+        .letter_style {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            margin-left: -30px;
+            margin-top: -30px;
+            color: #fff;
+            font-size: 1.5rem;
+            background: gray;
+            animation: fadeOut 2s 1;
+            -webkit-animation: fadeOut 2s 1;
+            opacity: 0;
+            border-radius: 3px;
+        }
+        .city_box {
+            position: relative;
+            padding-top: 48px;
+        }
+        .nearby-place-search {
+            position: fixed;
+            top: 45px;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            padding: 8px 10px 6px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #959595;
+        }
+        .nearby-place-inner {
+            padding: 6px 10px 6px 6px;
+            background-color: #fff;
+            border-radius: 3px;
+            border: 1px solid #bbb;
+            font-size: 1rem;
+            color: #999;
+            .bt {
+                font-size: 20px;
+                float: right;
+            }
+        }
+        .nearby-locate-current-place {
+            padding: 10px 20px 10px 10px;
+            line-height: 1.4;
+        }
+        .nearby-place-list {
+            position: absolute;
+            top: -4px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .title_his {
+            position: absolute;
+            right: 22px;
+            top: 7px;
+            color: #0091ff;
+            font-size: 16px;
+        }
     }
-    .pg-setting .about_content h4,
-    .pg-setting .about_content .subinfo {
-        margin: 10px 0;
-    }
-    .pg-setting .about_content h4 {
-        color: #494949;
-    }
-    .pg-setting .about_content .subinfo {
-        color: #4b90f9;
-        display: block;
-    }
-    .pg-setting .spellgroup .items_list_re {
-        padding: 8px 22px 8px 8px;
-    }
-    .pg-setting .spellgroup_re {
-        position: relative;
-    }
-    .pg-setting .spellgroup .citylist .item_re {
-        color: #333;
-        font-size: 0.875rem;
-        width: 33%;
-        box-sizing: border-box;
-        float: left;
-    }
-    .pg-setting .spellgroup .citylist .item_re span {
-        display: block;
-        text-align: center;
-        margin: 8px;
-        height: 36px;
-        line-height: 36px;
-        border: 1px solid #b0adad;
-        border-radius: 4px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-    }
-    .pg-setting .spellgroup .citylist .item {
-        margin-right: 20px;
-        padding-left: 15px;
-    }
-    .pg-setting .spellgroup .title,
-    .pg-setting .fixedTitle {
-        background-color: #efefef;
-        color: #666;
-        height: 30px;
-        line-height: 30px;
-        padding-left: 15px;
-        font-size: 0.875rem;
-    }
-    .pg-setting .spellgroup .title_re {
-        color: #666;
-    }
-    .pg-setting .spellgroup .currentcity {
-        font-size: 0.75em;
-        color: #8f9396;
-    }
-    .pg-setting .fixedTitle {
-        position: fixed;
-        top: 92px;
-        left: 0;
-        right: 0;
-        z-index: 99999;
-        display: none;
-    }
-    .pg-setting .city_anchor {
-        position: fixed;
-        right: 0;
-        top: 50%;
-        width: 50px;
-        margin-top: -147px;
-        z-index: 2000;
-    }
-    .pg-setting .city_anchor a {
-        display: block;
-        padding-left: 30px;
-        height: 16px;
-        font-size: 0.75em;
-        margin: 0;
-        text-align: center;
-    }
-    .pg-setting .letter_style {
-        position: fixed;
-        width: 60px;
-        height: 60px;
-        line-height: 60px;
-        text-align: center;
-        top: 50%;
-        left: 50%;
-        margin-left: -30px;
-        margin-top: -30px;
-        color: #fff;
-        font-size: 1.5rem;
-        background: gray;
-        animation: fadeOut 2s 1;
-        -webkit-animation: fadeOut 2s 1;
-        opacity: 0;
-        border-radius: 3px;
-    }
+
     @keyframes fadeOut {
         0% {
             opacity: 1;
         }
+
         75% {
             opacity: 1;
         }
+
         100% {
             opacity: 0;
         }
     }
+
     @-webkit-keyframes fadeOut {
         0% {
             opacity: 1;
         }
+
         75% {
             opacity: 1;
         }
+
         100% {
             opacity: 0;
         }
-    }
-    .pg-setting .city_box {
-        position: relative;
-        padding-top: 48px;
-    }
-    .pg-setting .nearby-place-search {
-        position: fixed;
-        top: 45px;
-        left: 0;
-        right: 0;
-        z-index: 2;
-        padding: 8px 10px 6px;
-        background-color: #f9f9f9;
-        border-bottom: 1px solid #959595;
-    }
-    .pg-setting .nearby-place-inner {
-        padding: 6px 10px 6px 6px;
-        background-color: #fff;
-        border-radius: 3px;
-        border: 1px solid #bbb;
-        font-size: 1rem;
-        color: #999;
-    }
-    .pg-setting .nearby-place-inner .bt {
-        width: 20px;
-        background: url('/img/nearby/city_search.png?v=f416c64f') no-repeat right 0;
-        background-size: 18px 18px;
-    }
-    .pg-setting .nearby-place-inner.clear_icon .bt {
-        background: url('/img/nearby/search_clear.png?v=8c0a7368') no-repeat right 1px;
-        background-size: 16px 16px;
-    }
-    .pg-setting .nearby-locate-current-place {
-        padding: 10px 20px 10px 10px;
-        line-height: 1.4;
-    }
-    .pg-setting .nearby-place-list {
-        position: absolute;
-        top: -4px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-    .pg-setting .title_his {
-        position: absolute;
-        right: 22px;
-        top: 7px;
-        color: #0091ff;
-        font-size: 0.875rem;
     }
 }
