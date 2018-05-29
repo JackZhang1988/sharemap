@@ -22,7 +22,7 @@
 <ion-content class="pg-setting pg-setting-city">
   <div class="nearby-place-search">
     <div class="nearby-place-inner display-flexbox">
-      <input type="text" [(ngModel)]="keyword" class="J_commonInput flexbox-children" placeholder="输入城市或拼音" (ionInput)="searchCity()">
+      <input type="text" [(ngModel)]="keyword" class="J_commonInput flexbox-children" placeholder="输入城市或拼音" (ngModelChange)="searchCity()">
       <ion-icon name="search" class="bt"></ion-icon>
     </div>
   </div>

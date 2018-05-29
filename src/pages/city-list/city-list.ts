@@ -58,11 +58,12 @@ export class CityListPage {
     }
 
     selectCity(cityData) {
-        console.log(cityData);
+        // console.log(cityData);
         if (!this.historyCityList.includes(cityData)) {
             this.historyCityList.push(cityData);
             this.storage.set('cityHistory', this.historyCityList);
         }
+        this.viewCtrl.dismiss(cityData);
     }
 
     searchCity() {

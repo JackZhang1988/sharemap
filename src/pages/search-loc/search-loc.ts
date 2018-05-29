@@ -71,7 +71,11 @@ export class SearchLocModal {
     showCityList() {
         let cityListModal = this.modalCtrl.create('CityListPage');
         cityListModal.onDidDismiss(data => {
-            console.log(data);
+            if (data) {
+                this.gdService.gdMap.setCity(data.adcode);
+                this.gdService.auto.setCity(data.adcode);
+                this.curCity = data.cityName;
+            }
         });
         cityListModal.present();
     }
