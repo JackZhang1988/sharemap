@@ -1,8 +1,14 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons start>
+      <button color="dark" ion-button (click)="showCityList()" class="cur-city-btn">
+        <span showWhen="ios">{{curCity}}</span>
+        <ion-icon name="arrow-down" class="cur-city-arrow"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-searchbar placeholder="搜索地点" (ionInput)="autoSearch($event)" [(ngModel)]="keyword" [debounce]="300"></ion-searchbar>
     <!-- <input type="text"  class="search-input"> -->
-    <ion-buttons start>
+    <ion-buttons end>
       <button ion-button (click)="dismiss()">
         <span color="primary" showWhen="ios">取消</span>
         <ion-icon name="md-close" showWhen="android,windows"></ion-icon>

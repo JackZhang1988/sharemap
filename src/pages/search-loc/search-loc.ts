@@ -21,6 +21,7 @@ export class SearchLocModal {
     keyword: string = '';
     curSelectPlace: any;
     hasInitDrag = false;
+    curCity: string = '';
     loading = true;
     loadingText = '正在定位中...';
     private mapInfo: any = this.navParams.get('mapInfo');
@@ -39,6 +40,8 @@ export class SearchLocModal {
             curLocalResult => {
                 this.zone.run(() => {
                     if (curLocalResult.addressComponent) {
+                        let cityStr = curLocalResult.addressComponent.city || curLocalResult.addressComponent.province;
+                        this.curCity = cityStr.replace('市', '');
                         this.gdService.addMarker([curLocalResult.position.lng, curLocalResult.position.lat]);
                         this.setSelectPlace(curLocalResult);
                     } else {
@@ -63,6 +66,14 @@ export class SearchLocModal {
             });
             this.hasInitDrag = true;
         }
+    }
+
+    showCityList() {
+        let cityListModal = this.modalCtrl.create('CityListPage');
+        cityListModal.onDidDismiss(data => {
+            console.log(data);
+        });
+        cityListModal.present();
     }
 
     setSelectPlace(result) {

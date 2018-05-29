@@ -1,0 +1,562 @@
+<!--
+  Generated template for the CityListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>城市列表</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span color="primary" showWhen="ios">关闭</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="pg-setting pg-setting-city">
+  <div class="nearby-place-search">
+    <div class="nearby-place-inner display-flexbox">
+      <input type="text" class="J_commonInput flexbox-children" placeholder="输入城市">
+      <span class="bt"></span>
+    </div>
+  </div>
+  <div class="common_light city_box">
+    <div class="spellgroup spellgroup_re M_his" id="spell_his">
+      <div class="title title_re">历史记录</div>
+      <div class="J_clearHistory title_his">清除历史纪录</div>
+      <div class="citylist items_list_re clearfix">
+        <div class="J_city_item_re item_re" data-index="0">
+          <span>北京市</span>
+        </div>
+      </div>
+    </div>
+    <div class="spellgroup spellgroup_re" id="spell_热">
+      <div class="title title_re">热门城市</div>
+      <div class="citylist items_list_re clearfix">
+        <div class="J_city_item_re item_re" data-index="0">
+          <span>北京市</span>
+        </div>
+        <div class="J_city_item_re item_re" data-index="1">
+          <span>上海市</span>
+        </div>
+        <div class="J_city_item_re item_re" data-index="2">
+          <span>深圳市</span>
+        </div>
+        <div class="J_city_item_re item_re" data-index="3">
+          <span>广州市</span>
+        </div>
+        <div class="J_city_item_re item_re" data-index="4">
+          <span>成都市</span>
+        </div>
+        <div class="J_city_item_re item_re" data-index="5">
+          <span>杭州市</span>
+        </div>
+        <div class="J_city_item_re item_re" data-index="6">
+          <span>苏州市</span>
+        </div>
+        <div class="J_city_item_re item_re" data-index="7">
+          <span>重庆市</span>
+        </div>
+        <div class="J_city_item_re item_re" data-index="8">
+          <span>武汉市</span>
+        </div>
+        <div class="J_city_item_re item_re" data-index="9">
+          <span>西安市</span>
+        </div>
+        <div class="J_city_item_re item_re" data-index="10">
+          <span>南京市</span>
+        </div>
+        <div class="J_city_item_re item_re" data-index="11">
+          <span>天津市</span>
+        </div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_A">
+      <div class="title J_scroll_title hidden show">A</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">阿坝藏族羌族自治州</div>
+        <div class="item J_city_item show" data-index="1">阿克苏地区</div>
+        <div class="item J_city_item show" data-index="2">阿勒泰地区</div>
+        <div class="item J_city_item show" data-index="3">阿拉善盟</div>
+        <div class="item J_city_item show" data-index="4">安康市</div>
+        <div class="item J_city_item show" data-index="5">安庆市</div>
+        <div class="item J_city_item show" data-index="6">鞍山市</div>
+        <div class="item J_city_item show" data-index="7">安顺市</div>
+        <div class="item J_city_item show" data-index="8">安阳市</div>
+        <div class="item J_city_item show" data-index="9">阿拉尔市</div>
+        <div class="item J_city_item show" data-index="10">澳門特別行政區</div>
+        <div class="item J_city_item show" data-index="11">阿里地区</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_B">
+      <div class="title J_scroll_title hidden show">B</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">白城市</div>
+        <div class="item J_city_item show" data-index="1">百色市</div>
+        <div class="item J_city_item show" data-index="2">白沙黎族自治县</div>
+        <div class="item J_city_item show" data-index="3">白山市</div>
+        <div class="item J_city_item show" data-index="4">白银市</div>
+        <div class="item J_city_item show" data-index="5">保定市</div>
+        <div class="item J_city_item show" data-index="6">宝鸡市</div>
+        <div class="item J_city_item show" data-index="7">保山市</div>
+        <div class="item J_city_item show" data-index="8">保亭黎族苗族自治县</div>
+        <div class="item J_city_item show" data-index="9">包头市</div>
+        <div class="item J_city_item show" data-index="10">巴彦淖尔市</div>
+        <div class="item J_city_item show" data-index="11">巴音郭楞蒙古自治州</div>
+        <div class="item J_city_item show" data-index="12">巴中市</div>
+        <div class="item J_city_item show" data-index="13">北海市</div>
+        <div class="item J_city_item show" data-index="14">北京市</div>
+        <div class="item J_city_item show" data-index="15">蚌埠市</div>
+        <div class="item J_city_item show" data-index="16">本溪市</div>
+        <div class="item J_city_item show" data-index="17">毕节市</div>
+        <div class="item J_city_item show" data-index="18">滨州市</div>
+        <div class="item J_city_item show" data-index="19">博尔塔拉蒙古自治州</div>
+        <div class="item J_city_item show" data-index="20">亳州市</div>
+        <div class="item J_city_item show" data-index="21">北屯市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_C">
+      <div class="title J_scroll_title hidden show">C</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">沧州市</div>
+        <div class="item J_city_item show" data-index="1">长春市</div>
+        <div class="item J_city_item show" data-index="2">常德市</div>
+        <div class="item J_city_item show" data-index="3">昌吉回族自治州</div>
+        <div class="item J_city_item show" data-index="4">昌江黎族自治县</div>
+        <div class="item J_city_item show" data-index="5">长沙市</div>
+        <div class="item J_city_item show" data-index="6">长治市</div>
+        <div class="item J_city_item show" data-index="7">常州市</div>
+        <div class="item J_city_item show" data-index="8">朝阳市</div>
+        <div class="item J_city_item show" data-index="9">潮州市</div>
+        <div class="item J_city_item show" data-index="10">承德市</div>
+        <div class="item J_city_item show" data-index="11">成都市</div>
+        <div class="item J_city_item show" data-index="12">澄迈县</div>
+        <div class="item J_city_item show" data-index="13">郴州市</div>
+        <div class="item J_city_item show" data-index="14">赤峰市</div>
+        <div class="item J_city_item show" data-index="15">池州市</div>
+        <div class="item J_city_item show" data-index="16">重庆市</div>
+        <div class="item J_city_item show" data-index="17">崇左市</div>
+        <div class="item J_city_item show" data-index="18">楚雄彝族自治州</div>
+        <div class="item J_city_item show" data-index="19">滁州市</div>
+        <div class="item J_city_item show" data-index="20">昌都市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_D">
+      <div class="title J_scroll_title hidden show">D</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">大兴安岭地区</div>
+        <div class="item J_city_item show" data-index="1">大理白族自治州</div>
+        <div class="item J_city_item show" data-index="2">大连市</div>
+        <div class="item J_city_item show" data-index="3">丹东市</div>
+        <div class="item J_city_item show" data-index="4">儋州市</div>
+        <div class="item J_city_item show" data-index="5">大庆市</div>
+        <div class="item J_city_item show" data-index="6">大同市</div>
+        <div class="item J_city_item show" data-index="7">达州市</div>
+        <div class="item J_city_item show" data-index="8">德宏傣族景颇族自治州</div>
+        <div class="item J_city_item show" data-index="9">迪庆藏族自治州</div>
+        <div class="item J_city_item show" data-index="10">德阳市</div>
+        <div class="item J_city_item show" data-index="11">德州市</div>
+        <div class="item J_city_item show" data-index="12">定安县</div>
+        <div class="item J_city_item show" data-index="13">定西市</div>
+        <div class="item J_city_item show" data-index="14">东方市</div>
+        <div class="item J_city_item show" data-index="15">东莞市</div>
+        <div class="item J_city_item show" data-index="16">东营市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_E">
+      <div class="title J_scroll_title hidden show">E</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">恩施土家族苗族自治州</div>
+        <div class="item J_city_item show" data-index="1">鄂州市</div>
+        <div class="item J_city_item show" data-index="2">鄂尔多斯市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_F">
+      <div class="title J_scroll_title hidden show">F</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">防城港市</div>
+        <div class="item J_city_item show" data-index="1">佛山市</div>
+        <div class="item J_city_item show" data-index="2">抚顺市</div>
+        <div class="item J_city_item show" data-index="3">阜新市</div>
+        <div class="item J_city_item show" data-index="4">阜阳市</div>
+        <div class="item J_city_item show" data-index="5">抚州市</div>
+        <div class="item J_city_item show" data-index="6">福州市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_G">
+      <div class="title J_scroll_title hidden show">G</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">甘南藏族自治州</div>
+        <div class="item J_city_item show" data-index="1">赣州市</div>
+        <div class="item J_city_item show" data-index="2">甘孜藏族自治州</div>
+        <div class="item J_city_item show" data-index="3">果洛藏族自治州</div>
+        <div class="item J_city_item show" data-index="4">广安市</div>
+        <div class="item J_city_item show" data-index="5">广元市</div>
+        <div class="item J_city_item show" data-index="6">广州市</div>
+        <div class="item J_city_item show" data-index="7">贵港市</div>
+        <div class="item J_city_item show" data-index="8">桂林市</div>
+        <div class="item J_city_item show" data-index="9">贵阳市</div>
+        <div class="item J_city_item show" data-index="10">固原市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_H">
+      <div class="title J_scroll_title hidden show">H</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">海北藏族自治州</div>
+        <div class="item J_city_item show" data-index="1">海东市</div>
+        <div class="item J_city_item show" data-index="2">海口市</div>
+        <div class="item J_city_item show" data-index="3">海南藏族自治州</div>
+        <div class="item J_city_item show" data-index="4">海西蒙古族藏族自治州</div>
+        <div class="item J_city_item show" data-index="5">邯郸市</div>
+        <div class="item J_city_item show" data-index="6">杭州市</div>
+        <div class="item J_city_item show" data-index="7">汉中市</div>
+        <div class="item J_city_item show" data-index="8">哈尔滨市</div>
+        <div class="item J_city_item show" data-index="9">鹤壁市</div>
+        <div class="item J_city_item show" data-index="10">河池市</div>
+        <div class="item J_city_item show" data-index="11">合肥市</div>
+        <div class="item J_city_item show" data-index="12">鹤岗市</div>
+        <div class="item J_city_item show" data-index="13">黑河市</div>
+        <div class="item J_city_item show" data-index="14">衡水市</div>
+        <div class="item J_city_item show" data-index="15">衡阳市</div>
+        <div class="item J_city_item show" data-index="16">河源市</div>
+        <div class="item J_city_item show" data-index="17">菏泽市</div>
+        <div class="item J_city_item show" data-index="18">贺州市</div>
+        <div class="item J_city_item show" data-index="19">呼和浩特市</div>
+        <div class="item J_city_item show" data-index="20">红河哈尼族彝族自治州</div>
+        <div class="item J_city_item show" data-index="21">和田地区</div>
+        <div class="item J_city_item show" data-index="22">淮安市</div>
+        <div class="item J_city_item show" data-index="23">淮北市</div>
+        <div class="item J_city_item show" data-index="24">怀化市</div>
+        <div class="item J_city_item show" data-index="25">淮南市</div>
+        <div class="item J_city_item show" data-index="26">黄冈市</div>
+        <div class="item J_city_item show" data-index="27">黄南藏族自治州</div>
+        <div class="item J_city_item show" data-index="28">黄山市</div>
+        <div class="item J_city_item show" data-index="29">黄石市</div>
+        <div class="item J_city_item show" data-index="30">惠州市</div>
+        <div class="item J_city_item show" data-index="31">葫芦岛市</div>
+        <div class="item J_city_item show" data-index="32">呼伦贝尔市</div>
+        <div class="item J_city_item show" data-index="33">湖州市</div>
+        <div class="item J_city_item show" data-index="34">哈密地区</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_J">
+      <div class="title J_scroll_title hidden show">J</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">吉安市</div>
+        <div class="item J_city_item show" data-index="1">佳木斯市</div>
+        <div class="item J_city_item show" data-index="2">江门市</div>
+        <div class="item J_city_item show" data-index="3">焦作市</div>
+        <div class="item J_city_item show" data-index="4">嘉兴市</div>
+        <div class="item J_city_item show" data-index="5">嘉峪关市</div>
+        <div class="item J_city_item show" data-index="6">揭阳市</div>
+        <div class="item J_city_item show" data-index="7">吉林市</div>
+        <div class="item J_city_item show" data-index="8">济南市</div>
+        <div class="item J_city_item show" data-index="9">金昌市</div>
+        <div class="item J_city_item show" data-index="10">晋城市</div>
+        <div class="item J_city_item show" data-index="11">景德镇市</div>
+        <div class="item J_city_item show" data-index="12">荆门市</div>
+        <div class="item J_city_item show" data-index="13">荆州市</div>
+        <div class="item J_city_item show" data-index="14">金华市</div>
+        <div class="item J_city_item show" data-index="15">济宁市</div>
+        <div class="item J_city_item show" data-index="16">晋中市</div>
+        <div class="item J_city_item show" data-index="17">锦州市</div>
+        <div class="item J_city_item show" data-index="18">九江市</div>
+        <div class="item J_city_item show" data-index="19">酒泉市</div>
+        <div class="item J_city_item show" data-index="20">鸡西市</div>
+        <div class="item J_city_item show" data-index="21">济源市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_K">
+      <div class="title J_scroll_title hidden show">K</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">开封市</div>
+        <div class="item J_city_item show" data-index="1">克拉玛依市</div>
+        <div class="item J_city_item show" data-index="2">喀什地区</div>
+        <div class="item J_city_item show" data-index="3">克孜勒苏柯尔克孜自治州</div>
+        <div class="item J_city_item show" data-index="4">昆明市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_L">
+      <div class="title J_scroll_title hidden show">L</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">来宾市</div>
+        <div class="item J_city_item show" data-index="1">莱芜市</div>
+        <div class="item J_city_item show" data-index="2">廊坊市</div>
+        <div class="item J_city_item show" data-index="3">兰州市</div>
+        <div class="item J_city_item show" data-index="4">乐东黎族自治县</div>
+        <div class="item J_city_item show" data-index="5">乐山市</div>
+        <div class="item J_city_item show" data-index="6">拉萨市</div>
+        <div class="item J_city_item show" data-index="7">凉山彝族自治州</div>
+        <div class="item J_city_item show" data-index="8">连云港市</div>
+        <div class="item J_city_item show" data-index="9">聊城市</div>
+        <div class="item J_city_item show" data-index="10">辽阳市</div>
+        <div class="item J_city_item show" data-index="11">辽源市</div>
+        <div class="item J_city_item show" data-index="12">丽江市</div>
+        <div class="item J_city_item show" data-index="13">临沧市</div>
+        <div class="item J_city_item show" data-index="14">临汾市</div>
+        <div class="item J_city_item show" data-index="15">临高县</div>
+        <div class="item J_city_item show" data-index="16">陵水黎族自治县</div>
+        <div class="item J_city_item show" data-index="17">临夏回族自治州</div>
+        <div class="item J_city_item show" data-index="18">临沂市</div>
+        <div class="item J_city_item show" data-index="19">丽水市</div>
+        <div class="item J_city_item show" data-index="20">六盘水市</div>
+        <div class="item J_city_item show" data-index="21">柳州市</div>
+        <div class="item J_city_item show" data-index="22">陇南市</div>
+        <div class="item J_city_item show" data-index="23">龙岩市</div>
+        <div class="item J_city_item show" data-index="24">娄底市</div>
+        <div class="item J_city_item show" data-index="25">六安市</div>
+        <div class="item J_city_item show" data-index="26">漯河市</div>
+        <div class="item J_city_item show" data-index="27">洛阳市</div>
+        <div class="item J_city_item show" data-index="28">泸州市</div>
+        <div class="item J_city_item show" data-index="29">吕梁市</div>
+        <div class="item J_city_item show" data-index="30">林芝市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_M">
+      <div class="title J_scroll_title hidden show">M</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">马鞍山市</div>
+        <div class="item J_city_item show" data-index="1">茂名市</div>
+        <div class="item J_city_item show" data-index="2">眉山市</div>
+        <div class="item J_city_item show" data-index="3">梅州市</div>
+        <div class="item J_city_item show" data-index="4">绵阳市</div>
+        <div class="item J_city_item show" data-index="5">牡丹江市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_N">
+      <div class="title J_scroll_title hidden show">N</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">那曲地区</div>
+        <div class="item J_city_item show" data-index="1">南昌市</div>
+        <div class="item J_city_item show" data-index="2">南充市</div>
+        <div class="item J_city_item show" data-index="3">南京市</div>
+        <div class="item J_city_item show" data-index="4">南宁市</div>
+        <div class="item J_city_item show" data-index="5">南平市</div>
+        <div class="item J_city_item show" data-index="6">南沙群岛</div>
+        <div class="item J_city_item show" data-index="7">南通市</div>
+        <div class="item J_city_item show" data-index="8">南阳市</div>
+        <div class="item J_city_item show" data-index="9">内江市</div>
+        <div class="item J_city_item show" data-index="10">宁波市</div>
+        <div class="item J_city_item show" data-index="11">宁德市</div>
+        <div class="item J_city_item show" data-index="12">怒江傈僳族自治州</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_P">
+      <div class="title J_scroll_title hidden show">P</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">盘锦市</div>
+        <div class="item J_city_item show" data-index="1">攀枝花市</div>
+        <div class="item J_city_item show" data-index="2">平顶山市</div>
+        <div class="item J_city_item show" data-index="3">平凉市</div>
+        <div class="item J_city_item show" data-index="4">萍乡市</div>
+        <div class="item J_city_item show" data-index="5">普洱市</div>
+        <div class="item J_city_item show" data-index="6">莆田市</div>
+        <div class="item J_city_item show" data-index="7">濮阳市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_Q">
+      <div class="title J_scroll_title hidden show">Q</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">黔东南苗族侗族自治州</div>
+        <div class="item J_city_item show" data-index="1">潜江市</div>
+        <div class="item J_city_item show" data-index="2">黔南布依族苗族自治州</div>
+        <div class="item J_city_item show" data-index="3">黔西南布依族苗族自治州</div>
+        <div class="item J_city_item show" data-index="4">青岛市</div>
+        <div class="item J_city_item show" data-index="5">庆阳市</div>
+        <div class="item J_city_item show" data-index="6">清远市</div>
+        <div class="item J_city_item show" data-index="7">秦皇岛市</div>
+        <div class="item J_city_item show" data-index="8">钦州市</div>
+        <div class="item J_city_item show" data-index="9">琼海市</div>
+        <div class="item J_city_item show" data-index="10">琼中黎族苗族自治县</div>
+        <div class="item J_city_item show" data-index="11">齐齐哈尔市</div>
+        <div class="item J_city_item show" data-index="12">七台河市</div>
+        <div class="item J_city_item show" data-index="13">泉州市</div>
+        <div class="item J_city_item show" data-index="14">曲靖市</div>
+        <div class="item J_city_item show" data-index="15">衢州市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_R">
+      <div class="title J_scroll_title hidden show">R</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">日照市</div>
+        <div class="item J_city_item show" data-index="1">日喀则市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_S">
+      <div class="title J_scroll_title hidden show">S</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">三门峡市</div>
+        <div class="item J_city_item show" data-index="1">三明市</div>
+        <div class="item J_city_item show" data-index="2">三沙市</div>
+        <div class="item J_city_item show" data-index="3">三亚市</div>
+        <div class="item J_city_item show" data-index="4">上海市</div>
+        <div class="item J_city_item show" data-index="5">商洛市</div>
+        <div class="item J_city_item show" data-index="6">商丘市</div>
+        <div class="item J_city_item show" data-index="7">上饶市</div>
+        <div class="item J_city_item show" data-index="8">山南地区</div>
+        <div class="item J_city_item show" data-index="9">汕头市</div>
+        <div class="item J_city_item show" data-index="10">汕尾市</div>
+        <div class="item J_city_item show" data-index="11">韶关市</div>
+        <div class="item J_city_item show" data-index="12">绍兴市</div>
+        <div class="item J_city_item show" data-index="13">邵阳市</div>
+        <div class="item J_city_item show" data-index="14">神农架林区</div>
+        <div class="item J_city_item show" data-index="15">沈阳市</div>
+        <div class="item J_city_item show" data-index="16">深圳市</div>
+        <div class="item J_city_item show" data-index="17">石河子市</div>
+        <div class="item J_city_item show" data-index="18">石家庄市</div>
+        <div class="item J_city_item show" data-index="19">十堰市</div>
+        <div class="item J_city_item show" data-index="20">石嘴山市</div>
+        <div class="item J_city_item show" data-index="21">双鸭山市</div>
+        <div class="item J_city_item show" data-index="22">朔州市</div>
+        <div class="item J_city_item show" data-index="23">四平市</div>
+        <div class="item J_city_item show" data-index="24">松原市</div>
+        <div class="item J_city_item show" data-index="25">绥化市</div>
+        <div class="item J_city_item show" data-index="26">遂宁市</div>
+        <div class="item J_city_item show" data-index="27">随州市</div>
+        <div class="item J_city_item show" data-index="28">宿迁市</div>
+        <div class="item J_city_item show" data-index="29">苏州市</div>
+        <div class="item J_city_item show" data-index="30">宿州市</div>
+        <div class="item J_city_item show" data-index="31">双河市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_T">
+      <div class="title J_scroll_title hidden show">T</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">泰安市</div>
+        <div class="item J_city_item show" data-index="1">天津市</div>
+        <div class="item J_city_item show" data-index="2">台湾省</div>
+        <div class="item J_city_item show" data-index="3">太原市</div>
+        <div class="item J_city_item show" data-index="4">台州市</div>
+        <div class="item J_city_item show" data-index="5">泰州市</div>
+        <div class="item J_city_item show" data-index="6">唐山市</div>
+        <div class="item J_city_item show" data-index="7">天门市</div>
+        <div class="item J_city_item show" data-index="8">天水市</div>
+        <div class="item J_city_item show" data-index="9">铁岭市</div>
+        <div class="item J_city_item show" data-index="10">铜川市</div>
+        <div class="item J_city_item show" data-index="11">通化市</div>
+        <div class="item J_city_item show" data-index="12">通辽市</div>
+        <div class="item J_city_item show" data-index="13">铜陵市</div>
+        <div class="item J_city_item show" data-index="14">铜仁市</div>
+        <div class="item J_city_item show" data-index="15">图木舒克市</div>
+        <div class="item J_city_item show" data-index="16">屯昌县</div>
+        <div class="item J_city_item show" data-index="17">吐鲁番市</div>
+        <div class="item J_city_item show" data-index="18">铁门关市</div>
+        <div class="item J_city_item show" data-index="19">塔城地区</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_W">
+      <div class="title J_scroll_title hidden show">W</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">乌鲁木齐市</div>
+        <div class="item J_city_item show" data-index="1">乌兰察布市</div>
+        <div class="item J_city_item show" data-index="2">万宁市</div>
+        <div class="item J_city_item show" data-index="3">潍坊市</div>
+        <div class="item J_city_item show" data-index="4">威海市</div>
+        <div class="item J_city_item show" data-index="5">渭南市</div>
+        <div class="item J_city_item show" data-index="6">文昌市</div>
+        <div class="item J_city_item show" data-index="7">文山壮族苗族自治州</div>
+        <div class="item J_city_item show" data-index="8">温州市</div>
+        <div class="item J_city_item show" data-index="9">乌海市</div>
+        <div class="item J_city_item show" data-index="10">武汉市</div>
+        <div class="item J_city_item show" data-index="11">芜湖市</div>
+        <div class="item J_city_item show" data-index="12">五家渠市</div>
+        <div class="item J_city_item show" data-index="13">武威市</div>
+        <div class="item J_city_item show" data-index="14">无锡市</div>
+        <div class="item J_city_item show" data-index="15">五指山市</div>
+        <div class="item J_city_item show" data-index="16">吴忠市</div>
+        <div class="item J_city_item show" data-index="17">梧州市</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_X">
+      <div class="title J_scroll_title hidden show">X</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">香港特別行政區</div>
+        <div class="item J_city_item show" data-index="1">西安市</div>
+        <div class="item J_city_item show" data-index="2">厦门市</div>
+        <div class="item J_city_item show" data-index="3">湘潭市</div>
+        <div class="item J_city_item show" data-index="4">湘西土家族苗族自治州</div>
+        <div class="item J_city_item show" data-index="5">襄阳市</div>
+        <div class="item J_city_item show" data-index="6">咸宁市</div>
+        <div class="item J_city_item show" data-index="7">仙桃市</div>
+        <div class="item J_city_item show" data-index="8">咸阳市</div>
+        <div class="item J_city_item show" data-index="9">孝感市</div>
+        <div class="item J_city_item show" data-index="10">锡林郭勒盟</div>
+        <div class="item J_city_item show" data-index="11">邢台市</div>
+        <div class="item J_city_item show" data-index="12">西宁市</div>
+        <div class="item J_city_item show" data-index="13">新乡市</div>
+        <div class="item J_city_item show" data-index="14">信阳市</div>
+        <div class="item J_city_item show" data-index="15">新余市</div>
+        <div class="item J_city_item show" data-index="16">忻州市</div>
+        <div class="item J_city_item show" data-index="17">西沙群岛</div>
+        <div class="item J_city_item show" data-index="18">西双版纳傣族自治州</div>
+        <div class="item J_city_item show" data-index="19">宣城市</div>
+        <div class="item J_city_item show" data-index="20">许昌市</div>
+        <div class="item J_city_item show" data-index="21">徐州市</div>
+        <div class="item J_city_item show" data-index="22">兴安盟</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_Y">
+      <div class="title J_scroll_title hidden show">Y</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">雅安市</div>
+        <div class="item J_city_item show" data-index="1">延安市</div>
+        <div class="item J_city_item show" data-index="2">延边朝鲜族自治州</div>
+        <div class="item J_city_item show" data-index="3">盐城市</div>
+        <div class="item J_city_item show" data-index="4">阳江市</div>
+        <div class="item J_city_item show" data-index="5">阳泉市</div>
+        <div class="item J_city_item show" data-index="6">扬州市</div>
+        <div class="item J_city_item show" data-index="7">烟台市</div>
+        <div class="item J_city_item show" data-index="8">宜宾市</div>
+        <div class="item J_city_item show" data-index="9">宜昌市</div>
+        <div class="item J_city_item show" data-index="10">宜春市</div>
+        <div class="item J_city_item show" data-index="11">伊春市</div>
+        <div class="item J_city_item show" data-index="12">银川市</div>
+        <div class="item J_city_item show" data-index="13">营口市</div>
+        <div class="item J_city_item show" data-index="14">鹰潭市</div>
+        <div class="item J_city_item show" data-index="15">益阳市</div>
+        <div class="item J_city_item show" data-index="16">永州市</div>
+        <div class="item J_city_item show" data-index="17">岳阳市</div>
+        <div class="item J_city_item show" data-index="18">玉林市</div>
+        <div class="item J_city_item show" data-index="19">榆林市</div>
+        <div class="item J_city_item show" data-index="20">运城市</div>
+        <div class="item J_city_item show" data-index="21">云浮市</div>
+        <div class="item J_city_item show" data-index="22">玉树藏族自治州</div>
+        <div class="item J_city_item show" data-index="23">玉溪市</div>
+        <div class="item J_city_item show" data-index="24">伊犁哈萨克自治州</div>
+      </div>
+    </div>
+    <div class="spellgroup" id="spell_Z">
+      <div class="title J_scroll_title hidden show">Z</div>
+      <div class="citylist items_list">
+        <div class="item J_city_item show" data-index="0">枣庄市</div>
+        <div class="item J_city_item show" data-index="1">张家界市</div>
+        <div class="item J_city_item show" data-index="2">张家口市</div>
+        <div class="item J_city_item show" data-index="3">张掖市</div>
+        <div class="item J_city_item show" data-index="4">漳州市</div>
+        <div class="item J_city_item show" data-index="5">湛江市</div>
+        <div class="item J_city_item show" data-index="6">肇庆市</div>
+        <div class="item J_city_item show" data-index="7">昭通市</div>
+        <div class="item J_city_item show" data-index="8">郑州市</div>
+        <div class="item J_city_item show" data-index="9">镇江市</div>
+        <div class="item J_city_item show" data-index="10">中沙群岛的岛礁及其海域</div>
+        <div class="item J_city_item show" data-index="11">中山市</div>
+        <div class="item J_city_item show" data-index="12">中卫市</div>
+        <div class="item J_city_item show" data-index="13">周口市</div>
+        <div class="item J_city_item show" data-index="14">舟山市</div>
+        <div class="item J_city_item show" data-index="15">珠海市</div>
+        <div class="item J_city_item show" data-index="16">驻马店市</div>
+        <div class="item J_city_item show" data-index="17">株洲市</div>
+        <div class="item J_city_item show" data-index="18">淄博市</div>
+        <div class="item J_city_item show" data-index="19">自贡市</div>
+        <div class="item J_city_item show" data-index="20">资阳市</div>
+        <div class="item J_city_item show" data-index="21">遵义市</div>
+      </div>
+    </div>
+  </div>
+</ion-content>
