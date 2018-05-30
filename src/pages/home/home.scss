@@ -9,9 +9,10 @@ page-home {
         bottom: 0;
         left: 0;
         background-color: rgba(64, 64, 64, 0.3);
-        .add-fab-container{
+        .add-fab-container {
             position: absolute;
             bottom: 80px;
+            padding-bottom: env(safe-area-inset-bottom);
             left: 0;
             right: 0;
             width: 100%;
