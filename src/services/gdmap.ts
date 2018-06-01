@@ -201,12 +201,12 @@ export class GDMap {
         self.mass.setMap(self.gdMap);
     }
 
-    pathSearch(pathPlanType: string, fromLngLat: Number[], toLngLat: Number[]) {
+    pathSearch(pathPlanType: string, fromLngLat: Number[], toLngLat: Number[], callback?:Function) {
         if (this.pathPlan[pathPlanType]) {
             this.lastSearchPathType = pathPlanType;
             this.pathPlanInstance = this.pathPlan[pathPlanType];
             this.pathPlanInstance.clear();
-            this.pathPlan[pathPlanType].search(fromLngLat, toLngLat);
+            this.pathPlan[pathPlanType].search(fromLngLat, toLngLat, callback);
         }
     }
 

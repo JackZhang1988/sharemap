@@ -200,11 +200,17 @@ img {
     min-height: 70vh;
 }
 
+// 本地调试情况
+.platform-mobileweb {
+    .path-plan-pannel-trigger {
+        top: 20px;
+    }
+}
 .path-plan-pannel-trigger {
     position: absolute;
     z-index: 1;
     background-color: #ffffff;
-    top: 20px;
+    top: 50px;
     left: 0;
     right: 0;
     padding: 10px;

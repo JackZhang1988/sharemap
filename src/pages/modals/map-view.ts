@@ -1,5 +1,13 @@
 import { Component, ViewChild, ElementRef, trigger, state, style, transition, animate, NgZone } from '@angular/core';
-import { IonicPage, ViewController, NavController, PopoverController, NavParams, Slides } from 'ionic-angular';
+import {
+    IonicPage,
+    ViewController,
+    NavController,
+    PopoverController,
+    NavParams,
+    Slides,
+    ToastController
+} from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
 import { ApiService } from '../../services/api';
 // import { PathPlanPopOverComponent } from '../../components/path-plan-pop-over/path-plan-pop-over';
@@ -25,6 +33,7 @@ export class MapViewModal {
     constructor(
         public viewCtrl: ViewController,
         public navCtrl: NavController,
+        public toastCtrl: ToastController,
         public zone: NgZone,
         public popoverCtrl: PopoverController,
         public navParams: NavParams,
@@ -72,15 +81,14 @@ export class MapViewModal {
                 buttonOffset: new AMap.Pixel(10, 10)
             },
             result => {
-                this.zone.run((()=>{
+                this.zone.run(() => {
                     this.curPosition = result;
                     // 首次加载时不根据定位调整定位视图，用户点击定位按钮后调整
                     if (geoTime) {
                         this.gdService.gdMap.setZoomAndCenter(13, result.position);
                     }
                     geoTime++;
-                }))
-
+                });
             }
         );
         this.gdService.initPathPlan('pathPannel');
@@ -175,7 +183,13 @@ export class MapViewModal {
     dismiss() {
         this.viewCtrl.dismiss();
     }
-
+    presentToast(message) {
+        const toast = this.toastCtrl.create({
+            message,
+            duration: 1500
+        });
+        toast.present();
+    }
     goLocationDetail(locationData) {
         this.navCtrl.push('LocationDetailPage', {
             id: locationData._id,
@@ -234,6 +248,9 @@ export class MapViewModal {
         });
         popover.onDidDismiss(data => {
             if (data) {
+                if (data.status == 'error') {
+                    this.presentToast('查询不到导航信息');
+                }
                 this.curPathPlanType = data.curPathPlanType;
                 this.pathSearchTrigger = data.pathSearchTrigger;
             }
