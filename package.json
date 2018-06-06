@@ -104,11 +104,11 @@
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "人人地图在浏览地图集、添加地点时会使用您的位置"
       },
-      "cordova-plugin-wechat": {
-        "WECHATAPPID": "wx6b9a1a289bfdc718"
-      },
       "cordova-plugin-statusbar": {},
-      "cordova-plugin-splashscreen": {}
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-wechat": {
+        "WECHATAPPID": "wx29f75a6a2b60d1ce"
+      }
     }
   }
 }

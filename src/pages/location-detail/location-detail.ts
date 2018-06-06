@@ -1,5 +1,13 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, ToastController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import {
+    IonicPage,
+    NavController,
+    ToastController,
+    NavParams,
+    Platform,
+    AlertController,
+    ModalController
+} from 'ionic-angular';
 import { ApiService } from '../../services/api';
 import { Storage } from '@ionic/storage';
 import { ShareProvider } from '../../providers/share';
@@ -21,6 +29,7 @@ export class LocationDetailPage {
         private alertCtrl: AlertController,
         public modalCtrl: ModalController,
         private storage: Storage,
+        private platform: Platform,
         public navParams: NavParams,
         private apiService: ApiService,
         private shareProvider: ShareProvider // private keyboard: Keyboard
@@ -41,7 +50,7 @@ export class LocationDetailPage {
 
     ionViewWillEnter() {
         // 修复map-view跳转时 statusbar bug
-        if (typeof StatusBar !== 'undefined' && this.locationParams.from == 'map-view') {
+        if (this.platform.is('ios') && typeof StatusBar !== 'undefined' && this.locationParams.from == 'map-view') {
             StatusBar.overlaysWebView(false);
             StatusBar.backgroundColorByHexString('#f8f8f8');
         }
@@ -49,7 +58,7 @@ export class LocationDetailPage {
 
     ionViewDidLeave() {
         // 修复map-view跳转时 statusbar bug
-        if (typeof StatusBar !== 'undefined' && this.locationParams.from == 'map-view') {
+        if (this.platform.is('ios') && typeof StatusBar !== 'undefined' && this.locationParams.from == 'map-view') {
             StatusBar.overlaysWebView(true);
             // StatusBar.backgroundColorByHexString('#387ef5');
         }
