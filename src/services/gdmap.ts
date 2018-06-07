@@ -6,7 +6,7 @@ import { LngLat } from '../common/models';
 const STATIC_MAP_KEY = 'c3b4477c4c2ad477141ee0358e4d1c82';
 @Injectable()
 export class GDMap {
-    constructor() {}
+    constructor() { }
 
     gdMap: any;
     auto: any;
@@ -107,7 +107,7 @@ export class GDMap {
     }
     initGeolocation(ops: any = {}, onComplete?, onError?): void {
         let self = this;
-        self.gdMap.plugin('AMap.Geolocation', function() {
+        self.gdMap.plugin('AMap.Geolocation', function () {
             let geolocation = new AMap.Geolocation(
                 Object.assign(
                     {
@@ -137,7 +137,7 @@ export class GDMap {
     initAutoSearch(autoOptions?: any): void {
         let self = this;
         autoOptions = autoOptions || {};
-        self.gdMap.plugin('AMap.Autocomplete', function() {
+        self.gdMap.plugin('AMap.Autocomplete', function () {
             self.auto = new AMap.Autocomplete(autoOptions);
         });
         //构造地点查询类
@@ -153,19 +153,19 @@ export class GDMap {
      */
     initPathPlan(pannel?, ops: any = {}): void {
         let self = this;
-        AMap.service('AMap.Driving', function() {
+        AMap.service('AMap.Driving', function () {
             self.pathPlan.driving = new AMap.Driving({
                 map: self.gdMap,
                 panel: pannel
             });
         });
-        AMap.service('AMap.Transfer', function() {
+        AMap.service('AMap.Transfer', function () {
             self.pathPlan.transfer = new AMap.Transfer({
                 map: self.gdMap,
                 panel: pannel
             });
         });
-        AMap.service('AMap.Walking', function() {
+        AMap.service('AMap.Walking', function () {
             self.pathPlan.walking = new AMap.Walking({
                 map: self.gdMap,
                 panel: pannel
@@ -192,7 +192,7 @@ export class GDMap {
             )
         );
         let marker = new AMap.Marker({ content: ' ', map: self.gdMap });
-        self.mass.on('click', function(e) {
+        self.mass.on('click', function (e) {
             marker.setPosition(e.data.lnglat);
             // marker.setLabel({ content: e.data.info.location });
             self.gdMap.setZoomAndCenter(15, e.data.lnglat);
@@ -201,7 +201,7 @@ export class GDMap {
         self.mass.setMap(self.gdMap);
     }
 
-    pathSearch(pathPlanType: string, fromLngLat: Number[], toLngLat: Number[], callback?:Function) {
+    pathSearch(pathPlanType: string, fromLngLat: Number[], toLngLat: Number[], callback?: Function) {
         if (this.pathPlan[pathPlanType]) {
             this.lastSearchPathType = pathPlanType;
             this.pathPlanInstance = this.pathPlan[pathPlanType];
@@ -254,6 +254,40 @@ export class GDMap {
         }
     }
 
+    /**
+     * 添加基于font-awsome图标的marker
+     * @param markList 
+     * @param ops 
+     */
+    addIconMarkers(markList: any[], options?: any) {
+        if (markList.length) {
+            let markerList = [];
+            options = Object.assign(
+                {
+                    isFitView: true,
+                    iconClass: 'fas fa-utensils'
+                },
+                options
+            );
+            markList.forEach((pos,index) => {
+                let marker = new AMap.Marker({
+                    map: this.gdMap,
+                    content: '<div class="icon-marker"><i class="' + options.iconClass + '"></i></div>',
+                    position: pos,
+                    offset: new AMap.Pixel(-25, -25)
+                })
+                marker.on('click', function (e) {
+                    options.markerClick && options.markerClick(e.target,index);
+                });
+                markerList.push(marker);
+            });
+            if (options.isFitView) {
+                this.gdMap.setFitView();
+            }
+            return markerList;
+        }
+    }
+
     addMarkers(markList: any[], isFitView = true) {
         if (markList.length) {
             let markerList = [];
@@ -287,6 +321,7 @@ export class GDMap {
                                 color: '#fff' //设置文字颜色
                             }
                         },
+                        iconTheme: 'fresh',
                         //背景图标样式
                         iconStyle: options.iconStyle,
 
@@ -296,6 +331,45 @@ export class GDMap {
                     });
                     resolve(result);
                 });
+            });
+        }
+    }
+
+    addSimpleMarkers(posList: any[], options?: any) {
+        if (posList && posList.length) {
+            options = Object.assign({ iconStyle: 'blue' }, options);
+            let markerList = [];
+            let curMap = this.gdMap;
+            AMapUI.loadUI(['overlay/SimpleMarker'], function (SimpleMarker) {
+                posList.forEach((pos, index) => {
+                    //创建SimpleMarker实例
+                    let tt = new SimpleMarker({
+                        //前景文字
+                        iconLabel: {
+                            // innerHTML: index + 1,
+                            style: {
+                                color: '#fff' //设置文字颜色
+                            }
+                        },
+                        iconTheme: 'numv2',
+                        //背景图标样式
+                        iconStyle: options.iconStyle,
+
+                        //...其他Marker选项...，不包括content
+                        map: curMap,
+                        position: pos
+                    });
+                    markerList.push(tt);
+                });
+
+                // 取消自适应view，让视图自动适配到定位位置
+                if (options.setFitView) {
+                    curMap.setFitView();
+                }
+                //点标记自适应的视图过大，重新定义点标记自适应的缩放级别
+                curMap.setZoom(curMap.getZoom() - 1);
+
+                options.callback && options.callback(markerList);
             });
         }
     }
@@ -325,13 +399,13 @@ export class GDMap {
                     '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
                 offset: new AMap.Pixel(-15, -15)
             });
-            marker.on('click', function(e) {
+            marker.on('click', function (e) {
                 options.markerClick && options.markerClick(e.target);
             });
             markers.push(marker);
         }
         var count = markers.length;
-        let _renderCluserMarker = function(context) {
+        let _renderCluserMarker = function (context) {
             let factor = Math.pow(context.count / count, 1 / 18);
             let div = document.createElement('div');
             let Hue = 180 - factor * 180;
@@ -404,44 +478,6 @@ export class GDMap {
         });
     }
 
-    addSimpleMarkers(posList: any[], callback?: any, options?: any) {
-        if (posList && posList.length) {
-            options = Object.assign({ iconStyle: 'blue' }, options);
-            let markerList = [];
-            let curMap = this.gdMap;
-            AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
-                posList.forEach((pos, index) => {
-                    //创建SimpleMarker实例
-                    let tt = new SimpleMarker({
-                        //前景文字
-                        iconLabel: {
-                            // innerHTML: index + 1,
-                            style: {
-                                color: '#fff' //设置文字颜色
-                            }
-                        },
-                        //背景图标样式
-                        iconStyle: options.iconStyle,
-
-                        //...其他Marker选项...，不包括content
-                        map: curMap,
-                        position: pos
-                    });
-                    markerList.push(tt);
-                });
-
-                // 取消自适应view，让视图自动适配到定位位置
-                if (options.setFitView) {
-                    curMap.setFitView();
-                }
-                //点标记自适应的视图过大，重新定义点标记自适应的缩放级别
-                curMap.setZoom(curMap.getZoom() - 1);
-
-                callback && callback(markerList);
-            });
-        }
-    }
-
     setFitView() {
         this.gdMap.setFitView();
     }
@@ -459,6 +495,23 @@ export class GDMap {
     unHighlightMarker(marker: any) {
         if (marker) {
             marker.setIconStyle('blue');
+        }
+    }
+
+    highlightIconMarker(iconMarker: any) {
+        if (iconMarker) {
+            let content = iconMarker.getContent();
+            iconMarker.setContent(content.replace('icon-marker','icon-marker cur'));
+            iconMarker.setzIndex(9999);
+            console.log(content);
+        }
+    } 
+
+    unhighlightIconMarker(iconMarker: any) {
+        if (iconMarker) {
+            let content = iconMarker.getContent();
+            iconMarker.setzIndex(1);
+            iconMarker.setContent(content.replace('cur',''));
         }
     }
 

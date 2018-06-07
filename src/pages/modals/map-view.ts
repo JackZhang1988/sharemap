@@ -39,7 +39,7 @@ export class MapViewModal {
         public navParams: NavParams,
         public apiService: ApiService,
         private gdService: GDMap
-    ) {}
+    ) { }
     @ViewChild(Slides) slides: Slides;
     @ViewChild('pathPannel', { read: ElementRef })
     pathPannel: ElementRef;
@@ -58,7 +58,6 @@ export class MapViewModal {
     private showPathPanel: boolean = false;
     private isMass: boolean = false;
     private showSlides: boolean = true;
-    private canOpenPathSelect: boolean = false;
     private slidesData: any[] = [];
 
     //使用动态id，方式生成多个modal时id重复
@@ -110,20 +109,11 @@ export class MapViewModal {
                                     info: item
                                 };
                             });
-                            //数量庞大的marker使用massMarks
-                            // this.gdService.addMassMarks(markList, {
-                            //     markerClick: async locData => {
-                            //         this.slidesData = [locData.info];
-                            //         this.curMarker = await this.gdService.posToMarker([locData.lnglat.lng, locData.lnglat.lat]);
-                            //         console.log(this.curMarker);
-                            //     }
-                            // });
 
                             // 使用点聚合地图
                             this.gdService.renderCluserMarker(markList, {
                                 markerClick: curMarker => {
                                     this.curMarker = curMarker;
-                                    this.canOpenPathSelect = true;
                                     this.slidesData = [curMarker.getExtData().info];
                                 }
                             });
@@ -134,14 +124,8 @@ export class MapViewModal {
                             markList = res.result.locations.map(item => {
                                 return item.lnglat;
                             });
-                            this.gdService.addSimpleMarkers(markList, markerList => {
-                                this.markerList = markerList;
-                                this.curMarker = markerList[0];
-                                this.canOpenPathSelect = true;
-                                //默认高亮第一个marker
-                                this.gdService.highlightMarker(markerList[0]);
-                                this.gdService.setFitView();
-                            });
+
+                            this.addMarkerList(markList);
                         }
                         // this.initSlideWidth();
                     }
@@ -151,13 +135,8 @@ export class MapViewModal {
                 for (let item of this.mapLocations) {
                     markList.push(item.lnglat);
                 }
-                this.gdService.addSimpleMarkers(markList, markerList => {
-                    this.markerList = markerList;
-                    this.curMarker = markerList[0];
-                    //默认高亮第一个marker
-                    this.gdService.highlightMarker(markerList[0]);
-                    this.gdService.setFitView();
-                });
+
+                this.addMarkerList(markList);
             }
         } else {
             // location detail页不显示slide
@@ -165,19 +144,35 @@ export class MapViewModal {
             for (let item of this.mapLocations) {
                 markList.push(item.lnglat);
             }
-            this.gdService.addSimpleMarkers(markList, markerList => {
-                this.markerList = markerList;
-                this.curMarker = markerList[0];
-                //默认高亮第一个marker
-                this.gdService.highlightMarker(markerList[0]);
-                this.gdService.setFitView();
-            });
-            // this.slidesData = this.mapLocations;
-            // this.initSlideWidth();
+            this.addMarkerList(markList);
+
         }
         if (this.type == 'map-locations') {
             this.slides.width = window.screen.width * 0.9;
         }
+    }
+
+    addMarkerList(markList) {
+
+        this.markerList = this.gdService.addIconMarkers(markList, {
+            markerClick: (target, index) => {
+                this.preMarker && this.unhighlightMarker(this.preMarker);
+                this.highlightMarker(target);
+                this.slides.slideTo(index);
+                this.preMarker = target;
+            }
+        });;
+        this.curMarker = this.markerList[0];
+        //默认高亮第一个marker
+        this.highlightMarker(this.curMarker);
+    }
+
+    highlightMarker(iconMarker) {
+        this.gdService.highlightIconMarker(iconMarker);
+    }
+
+    unhighlightMarker(iconMarker) {
+        this.gdService.unhighlightIconMarker(iconMarker);
     }
 
     dismiss() {
@@ -207,16 +202,13 @@ export class MapViewModal {
         if (curMarkerInfo) {
             // this.gdService.setZoomAndCenter(curMarkerInfo.lnglat)
             // 高亮显示改坐标
-            this.gdService.highlightMarker(this.curMarker);
-            // this.curMarker.setIcon('http://webapi.amap.com/theme/v1.3/markers/b/mark_r.png');
-            // this.curMarker.setIconStyle('red')
+            this.highlightMarker(this.curMarker);
         }
         this.preMarker = this.markerList[this.slides.getPreviousIndex()];
 
         if (this.preMarker) {
             //恢复成默认光标
-            this.gdService.unHighlightMarker(this.preMarker);
-            //  this.preMarker.setIconStyle('blue')
+            this.unhighlightMarker(this.preMarker);
         }
         //slider滑动时更新导航信息
         this.pathSearch();
