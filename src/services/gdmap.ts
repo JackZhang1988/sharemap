@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { LngLat } from '../common/models';
-
 // let singleInstance = false;
 const STATIC_MAP_KEY = 'c3b4477c4c2ad477141ee0358e4d1c82';
+
 @Injectable()
 export class GDMap {
     constructor() { }
@@ -265,14 +264,14 @@ export class GDMap {
             options = Object.assign(
                 {
                     isFitView: true,
-                    iconClass: 'fas fa-utensils'
+                    iconClass: ''
                 },
                 options
             );
             markList.forEach((pos,index) => {
                 let marker = new AMap.Marker({
                     map: this.gdMap,
-                    content: '<div class="icon-marker"><i class="' + options.iconClass + '"></i></div>',
+                    content: `<div class="icon-marker"><i class="${options.iconClass}">${options.iconContent}</i></div>`,
                     position: pos,
                     offset: new AMap.Pixel(-25, -25)
                 })
@@ -503,7 +502,6 @@ export class GDMap {
             let content = iconMarker.getContent();
             iconMarker.setContent(content.replace('icon-marker','icon-marker cur'));
             iconMarker.setzIndex(9999);
-            console.log(content);
         }
     } 
 
@@ -511,7 +509,7 @@ export class GDMap {
         if (iconMarker) {
             let content = iconMarker.getContent();
             iconMarker.setzIndex(1);
-            iconMarker.setContent(content.replace('cur',''));
+            iconMarker.setContent(content.replace(/ cur/gi,''));
         }
     }
 

@@ -156,10 +156,11 @@ export class MapViewModal {
 
         this.markerList = this.gdService.addIconMarkers(markList, {
             markerClick: (target, index) => {
-                this.preMarker && this.unhighlightMarker(this.preMarker);
+                // debugger;
+                // this.preMarker && this.unhighlightMarker(this.preMarker);
                 this.highlightMarker(target);
                 this.slides.slideTo(index);
-                this.preMarker = target;
+                // this.preMarker = target;
             }
         });;
         this.curMarker = this.markerList[0];
@@ -207,6 +208,7 @@ export class MapViewModal {
         this.preMarker = this.markerList[this.slides.getPreviousIndex()];
 
         if (this.preMarker) {
+            console.log('preMarker', this.preMarker);
             //恢复成默认光标
             this.unhighlightMarker(this.preMarker);
         }
