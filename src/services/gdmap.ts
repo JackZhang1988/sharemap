@@ -255,8 +255,11 @@ export class GDMap {
 
     /**
      * 添加基于font-awsome图标的marker
+     * 参考：https://fontawesome.com/icons?d=gallery&m=free
      * @param markList 
      * @param ops 
+     *      iconClass font-awsome icon 类名
+     *      isFitView 添加marker后是否自动调整地图
      */
     addIconMarkers(markList: any[], options?: any) {
         if (markList.length) {
