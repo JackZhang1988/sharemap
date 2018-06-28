@@ -14,7 +14,9 @@ export class SearchLocModal {
         public modalCtrl: ModalController,
         public navParams: NavParams,
         private gdService: GDMap
-    ) {}
+    ) { }
+
+    locationInfo: any = this.navParams.get('locationInfo');
     tips: any[] = [];
     isShowTipSelecter = false;
     citycode: string;
@@ -34,29 +36,37 @@ export class SearchLocModal {
         this.viewCtrl.dismiss();
     }
     ngOnInit(): void {
-        // this.gdService.initMap();
-        this.gdService.initLocateMap(
-            {},
-            curLocalResult => {
-                this.zone.run(() => {
-                    if (curLocalResult.addressComponent) {
-                        let cityStr = curLocalResult.addressComponent.city || curLocalResult.addressComponent.province;
-                        this.curCity = cityStr.replace('市', '');
-                        this.gdService.addMarker([curLocalResult.position.lng, curLocalResult.position.lat]);
-                        this.setSelectPlace(curLocalResult);
-                    } else {
+        this.gdService.initMap();
+        this.gdService.initCity();
+        this.gdService.initGeocoder();
+        let __initMapContent = (curLocalResult) => {
+            let cityStr = curLocalResult.addressComponent.city || curLocalResult.addressComponent.province;
+            this.curCity = cityStr.replace('市', '');
+            this.gdService.addMarker([curLocalResult.position.lng, curLocalResult.position.lat]);
+            this.setSelectPlace(curLocalResult);
+        }
+        if (this.locationInfo) {
+            __initMapContent(this.locationInfo);
+        } else {
+            this.gdService.initLocate({
+                success: curLocalResult => {
+                    this.zone.run(() => {
+                        if (curLocalResult.addressComponent) {
+                            __initMapContent(curLocalResult);
+                        } else {
+                            this.loading = true;
+                            this.loadingText = '定位失败，请检查您的网络';
+                        }
+                    });
+                },
+                error: () => {
+                    this.zone.run(() => {
                         this.loading = true;
                         this.loadingText = '定位失败，请检查您的网络';
-                    }
-                });
-            },
-            () => {
-                this.zone.run(() => {
-                    this.loading = true;
-                    this.loadingText = '定位失败，请检查您的网络';
-                });
-            }
-        );
+                    });
+                }
+            });
+        }
 
         if (!this.hasInitDrag) {
             this.gdService.initDragLocate(dragResult => {
@@ -92,16 +102,14 @@ export class SearchLocModal {
                     .replace(province, '')
                     .replace(city, '')
                     .replace(district, '')
-                    .replace(township, '') +
-                result.addressComponent.street +
-                result.addressComponent.streetNumber,
+                    .replace(township, ''),
             address: result.formattedAddress,
             location: result.location,
             district: result.addressComponent.district,
             citycode: result.addressComponent.citycode,
             adcode: result.addressComponent.adcode
         };
-        console.log(this.curSelectPlace.name);
+        console.log('curSelectPlace:', this.curSelectPlace);
     }
 
     autoSearch() {
@@ -128,23 +136,26 @@ export class SearchLocModal {
         this.keyword = '';
         this.curSelectPlace = tip;
         this.gdService.clearMap();
-        this.gdService.addMarker([tip.location.lng, tip.location.lat], () => {});
+        this.gdService.addMarker([tip.location.lng, tip.location.lat], () => { });
     }
 
     submit() {
-        let curModal = this.modalCtrl.create('AddLocModal', {
-            curSelectPlace: this.curSelectPlace,
-            mapInfo: this.mapInfo
-        });
-        curModal.onDidDismiss(data => {
-            console.log(data);
-            if (data) {
-                //有数据返回表示添加成功
-                this.viewCtrl.dismiss(data, 'add-location-done', {
-                    animate: false
-                });
-            }
-        });
-        curModal.present();
+        this.viewCtrl.dismiss({
+            curSelectPlace:this.curSelectPlace
+        })
+        // let curModal = this.modalCtrl.create('AddLocModal', {
+        //     curSelectPlace: this.curSelectPlace,
+        //     mapInfo: this.mapInfo
+        // });
+        // curModal.onDidDismiss(data => {
+        //     console.log(data);
+        //     if (data) {
+        //         //有数据返回表示添加成功
+        //         this.viewCtrl.dismiss(data, 'add-location-done', {
+        //             animate: false
+        //         });
+        //     }
+        // });
+        // curModal.present();
     }
 }

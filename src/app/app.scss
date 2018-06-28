@@ -23,24 +23,24 @@ ion-item.no-padding-left {
     white-space: normal;
 }
 
+$iconWidth:27px;
+
 .icon-marker {
-    border: 2px solid #fff;
+    // border: 2px solid #fff;
     border-radius: 100%;
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
     text-align: center;
     background-color: #ff5d00;
     color: #fff;
     &.cur {
-        width:35px;
-        height: 35px;
-        border: 4px solid #fff;
+        width:$iconWidth;
+        height: $iconWidth;
+        // border: 4px solid #fff;
         border-radius: 50% 50% 50% 0;
         transform: rotate(-45deg);
         i {
-            transform: rotate(45deg);
-            position: relative;
-            top: 2px;
+            line-height: $iconWidth;
         }
     }
 }

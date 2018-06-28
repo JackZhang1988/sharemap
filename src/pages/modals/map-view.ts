@@ -64,7 +64,6 @@ export class MapViewModal {
     private randomMapId: string = 'mapContainer-' + new Date().getTime().toString(32);
 
     ionViewDidLoad() {
-        this.gdService.initMap(this.randomMapId);
         let geoTime = 0;
         let buttonOffset;
         if (this.type == 'map-locations') {
@@ -72,6 +71,9 @@ export class MapViewModal {
         } else {
             buttonOffset = new AMap.Pixel(10, 10);
         }
+        this.gdService.initMap({
+            container: this.randomMapId
+        });
         this.gdService.initGeolocation(
             {
                 panToLocation: false,
@@ -153,7 +155,6 @@ export class MapViewModal {
     }
 
     addMarkerList(markList) {
-
         this.markerList = this.gdService.addIconMarkers(markList, {
             markerClick: (target, index) => {
                 // debugger;

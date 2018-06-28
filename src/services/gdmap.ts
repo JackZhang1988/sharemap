@@ -25,65 +25,71 @@ export class GDMap {
         return STATIC_MAP_KEY;
     }
 
-    initMap(container: string = 'mapContainer'): any {
+    initMap(options?): any {
         let self = this;
-        self.gdMap = new AMap.Map(container, {
-            rotateEnable: false,
-            dragEnable: true,
-            zoomEnable: true,
-            zooms: [3, 18],
-            zoom: 15
+        options = Object.assign({
+            container: 'mapContainer',
+            mapOps: {
+                rotateEnable: false,
+                dragEnable: true,
+                zoomEnable: true,
+                zooms: [3, 18],
+                zoom: 15
+            }
+        }, options);
+        self.gdMap = new AMap.Map(options.container, options.mapOps);
+    }
+
+    /**
+     * 初始化带定位功能
+     * @param options
+     * @param options.success 定位成功callback
+     * @param options.error 定位失败callback
+     */
+    initLocate(options: any = {}): any {
+        let self = this;
+        if (!self.gdMap) {
+            self.initMap();
+        }
+        let geoOps = Object.assign({
+            enableHighAccuracy: true, //是否使用高精度定位，默认:true
+            timeout: 5000, //超过5秒后停止定位，默认：无穷大
+            maximumAge: 0, //定位结果缓存0毫秒，默认：0
+            convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+            showButton: true, //显示定位按钮，默认：true
+            buttonPosition: 'LB', //定位按钮停靠位置，默认：'LB'，左下角
+            buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            showMarker: false, //定位成功后在定位到的位置显示点标记，默认：true
+            markerOptions: {
+                icon: '//webapi.amap.com/theme/v1.3/markers/n/mark_b.png'
+            },
+            showCircle: false, //定位成功后用圆圈表示定位精度范围，默认：true
+            panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
+            zoomToAccuracy: true //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false,
+        }, options.geoOps);
+
+        AMap.plugin('AMap.Geolocation', () => {
+            let geolocation = new AMap.Geolocation(geoOps);
+            self.gdMap.addControl(geolocation);
+            geolocation.getCurrentPosition();
+            AMap.event.addListener(geolocation, 'complete', result => {
+                console.log('当前位置: ', result);
+                if (!result.location) {
+                    result.location = result.position;
+                }
+                options.success && options.success(result);
+            }); //返回定位信息
+            AMap.event.addListener(geolocation, 'error', err => {
+                options.error && options.error(err);
+            }); //返回定位出错信息
         });
     }
 
     /**
-     * 初始化带定位功能的地图
-     * @param options
-     * @param callback 定位成功callback
-     * @param errorCallback 定位失败callback
+     * 初始化获取当前城市
      */
-    initLocateMap(options: any = {}, callback: any, errorCallback: any): any {
+    initCity() {
         let self = this;
-        options = Object.assign({ container: 'mapContainer' }, options);
-        self.gdMap = new AMap.Map(options.container, {
-            rotateEnable: false,
-            dragEnable: true,
-            zoomEnable: true,
-            zooms: [3, 18],
-            zoom: 15
-        });
-        AMap.plugin('AMap.Geolocation', () => {
-            let geolocation = new AMap.Geolocation({
-                enableHighAccuracy: true, //是否使用高精度定位，默认:true
-                timeout: 5000, //超过5秒后停止定位，默认：无穷大
-                maximumAge: 0, //定位结果缓存0毫秒，默认：0
-                convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
-                showButton: true, //显示定位按钮，默认：true
-                buttonPosition: 'LB', //定位按钮停靠位置，默认：'LB'，左下角
-                buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-                showMarker: false, //定位成功后在定位到的位置显示点标记，默认：true
-                markerOptions: {
-                    icon: '//webapi.amap.com/theme/v1.3/markers/n/mark_b.png'
-                },
-                showCircle: false, //定位成功后用圆圈表示定位精度范围，默认：true
-                panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
-                zoomToAccuracy: true //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false,
-            });
-            self.gdMap.addControl(geolocation);
-            geolocation.getCurrentPosition((status, result) => {
-                console.log(status, result);
-            });
-            AMap.event.addListener(geolocation, 'complete', result => {
-                console.log(result);
-                if (!result.location) {
-                    result.location = result.position;
-                }
-                callback && callback(result);
-            }); //返回定位信息
-            AMap.event.addListener(geolocation, 'error', err => {
-                errorCallback && errorCallback(err);
-            }); //返回定位出错信息
-        });
         AMap.plugin('AMap.CitySearch', () => {
             self.citySearch = new AMap.CitySearch();
             self.citySearch.getLocalCity((status, citySearchResult) => {
@@ -100,10 +106,18 @@ export class GDMap {
                 }
             });
         });
+    }
+
+    /**
+     * 初始化地理位置转换功能
+     */
+    initGeocoder() {
+        let self = this;
         AMap.plugin('AMap.Geocoder', () => {
             self.geocoder = new AMap.Geocoder();
         });
     }
+
     initGeolocation(ops: any = {}, onComplete?, onError?): void {
         let self = this;
         self.gdMap.plugin('AMap.Geolocation', function () {
@@ -258,8 +272,9 @@ export class GDMap {
      * 参考：https://fontawesome.com/icons?d=gallery&m=free
      * @param markList 
      * @param ops 
-     *      iconClass font-awsome icon 类名
+     *      iconClass font-awsome icon 类名 example:fas fa-circle
      *      isFitView 添加marker后是否自动调整地图
+     *      iconContent 显示文字icon，注：为保证显示效果，通常设置文字icon时，iconClass设置为fas
      */
     addIconMarkers(markList: any[], options?: any) {
         if (markList.length) {
@@ -267,11 +282,15 @@ export class GDMap {
             options = Object.assign(
                 {
                     isFitView: true,
-                    iconClass: ''
+                    iconClass: 'fas fa-circle',
+                    iconContent: '',
                 },
                 options
             );
-            markList.forEach((pos,index) => {
+            if (options.iconContent) {
+                options.iconClass = 'fas'
+            }
+            markList.forEach((pos, index) => {
                 let marker = new AMap.Marker({
                     map: this.gdMap,
                     content: `<div class="icon-marker"><i class="${options.iconClass}">${options.iconContent}</i></div>`,
@@ -279,7 +298,7 @@ export class GDMap {
                     offset: new AMap.Pixel(-25, -25)
                 })
                 marker.on('click', function (e) {
-                    options.markerClick && options.markerClick(e.target,index);
+                    options.markerClick && options.markerClick(e.target, index);
                 });
                 markerList.push(marker);
             });
@@ -503,16 +522,16 @@ export class GDMap {
     highlightIconMarker(iconMarker: any) {
         if (iconMarker) {
             let content = iconMarker.getContent();
-            iconMarker.setContent(content.replace('icon-marker','icon-marker cur'));
+            iconMarker.setContent(content.replace('icon-marker', 'icon-marker cur'));
             iconMarker.setzIndex(9999);
         }
-    } 
+    }
 
     unhighlightIconMarker(iconMarker: any) {
         if (iconMarker) {
             let content = iconMarker.getContent();
             iconMarker.setzIndex(1);
-            iconMarker.setContent(content.replace(/ cur/gi,''));
+            iconMarker.setContent(content.replace(/ cur/gi, ''));
         }
     }
 

@@ -19,7 +19,7 @@
     </ion-segment>
   </ion-toolbar>
 </ion-header>
-<ion-content padding [ngSwitch]="pageType">
+<ion-content padding [ngSwitch]="pageType" class="add-loc-modal">
   <div class="content-add status" *ngSwitchCase="'status'">
     <div class="item item-img-add">
       <ul class="img-prev">
@@ -44,6 +44,10 @@
 
     <ion-item class="no-padding-left">
       <ion-textarea placeholder="分享下你对这里的感受吧..." [(ngModel)]="description" class="status-textarea"></ion-textarea>
+    </ion-item>
+    <ion-item class="no-padding-left location-area" (click)="goSearchLoc()">
+      <ion-icon name="ios-pin-outline"></ion-icon>
+      <span class="location-text">{{locationText}}</span>
     </ion-item>
   </div>
 

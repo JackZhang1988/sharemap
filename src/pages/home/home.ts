@@ -83,7 +83,7 @@ export class HomePage implements OnInit {
                 if (type == 'map') {
                     curModal = this.modalCtrl.create('AddMapModal');
                 } else {
-                    curModal = this.modalCtrl.create('SearchLocModal');
+                    curModal = this.modalCtrl.create('AddLocModal');
                 }
                 curModal.onDidDismiss(callbackData => {
                     // typeof StatusBar !== 'undefined' && StatusBar.backgroundColorByHexString('#387ef5');

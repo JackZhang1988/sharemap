@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, ViewController, NavParams, ToastController } from 'ionic-angular';
+import { Component, NgZone } from '@angular/core';
+import { IonicPage, NavController, AlertController, ViewController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import { ApiService } from '../../services/api';
@@ -7,22 +7,26 @@ import { QiniuService } from '../../services/qiniu';
 
 import { Map } from '../../common/models';
 import { ModalContent } from './modal-content';
+import { GDMap } from '../../services/gdmap';
 
 @IonicPage()
 @Component({
     templateUrl: 'add-loc.html',
-    providers: [ApiService, QiniuService]
+    providers: [ApiService, QiniuService, GDMap]
 })
 export class AddLocModal extends ModalContent {
     constructor(
         private storage: Storage,
         public viewCtrl: ViewController,
         public navCtrl: NavController,
+        public modalCtrl: ModalController,
         public navParams: NavParams,
         public toastCtrl: ToastController,
         public alertCtrl: AlertController,
         public qiniuService: QiniuService,
-        private apiService: ApiService
+        private apiService: ApiService,
+        public zone: NgZone,
+        private gdService: GDMap
     ) {
         super(viewCtrl);
     }
@@ -32,6 +36,8 @@ export class AddLocModal extends ModalContent {
     curSelectedMapId: string;
     locationImgs: string[] = [];
     description: string;
+    locationText: string = '正在获取位置信息...';
+    orignalLocationResult: any;
     // isShowImgUploader = true;
     showHeader = true;
     private mapInfo: any = this.navParams.get('mapInfo');
@@ -44,7 +50,73 @@ export class AddLocModal extends ModalContent {
             this.locationImgs = this.locationInfo.imgs;
             this.description = this.locationInfo.description;
             this.curLocation = this.locationInfo.locationInfo;
+            this.locationText = this.locationInfo.name;
+        } else {
+            this.initLocation();
         }
+    }
+
+    initLocation(): void {
+        this.gdService.initMap();
+        this.gdService.initLocate({
+            success: result => {
+                this.zone.run(() => {
+                    if (result) {
+                        this.orignalLocationResult = result;
+                        this.curLocation = this.formateLocationInfo(result);
+                        this.locationText = this.curLocation.name;
+                    } else {
+                        // this.loading = true;
+                        this.locationText = '定位失败，请检查您的网络';
+                    }
+                });
+            },
+            error: () => {
+                this.zone.run(() => {
+                    // this.loading = true;
+                    this.locationText = '定位失败，请检查您的网络';
+                });
+            }
+        });
+    }
+
+    formateLocationInfo(locationResult) {
+        if (locationResult) {
+            let city = locationResult.addressComponent.city;
+            let province = locationResult.addressComponent.province;
+            let district = locationResult.addressComponent.district;
+            let township = locationResult.addressComponent.township;
+            return {
+                name:
+                    locationResult.formattedAddress
+                        .replace(province, '')
+                        .replace(city, '')
+                        .replace(district, '')
+                        .replace(township, ''),
+                address: locationResult.formattedAddress,
+                location: locationResult.location,
+                district: locationResult.addressComponent.district,
+                citycode: locationResult.addressComponent.citycode,
+                adcode: locationResult.addressComponent.adcode
+            };
+        }
+    }
+
+    goSearchLoc(): void {
+        // this.navCtrl.push('SearchLocModal', {
+        //     locationInfo: this.orignalLocationResult
+        // });
+        let curModal = this.modalCtrl.create('SearchLocModal', {
+            locationInfo: this.orignalLocationResult
+        });
+        curModal.onDidDismiss(data => {
+            console.log(data);
+            if (data) {
+                this.locationText = data.curSelectPlace.name;
+                this.curLocation = data.curSelectPlace;
+            }
+        });
+        curModal.present();
     }
 
     getMaps(): void {
