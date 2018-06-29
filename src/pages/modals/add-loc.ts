@@ -63,7 +63,7 @@ export class AddLocModal extends ModalContent {
                 this.zone.run(() => {
                     if (result) {
                         this.orignalLocationResult = result;
-                        this.curLocation = this.formateLocationInfo(result);
+                        this.curLocation = this.gdService.formateLocationInfo(result);
                         this.locationText = this.curLocation.name;
                     } else {
                         // this.loading = true;
@@ -80,27 +80,7 @@ export class AddLocModal extends ModalContent {
         });
     }
 
-    formateLocationInfo(locationResult) {
-        if (locationResult) {
-            let city = locationResult.addressComponent.city;
-            let province = locationResult.addressComponent.province;
-            let district = locationResult.addressComponent.district;
-            let township = locationResult.addressComponent.township;
-            return {
-                name:
-                    locationResult.formattedAddress
-                        .replace(province, '')
-                        .replace(city, '')
-                        .replace(district, '')
-                        .replace(township, ''),
-                address: locationResult.formattedAddress,
-                location: locationResult.location,
-                district: locationResult.addressComponent.district,
-                citycode: locationResult.addressComponent.citycode,
-                adcode: locationResult.addressComponent.adcode
-            };
-        }
-    }
+    
 
     goSearchLoc(): void {
         // this.navCtrl.push('SearchLocModal', {

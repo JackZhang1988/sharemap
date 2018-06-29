@@ -92,24 +92,7 @@ export class SearchLocModal {
 
     setSelectPlace(result) {
         this.loading = false;
-        let city = result.addressComponent.city;
-        let province = result.addressComponent.province;
-        let district = result.addressComponent.district;
-        let township = result.addressComponent.township;
-        this.curSelectPlace = {
-            name:
-                result.formattedAddress
-                    .replace(province, '')
-                    .replace(city, '')
-                    .replace(district, '')
-                    .replace(township, ''),
-            address: result.formattedAddress,
-            location: result.location,
-            district: result.addressComponent.district,
-            citycode: result.addressComponent.citycode,
-            adcode: result.addressComponent.adcode
-        };
-        console.log('curSelectPlace:', this.curSelectPlace);
+        this.curSelectPlace = this.gdService.formateLocationInfo(result);
     }
 
     autoSearch() {
@@ -141,7 +124,7 @@ export class SearchLocModal {
 
     submit() {
         this.viewCtrl.dismiss({
-            curSelectPlace:this.curSelectPlace
+            curSelectPlace: this.curSelectPlace
         })
         // let curModal = this.modalCtrl.create('AddLocModal', {
         //     curSelectPlace: this.curSelectPlace,

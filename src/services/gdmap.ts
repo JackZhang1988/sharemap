@@ -186,6 +186,38 @@ export class GDMap {
         });
     }
 
+
+    /**
+     * 格式化地理位置信息
+     * @param locationResult 高德地图返回的地理信息
+     */
+    formateLocationInfo(locationResult) {
+        if (locationResult) {
+            let building = locationResult.addressComponent.building;
+            let city = locationResult.addressComponent.city;
+            let province = locationResult.addressComponent.province;
+            let district = locationResult.addressComponent.district;
+            let township = locationResult.addressComponent.township;
+            let result =  {
+                name:
+                    building ? building : locationResult.formattedAddress
+                        .replace(province, '')
+                        .replace(city, '')
+                        .replace(district, '')
+                        .replace(township, ''),
+                address: locationResult.formattedAddress,
+                location: locationResult.location,
+                district: locationResult.addressComponent.district,
+                citycode: locationResult.addressComponent.citycode,
+                adcode: locationResult.addressComponent.adcode
+            };
+            console.log(locationResult.formattedAddress);
+            console.log(locationResult.addressComponent);
+            console.log(result.name);
+            return result;
+        }
+    }
+
     addMassMarks(marks, ops: any = {}) {
         let self = this;
         self.mass = new AMap.MassMarks(
