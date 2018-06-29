@@ -83,9 +83,6 @@ export class AddLocModal extends ModalContent {
     
 
     goSearchLoc(): void {
-        // this.navCtrl.push('SearchLocModal', {
-        //     locationInfo: this.orignalLocationResult
-        // });
         let curModal = this.modalCtrl.create('SearchLocModal', {
             locationInfo: this.orignalLocationResult
         });
@@ -94,6 +91,17 @@ export class AddLocModal extends ModalContent {
             if (data) {
                 this.locationText = data.curSelectPlace.name;
                 this.curLocation = data.curSelectPlace;
+            }
+        });
+        curModal.present();
+    }
+
+    goIconList():void {
+        // this.navCtrl.push('IconListPage');
+        let curModal = this.modalCtrl.create('IconListPage');
+        curModal.onDidDismiss(data => {
+            if (data) {
+                console.log(data);
             }
         });
         curModal.present();
@@ -147,17 +155,7 @@ export class AddLocModal extends ModalContent {
         console.log(index);
         this.locationImgs.splice(index, 1);
     }
-    // showMapModal() {
-    //   let curModal;
-    //   curModal = this.modalCtrl.create('SearchLocModal');
-    //   curModal.onDidDismiss(data => {
-    //     // console.log(data);
-    //     if (data) {
-    //       this.curLocation = data;
-    //     }
-    //   });
-    //   curModal.present();
-    // }
+
     submit() {
         let requireField = [
             {

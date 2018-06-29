@@ -278,9 +278,13 @@ textarea {
     }
 }
 
-.location-area {
+.config-item {
     color:#666;
-    .location-text{
+    .config-fa-icon {
+        width:15px;
+        height: 15px;
+    }
+    .config-text{
         font-size: 18px;
     }
 }

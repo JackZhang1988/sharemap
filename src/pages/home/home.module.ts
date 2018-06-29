@@ -7,6 +7,7 @@ import { AddLocModule } from '../modals/add-loc.module';
 import { SearchLocModule } from '../search-loc/search-loc.module';
 // import { RichTextAddPageModule } from '../rich-text-add/rich-text-add.module';
 import { PipesModule } from '../../pipes/pipes.module';
+import { IconListPageModule } from '../icon-list/icon-list.module';
 // import { ImagefilterPipe } from '../../pipes/imagefilter/imagefilter';
 // import { ComponentsModule } from '../../components/components.module';
 
@@ -20,6 +21,7 @@ import { PipesModule } from '../../pipes/pipes.module';
         AddLocModule,
         SearchLocModule,
         PipesModule,
+        IconListPageModule,
         // SearchTipsModule,
         IonicPageModule.forChild(HomePage),
     ],
