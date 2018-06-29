@@ -1,48 +1,42 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>{{title}}</ion-title>
-    <ion-buttons start>
-      <button ion-button (click)="dismiss()">
-        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
-        <span color="primary" showWhen="ios">关闭</span>
-      </button>
-    </ion-buttons>
-    <ion-buttons end>
-      <button ion-button icon-only color="royal" (click)="openPathSelect($event)" [disabled]="!curMarker || !curPosition">
-        <ion-icon name="ios-navigate"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-navbar>
+        <ion-title>{{title}}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only color="royal" (click)="openPathSelect($event)" [disabled]="!curMarker || !curPosition">
+                <ion-icon name="ios-navigate"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content>
-  <div id="mapView" [hidden]="curView=='list'">
-    <div [attr.id]="randomMapId" class="item full-map map-container">
-    </div>
-    <div class="path-plan-pannel-trigger" *ngIf="pathSearchTrigger" [@enterAnimation] (click)="openPathPannel()">{{showPathPanel?'关闭':'查看'}}导航详情</div>
-    <div id="pathPannel" #pathPannel [ngClass]="{'slideInUp':showPathPanel,'slideOutDown':!showPathPanel}"></div>
-    <!-- <div id="mapDetail">
+    <div id="mapView" [hidden]="curView=='list'">
+        <div [attr.id]="randomMapId" class="item full-map map-container">
+        </div>
+        <div class="path-plan-pannel-trigger" *ngIf="pathSearchTrigger" [@enterAnimation] (click)="openPathPannel()">{{showPathPanel?'关闭':'查看'}}导航详情</div>
+        <div id="pathPannel" #pathPannel [ngClass]="{'slideInUp':showPathPanel,'slideOutDown':!showPathPanel}"></div>
+        <!-- <div id="mapDetail">
       <div class="user-info">
         <img class="avatar" src="{{(mapInfo.creater?.avatar || 'http://okyb0e40i.bkt.clouddn.com/FmYuiaXcxOee_nLJmouPS5C-m2uM') | imagefilter:'avatar'}}">
         <span class="user-name">{{mapInfo.creater?.name}}</span>
       </div>
       <div class="map-intro">{{mapInfo.description}}</div>
     </div> -->
-    <ion-slides id="slideContainer" [pager]=false (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()"
-      *ngIf="showSlides">
-      <ion-slide *ngFor='let item of slidesData' class="map-slider">
-        <button ion-item (click)="goLocationDetail(item)">
-          <ion-thumbnail item-start>
-            <img class="" src="{{item.imgs[0] | imagefilter:'thumbnail' }}">
-          </ion-thumbnail>
-          <h2>{{item.locationInfo.name}}</h2>
-          <p>{{item.description}}</p>
-          <button ion-button clear item-end>详情</button>
-        </button>
-      </ion-slide>
-    </ion-slides>
+        <ion-slides id="slideContainer" [pager]=false (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()"
+            *ngIf="showSlides">
+            <ion-slide *ngFor='let item of slidesData' class="map-slider">
+                <button ion-item (click)="goLocationDetail(item)">
+                    <ion-thumbnail item-start>
+                        <img class="" src="{{item.imgs[0] | imagefilter:'thumbnail' }}">
+                    </ion-thumbnail>
+                    <h2>{{item.locationInfo.name}}</h2>
+                    <p>{{item.description}}</p>
+                    <button ion-button clear item-end>详情</button>
+                </button>
+            </ion-slide>
+        </ion-slides>
 
-  </div>
+    </div>
 
 </ion-content>

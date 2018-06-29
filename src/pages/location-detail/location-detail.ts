@@ -48,21 +48,21 @@ export class LocationDetailPage {
         this.getLocationData();
     }
 
-    ionViewWillEnter() {
-        // 修复map-view跳转时 statusbar bug
-        if (this.platform.is('ios') && typeof StatusBar !== 'undefined' && this.locationParams.from == 'map-view') {
-            StatusBar.overlaysWebView(false);
-            StatusBar.backgroundColorByHexString('#f8f8f8');
-        }
-    }
+    // ionViewWillEnter() {
+    //     // 修复map-view跳转时 statusbar bug
+    //     if (this.platform.is('ios') && typeof StatusBar !== 'undefined' && this.locationParams.from == 'map-view') {
+    //         StatusBar.overlaysWebView(false);
+    //         StatusBar.backgroundColorByHexString('#f8f8f8');
+    //     }
+    // }
 
-    ionViewDidLeave() {
-        // 修复map-view跳转时 statusbar bug
-        if (this.platform.is('ios') && typeof StatusBar !== 'undefined' && this.locationParams.from == 'map-view') {
-            StatusBar.overlaysWebView(true);
-            // StatusBar.backgroundColorByHexString('#387ef5');
-        }
-    }
+    // ionViewDidLeave() {
+    //     // 修复map-view跳转时 statusbar bug
+    //     if (this.platform.is('ios') && typeof StatusBar !== 'undefined' && this.locationParams.from == 'map-view') {
+    //         StatusBar.overlaysWebView(true);
+    //         // StatusBar.backgroundColorByHexString('#387ef5');
+    //     }
+    // }
 
     initShare() {
         this.shareProvider.showSharePanel();

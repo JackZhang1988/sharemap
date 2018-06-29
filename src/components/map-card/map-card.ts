@@ -1,5 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController, NavController } from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
 
 @Component({
@@ -16,7 +16,7 @@ export class MapCardComponent {
 
     private STATIC_MAP_KEY: string;
 
-    constructor(public modalCtrl: ModalController, private gdService: GDMap) {
+    constructor(public navCtrl: NavController, public modalCtrl: ModalController, private gdService: GDMap) {
         this.STATIC_MAP_KEY = this.gdService.getStaticMapKey();
     }
     ngOnChanges(changes: SimpleChanges) {
@@ -32,7 +32,7 @@ export class MapCardComponent {
                 this.viewTitle = this.viewTitle || '地图视图';
                 markerGpsStr = `-1,http://cache.amap.com/lbs/static/cuntom_marker1.png,0:${this.dataSource[0]},${
                     this.dataSource[1]
-                }`;
+                    }`;
                 // http://restapi.amap.com/v3/staticmap?size=400*200&markers=-1,http://cache.amap.com/lbs/static/cuntom_marker1.png,0:116.326778,40.0033&key=c3b4477c4c2ad477141ee0358e4d1c82
                 this.mapStaticImg =
                     'http://restapi.amap.com/v3/staticmap?size=' +
@@ -50,13 +50,13 @@ export class MapCardComponent {
                     for (let i = 0; i < lLength && i < 50; i++) {
                         markerList.push(
                             'mid,' +
-                                color +
-                                ',' +
-                                i +
-                                ':' +
-                                this.dataSource[i].lnglat[0] +
-                                ',' +
-                                this.dataSource[i].lnglat[1]
+                            color +
+                            ',' +
+                            i +
+                            ':' +
+                            this.dataSource[i].lnglat[0] +
+                            ',' +
+                            this.dataSource[i].lnglat[1]
                         );
                     }
                     markerGpsStr = markerList.join('|');
@@ -80,12 +80,18 @@ export class MapCardComponent {
         } else {
             mapModalData = this.dataSource;
         }
-        let mapViewModal = this.modalCtrl.create('MapViewModal', {
+        // let mapViewModal = this.modalCtrl.create('MapViewModal', {
+        //     type: this.viewType,
+        //     title: this.viewTitle,
+        //     count: this.count,
+        //     mapLocations: mapModalData
+        // });
+        // mapViewModal.present();
+        this.navCtrl.push('MapViewModal', {
             type: this.viewType,
             title: this.viewTitle,
             count: this.count,
             mapLocations: mapModalData
         });
-        mapViewModal.present();
     }
 }
