@@ -41,6 +41,7 @@ $iconWidth:27px;
         transform: rotate(-45deg);
         i {
             line-height: $iconWidth;
+            transform: rotate(45deg);
         }
     }
 }

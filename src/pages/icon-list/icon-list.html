@@ -19,7 +19,11 @@
 
 
 <ion-content padding>
-  <div class="icon-list">
+  <div class="icon-list" *ngIf="type == 'icon'">
     <i *ngFor="let iconItem of iconList" class="icon-item {{iconItem}}" (click)="selectIcon(iconItem)"></i>
+  </div>
+
+  <div class="color-list" *ngIf="type == 'color'">
+    <span class="color-item" *ngFor="let colorItem of colorList" (click)="selectColor(colorItem)" [ngStyle]="{'background-color':colorItem}"></span>
   </div>
 </ion-content>

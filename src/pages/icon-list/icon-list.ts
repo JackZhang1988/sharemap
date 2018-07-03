@@ -18,6 +18,8 @@ export class IconListPage {
   constructor(public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams) {
   }
 
+  public type = this.navParams.get('type') || 'icon';
+
   public iconList = [
     "far fa-circle",
     "far fa-child",
@@ -58,12 +60,38 @@ export class IconListPage {
     "fas fa-grin-wink",
   ]
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad IconListPage');
-  }
+  public colorList = [
+    '#f44336',
+    '#e91e63',
+    '#9c27b0',
+    '#673ab7',
+    '#3f51b5',
+    '#2196f3',
+    '#03a9f4',
+    '#00bcd4',
+    '#009688',
+    '#4caf50',
+    '#8bc34a',
+    '#ffeb3b',
+    '#ffc107',
+    '#ff9800',
+    '#ff5722',
+    '#795548',
+    '#9e9e9e',
+    '#607d8b',
+  ]
+
   selectIcon(iconStr) {
     this.viewCtrl.dismiss({
-      curIconStyle: iconStr
+      type: 'icon',
+      result: iconStr
+    })
+  }
+
+  selectColor(colorStr) {
+    this.viewCtrl.dismiss({
+      type: 'color',
+      result: colorStr
     })
   }
 

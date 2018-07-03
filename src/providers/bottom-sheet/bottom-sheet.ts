@@ -5,7 +5,7 @@ interface BottomSheetOpts {
   modalPageName: string,
   params?: any,
   modalOpts?: any,
-  onDidDismiss?: Function
+  onDidDismiss?: (data: any, role: string) => void
 }
 
 @Injectable()
@@ -15,19 +15,17 @@ export class BottomSheetProvider {
     console.log('Hello BottomSheetProvider Provider');
   }
 
-  public curModal;
-
   initBottomSheet(opts: BottomSheetOpts) {
     opts.modalOpts = Object.assign({
       cssClass: 'bottom-sheet'
-    }, opts.modalOpts)
-    if (opts.modalPageName) {
-      this.curModal = this.modalCtrl.create(opts.modalPageName, opts.params, opts.modalOpts);
-    }
-    opts.onDidDismiss && this.curModal.onDidDismiss(opts.onDidDismiss);
-  }
+    }, opts.modalOpts);
 
-  showBottomSheet() {
-    this.curModal.present();
+    if (opts.modalPageName) {
+      let curModal = this.modalCtrl.create(opts.modalPageName, opts.params, opts.modalOpts);
+      if (opts.onDidDismiss) {
+        curModal.onDidDismiss(opts.onDidDismiss);
+      }
+      return curModal;
+    }
   }
 }

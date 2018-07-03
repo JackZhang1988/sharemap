@@ -21,26 +21,41 @@ export class AddLocationCategoryPage {
   }
 
   public markerIcon: string;
-  public addBottomSheet;
+  public iconListBottomSheet;
+  public colorListBottomSheet;
+  public curColor: string = '#ff5d00';
+  public curIcon: string = 'far fa-circle';
 
   ngOnInit() {
-    this.bottomSheet.initBottomSheet({
+    this.iconListBottomSheet = this.bottomSheet.initBottomSheet({
       modalPageName: 'IconListPage',
+      params: {
+        type: 'icon'
+      },
       onDidDismiss: data => {
         console.log(data);
+        this.curIcon = data.result;
       }
     })
+    this.colorListBottomSheet = this.bottomSheet.initBottomSheet({
+      modalPageName: 'IconListPage',
+      params: {
+        type: 'color'
+      },
+      onDidDismiss: data => {
+        console.log(data);
+        this.curColor = data.result;
+      }
+    })
+
   }
 
   selectIcon() {
-    // let curModal = this.modalCtrl.create('IconListPage');
-    // curModal.onDidDismiss(data => {
-    //   if (data) {
-    //     console.log(data);
-    //   }
-    // });
-    // curModal.present();
-    this.bottomSheet.showBottomSheet();
+    this.iconListBottomSheet.present();
+  }
+
+  selectColor() {
+    this.colorListBottomSheet.present();
   }
 
   dismiss() {

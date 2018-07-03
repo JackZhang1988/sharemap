@@ -1,3 +1,18 @@
 page-add-location-category {
-
+    .color-item {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin: 10px;
+        border-radius: 2px;
+    }
+    .select-content {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        &.icon-marker {
+            bottom: 15px;
+            right: 15px;
+        }
+    }
 }

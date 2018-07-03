@@ -30,9 +30,13 @@
 
         <ion-item (click)="selectIcon()">
             <ion-label stacked>选择坐标图标</ion-label>
+            <div class="icon-marker cur select-content" item-content [ngStyle]="{'background-color':curColor}">
+                <i class="icon-item {{curIcon}}"></i>
+            </div>
         </ion-item>
-        <ion-item>
+        <ion-item (click)="selectColor()">
             <ion-label stacked>设置坐标颜色</ion-label>
+            <span item-content class="color-item select-content" [ngStyle]="{'background-color':curColor}"></span>
         </ion-item>
     </ion-list>
     <button ion-button block>保存</button>
