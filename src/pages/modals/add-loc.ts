@@ -80,7 +80,7 @@ export class AddLocModal extends ModalContent {
         });
     }
 
-    
+
 
     goSearchLoc(): void {
         let curModal = this.modalCtrl.create('SearchLocModal', {
@@ -96,9 +96,9 @@ export class AddLocModal extends ModalContent {
         curModal.present();
     }
 
-    goIconList():void {
+    goConfigCategory(): void {
         // this.navCtrl.push('IconListPage');
-        let curModal = this.modalCtrl.create('IconListPage');
+        let curModal = this.modalCtrl.create('LocationCategoryPage');
         curModal.onDidDismiss(data => {
             if (data) {
                 console.log(data);

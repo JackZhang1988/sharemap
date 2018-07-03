@@ -1,0 +1,32 @@
+<!--
+  Generated template for the AddLocationCategoryPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>添加新的坐标分类</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+
+        <ion-item>
+            <ion-label stacked>设置分类名称</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+
+        <ion-item (click)="selectIcon()">
+            <ion-label stacked>选择坐标图标</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>设置坐标颜色</ion-label>
+        </ion-item>
+    </ion-list>
+    <button ion-button block>保存</button>
+</ion-content>
