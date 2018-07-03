@@ -16,6 +16,7 @@ import { AuthServiceProvider } from '../providers/auth';
 import { HttpHeaderInterceptor } from '../providers/http-header';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { ShareProvider } from '../providers/share';
+import { BottomSheetProvider } from '../providers/bottom-sheet/bottom-sheet';
 
 export function jwtOptionsFactory(storage) {
     return {
@@ -57,7 +58,8 @@ export function jwtOptionsFactory(storage) {
         StatusBar,
         AuthServiceProvider,
         FileTransfer,
-        ShareProvider
+        ShareProvider,
+    BottomSheetProvider
     ]
 })
 export class AppModule {}
