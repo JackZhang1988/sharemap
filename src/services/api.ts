@@ -4,6 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ENV } from '@app/env';
 
+
+interface LocationCategory {
+    userId:string,
+    title:string,
+    iconClass:string,
+    iconColor:string
+}
+
 @Injectable()
 export class ApiService {
     private serverHost = ENV.API_URL;
@@ -168,6 +176,12 @@ export class ApiService {
     getUserFeedbacks(userId: string): Observable<any> {
         return this.http
             .get(this.serverHost + '/feedback?userId=' + userId)
+            .catch((error: any) => Observable.throw(error.error || 'Server error'));
+    }
+
+    saveLocationCategory(params:LocationCategory): Observable<any> {
+        return this.http
+            .post(this.serverHost + '/map/locationCategory', params)
             .catch((error: any) => Observable.throw(error.error || 'Server error'));
     }
 }

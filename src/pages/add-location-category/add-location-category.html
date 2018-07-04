@@ -25,7 +25,7 @@
 
         <ion-item>
             <ion-label stacked>设置分类名称</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]="title"></ion-input>
         </ion-item>
 
         <ion-item (click)="selectIcon()">
@@ -39,5 +39,5 @@
             <span item-content class="color-item select-content" [ngStyle]="{'background-color':curColor}"></span>
         </ion-item>
     </ion-list>
-    <button ion-button block>保存</button>
+    <button ion-button block (click)="saveCategory()">保存</button>
 </ion-content>
