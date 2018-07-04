@@ -33,8 +33,9 @@ export class AddLocationCategoryPage {
         type: 'icon'
       },
       onDidDismiss: data => {
-        console.log(data);
-        this.curIcon = data.result;
+        if (data) {
+          this.curIcon = data.result;
+        }
       }
     })
     this.colorListBottomSheet = this.bottomSheet.initBottomSheet({
@@ -43,8 +44,9 @@ export class AddLocationCategoryPage {
         type: 'color'
       },
       onDidDismiss: data => {
-        console.log(data);
-        this.curColor = data.result;
+        if (data) {
+          this.curColor = data.result;
+        }
       }
     })
 

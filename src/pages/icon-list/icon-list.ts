@@ -22,7 +22,7 @@ export class IconListPage {
 
   public iconList = [
     "far fa-circle",
-    "far fa-child",
+    "fas fa-child",
     "fas fa-map-pin",
     "fas fa-address-book",
     "fas fa-building",
@@ -33,8 +33,6 @@ export class IconListPage {
     "fas fa-futbol",
     "fas fa-coffee",
     "fas fa-gem",
-    "fas fa-ambulance",
-    "fas fa-ambulance",
     "fas fa-ambulance",
     "fas fa-beer",
     "fas fa-bed",
