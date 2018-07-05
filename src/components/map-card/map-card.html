@@ -1,5 +1,5 @@
 <ion-card (click)="changeView()" *ngIf="dataSource">
-  <ion-card-header>
+  <ion-card-header *ngIf="showHeader">
     <ng-content select="[card-header]"></ng-content>
   </ion-card-header>
   <img src="{{mapStaticImg}}" alt="">

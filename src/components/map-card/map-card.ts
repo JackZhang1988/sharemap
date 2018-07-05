@@ -12,6 +12,7 @@ export class MapCardComponent {
     @Input() viewTitle: string;
     @Input() count?: Number;
     @Input() dataSource?: any;
+    @Input() showHeader?: boolean = true;
     @Input() viewType: string; //表示map-card展示类型
 
     private STATIC_MAP_KEY: string;
