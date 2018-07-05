@@ -37,3 +37,10 @@ export interface User {
   signature?: string,
   avatar?: string,
 }
+
+export interface LocationCategory {
+  userId:string,
+  title:string,
+  iconClass:string,
+  iconColor:string
+}

@@ -93,7 +93,7 @@ export class AddLocationCategoryPage {
       }).subscribe(res => {
         if (res.status == 0) {
           this.viewCtrl.dismiss({
-            status: 'save-success',
+            type: 'save-success',
             data: res.result
           });
         }

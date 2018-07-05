@@ -40,6 +40,12 @@ export class AddLocModal extends ModalContent {
     orignalLocationResult: any;
     // isShowImgUploader = true;
     showHeader = true;
+    locationCategory: any = {
+        title: '默认',
+        iconClass: 'fas fa-circle',
+        iconColor: '#ff5d00'
+    };
+
     private mapInfo: any = this.navParams.get('mapInfo');
     private locationInfo: any = this.navParams.get('locationInfo');
 
@@ -99,9 +105,12 @@ export class AddLocModal extends ModalContent {
     goConfigCategory(): void {
         // this.navCtrl.push('IconListPage');
         let curModal = this.modalCtrl.create('LocationCategoryPage');
-        curModal.onDidDismiss(data => {
-            if (data) {
-                console.log(data);
+        curModal.onDidDismiss(result => {
+            if (result) {
+                if (result.type == 'category-select') {
+                    console.log(result.data);
+                    this.locationCategory = result.data;
+                }
             }
         });
         curModal.present();
@@ -195,6 +204,7 @@ export class AddLocModal extends ModalContent {
                             userId: userID,
                             id: this.locationInfo._id,
                             imgs: this.locationImgs,
+                            locationCategoryId: this.locationCategory._id,
                             description: this.description
                         })
                         .subscribe(res => {
@@ -230,6 +240,7 @@ export class AddLocModal extends ModalContent {
                         locationInfo: this.curLocation,
                         lnglat: lnglat,
                         mapId: this.curSelectedMapId,
+                        locationCategoryId: this.locationCategory._id,
                         imgs: this.locationImgs,
                         description: this.description
                     })

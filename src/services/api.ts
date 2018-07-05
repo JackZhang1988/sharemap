@@ -3,14 +3,7 @@ import { Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ENV } from '@app/env';
-
-
-interface LocationCategory {
-    userId:string,
-    title:string,
-    iconClass:string,
-    iconColor:string
-}
+import { LocationCategory } from '../common/models';
 
 @Injectable()
 export class ApiService {
@@ -179,9 +172,16 @@ export class ApiService {
             .catch((error: any) => Observable.throw(error.error || 'Server error'));
     }
 
+    getLocaionCategory(userId:string): Observable<any> {
+        return this.http
+            .get(this.serverHost + '/map/locationCategory?userId=' + userId)
+            .catch((error: any) => Observable.throw(error.error || 'Server error'));
+    }
+
     saveLocationCategory(params:LocationCategory): Observable<any> {
         return this.http
             .post(this.serverHost + '/map/locationCategory', params)
             .catch((error: any) => Observable.throw(error.error || 'Server error'));
     }
+
 }

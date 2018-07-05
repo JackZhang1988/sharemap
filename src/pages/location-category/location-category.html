@@ -20,12 +20,14 @@
         <ion-icon name="ios-alert-outline"></ion-icon>
         你可以为一组坐标设置一个分类，这样在查看地图详情时，可以快速找到该分类下的地点信息
     </p>
-    <ion-list>
+    <ion-list *ngIf="categoryList">
         <ion-list-header>当前分类</ion-list-header>
-        <ion-item-sliding>
-            <!-- <ion-item>
-                <i class="far fa-circle"></i>
-                <span class="categroy-title">分类1</span>
+        <ion-item-sliding *ngFor="let item of categoryList" (click)="selectCategory(item)">
+            <ion-item class="category-item">
+                <span class="categroy-title">{{item.title}}</span>
+                <span class="icon-marker cur" [ngStyle]="{'background-color':item.iconColor}">
+                    <i class="icon-item {{item.iconClass}}"></i>
+                </span>
             </ion-item>
             <ion-item-options side="right">
                 <button ion-button color="secondary">
@@ -36,7 +38,7 @@
                     <ion-icon name="ios-trash"></ion-icon>
                     删除
                 </button>
-            </ion-item-options> -->
+            </ion-item-options>
         </ion-item-sliding>
     </ion-list>
     <button ion-button block (click)="addNewCategroy()">新建分类</button>
