@@ -198,7 +198,7 @@ export class GDMap {
             let province = locationResult.addressComponent.province;
             let district = locationResult.addressComponent.district;
             let township = locationResult.addressComponent.township;
-            let result =  {
+            let result = {
                 name:
                     building ? building : locationResult.formattedAddress
                         .replace(province, '')
@@ -302,32 +302,39 @@ export class GDMap {
     /**
      * 添加基于font-awsome图标的marker
      * 参考：https://fontawesome.com/icons?d=gallery&m=free
-     * @param markList 
-     * @param ops 
+     * @param markerObjList 
+     *  markerObj marker对象，包含icon category信息:
      *      iconClass font-awsome icon 类名 example:fas fa-circle
-     *      isFitView 添加marker后是否自动调整地图
      *      iconContent 显示文字icon，注：为保证显示效果，通常设置文字icon时，iconClass设置为fas
+     * @param ops 
+     *      isFitView 添加marker后是否自动调整地图
      */
-    addIconMarkers(markList: any[], options?: any) {
-        if (markList.length) {
+    addIconMarkers(markerObjList: any[], options?: any) {
+        // debugger;
+        if (markerObjList.length) {
             let markerList = [];
             options = Object.assign(
                 {
                     isFitView: true,
-                    iconClass: 'fas fa-circle',
-                    iconContent: '',
                 },
                 options
             );
-            if (options.iconContent) {
-                options.iconClass = 'fas'
-            }
-            markList.forEach((pos, index) => {
+            let iconDefaultWidth = 22;
+            markerObjList.forEach((markerObj, index) => {
+                // 设置默认样式
+                let locationCategory = Object.assign({
+                    iconClass: 'fas fa-circle',
+                    iconColor: '#ff5d00',
+                }, markerObj.locationCategory)
+                if (markerObj.iconContent) {
+                    // 如果设置icon Content，则默认为fas类
+                    markerObj.iconClass = 'fas'
+                }
                 let marker = new AMap.Marker({
                     map: this.gdMap,
-                    content: `<div class="icon-marker"><i class="${options.iconClass}">${options.iconContent}</i></div>`,
-                    position: pos,
-                    offset: new AMap.Pixel(-25, -25)
+                    content: `<div class="icon-marker" style="background-color:${locationCategory.iconColor}"><i class="${locationCategory.iconClass}">${markerObj.iconContent || ''}</i></div>`,
+                    position: markerObj.lnglat,
+                    offset: new AMap.Pixel(-iconDefaultWidth, -iconDefaultWidth)
                 })
                 marker.on('click', function (e) {
                     options.markerClick && options.markerClick(e.target, index);
@@ -555,6 +562,7 @@ export class GDMap {
         if (iconMarker) {
             let content = iconMarker.getContent();
             iconMarker.setContent(content.replace('icon-marker', 'icon-marker cur'));
+            iconMarker.setOffset(new AMap.Pixel(-34, -34));
             iconMarker.setzIndex(9999);
         }
     }
@@ -564,6 +572,7 @@ export class GDMap {
             let content = iconMarker.getContent();
             iconMarker.setzIndex(1);
             iconMarker.setContent(content.replace(/ cur/gi, ''));
+            iconMarker.setOffset(new AMap.Pixel(-22, -22));
         }
     }
 

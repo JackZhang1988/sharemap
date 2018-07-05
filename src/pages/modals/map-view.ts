@@ -127,26 +127,19 @@ export class MapViewModal {
                                 return item.lnglat;
                             });
 
-                            this.addMarkerList(markList);
+                            this.addMarkerList(res.result.locations);
                         }
                         // this.initSlideWidth();
                     }
                 });
             } else {
                 this.slidesData = this.mapLocations;
-                for (let item of this.mapLocations) {
-                    markList.push(item.lnglat);
-                }
-
-                this.addMarkerList(markList);
+                this.addMarkerList(this.mapLocations);
             }
         } else {
             // location detail页不显示slide
             this.showSlides = false;
-            for (let item of this.mapLocations) {
-                markList.push(item.lnglat);
-            }
-            this.addMarkerList(markList);
+            this.addMarkerList([this.mapLocations]);
 
         }
         if (this.type == 'map-locations') {
@@ -154,8 +147,8 @@ export class MapViewModal {
         }
     }
 
-    addMarkerList(markList) {
-        this.markerList = this.gdService.addIconMarkers(markList, {
+    addMarkerList(markerObjList) {
+        this.markerList = this.gdService.addIconMarkers(markerObjList, {
             markerClick: (target, index) => {
                 // debugger;
                 // this.preMarker && this.unhighlightMarker(this.preMarker);

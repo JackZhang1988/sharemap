@@ -46,7 +46,7 @@
       {{locationInfo.addDate| date: 'MM-dd'}}
     </div>
   </ion-card>
-  <map-card [dataSource]="lnglat" [viewType]="'location-view'">
+  <map-card [dataSource]="locationInfo" [viewType]="'location-view'">
     <div card-header *ngIf="locationInfo">
       <ion-card-title>{{locationInfo.locationInfo?.name}}</ion-card-title>
       <div>
