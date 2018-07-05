@@ -288,3 +288,14 @@ textarea {
         font-size: 18px;
     }
 }
+
+.cur-category {
+    float: right;
+    display: flex;
+    .category-title{
+        margin-right: 10px;
+    }
+    .cur-marker{
+        @include icon-marker(22px);
+    }
+}

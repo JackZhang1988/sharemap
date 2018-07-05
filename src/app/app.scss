@@ -1,5 +1,4 @@
 // http://ionicframework.com/docs/v2/theming/
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,7 +13,6 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 @import './normalize.scss';
-
 ion-item.no-padding-left {
     padding-left: 0;
 }
@@ -24,7 +22,6 @@ ion-item.no-padding-left {
 }
 
 $iconWidth:27px;
-
 .icon-marker {
     // border: 2px solid #fff;
     border-radius: 100%;
@@ -34,9 +31,8 @@ $iconWidth:27px;
     background-color: #ff5d00;
     color: #fff;
     &.cur {
-        width:$iconWidth;
-        height: $iconWidth;
-        // border: 4px solid #fff;
+        width: $iconWidth;
+        height: $iconWidth; // border: 4px solid #fff;
         border-radius: 50% 50% 50% 0;
         transform: rotate(-45deg);
         i {
