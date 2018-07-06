@@ -24,7 +24,7 @@ export class MapCardComponent {
         this.init();
     }
     init() {
-        if (this.dataSource && this.dataSource.lnglat) {
+        if (this.dataSource && Object.keys(this.dataSource).length !== 0) {
             let size = '400*200';
             let color = '0x387ef5';
             let markerGpsStr = '';
