@@ -149,15 +149,6 @@ img {
     position: absolute;
 }
 
-#mapView {
-    height: 100%;
-}
-
-#slideContainer {
-    height: auto;
-    position: absolute;
-    bottom: 15px;
-}
 
 .avatar {
     width: 45px;
@@ -222,47 +213,7 @@ img {
     margin: 0 auto;
 }
 
-#pathPannel {
-    width: 95%;
-    background-color: transparent;
-    position: absolute;
-    top: 120px;
-    z-index: 11;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    display: none;
-}
 
-@keyframes slideInUp {
-    from {
-        transform: translate3d(0, 100%, 0);
-    }
-    to {
-        transform: translate3d(0, 0, 0);
-    }
-}
-
-#pathPannel.slideInUp {
-    display: block;
-    animation-name: slideInUp;
-    animation-duration: 1s;
-}
-
-@keyframes slideOutDown {
-    from {
-        transform: translate3d(0, 0, 0);
-    }
-    to {
-        display: none;
-        transform: translate3d(0, 100%, 0);
-    }
-}
-
-#pathPannel.slideOutDown {
-    animation-name: slideOutDown;
-    animation-duration: 1s;
-}
 textarea {
     min-height: 140px;
 }

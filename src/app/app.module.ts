@@ -20,7 +20,7 @@ import { BottomSheetProvider } from '../providers/bottom-sheet/bottom-sheet';
 
 export function jwtOptionsFactory(storage) {
     return {
-        whitelistedDomains: ['localhost:3000','fendxiangditu.com','renrenmap.cn','renrenmap.com'],
+        whitelistedDomains: ['localhost:3000', 'fendxiangditu.com', 'renrenmap.cn', 'renrenmap.com'],
         tokenGetter: () => {
             return storage.get('token');
         }
@@ -59,7 +59,7 @@ export function jwtOptionsFactory(storage) {
         AuthServiceProvider,
         FileTransfer,
         ShareProvider,
-    BottomSheetProvider
+        BottomSheetProvider
     ]
 })
-export class AppModule {}
+export class AppModule { }

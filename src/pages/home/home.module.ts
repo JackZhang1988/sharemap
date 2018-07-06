@@ -5,11 +5,10 @@ import { HomePage } from './home';
 import { AddMapModule } from '../modals/add-map.module';
 import { AddLocModule } from '../modals/add-loc.module';
 import { SearchLocModule } from '../search-loc/search-loc.module';
-// import { RichTextAddPageModule } from '../rich-text-add/rich-text-add.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { LocationCategoryPageModule } from '../location-category/location-category.module';
-// import { ImagefilterPipe } from '../../pipes/imagefilter/imagefilter';
-// import { ComponentsModule } from '../../components/components.module';
+import { MapViewModule } from '../map-view/map-view.module';
+
 
 @NgModule({
     declarations: [
@@ -22,7 +21,7 @@ import { LocationCategoryPageModule } from '../location-category/location-catego
         SearchLocModule,
         PipesModule,
         LocationCategoryPageModule,
-        // SearchTipsModule,
+        MapViewModule,
         IonicPageModule.forChild(HomePage),
     ],
     exports: [
