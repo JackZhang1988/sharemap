@@ -75,7 +75,7 @@
       </div>
     </ion-card>
   </div>
-  <div class="edit-btn-action">
+  <div class="edit-btn-action" *ngIf="isLogin">
     <button class="edit-btn-item" ion-button (click)="addLocation()" *ngIf="actionProperty?.showAddBtn">添加地点</button>
     <button class="edit-btn-item" ion-button color="secondary" (click)="editMap()" *ngIf="actionProperty?.showEditBtn">编辑地图集</button>
     <button class="edit-btn-item" ion-button color="danger" (click)="delMap()" *ngIf="actionProperty?.showDelBtn">删除地图集</button>

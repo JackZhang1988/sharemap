@@ -11,6 +11,7 @@ import {
 import { ApiService } from '../../services/api';
 import { ShareProvider } from '../../providers/share';
 import { Storage } from '@ionic/storage';
+import { AuthServiceProvider } from '../../providers/auth';
 
 @IonicPage({
     segment: '/map-detail/:id',
@@ -19,7 +20,7 @@ import { Storage } from '@ionic/storage';
 @Component({
     selector: 'page-map-detail',
     templateUrl: 'map-detail.html',
-    providers: [ApiService, ShareProvider]
+    providers: [ApiService, ShareProvider, AuthServiceProvider]
 })
 export class MapDetailPage {
     constructor(
@@ -30,6 +31,7 @@ export class MapDetailPage {
         private apiService: ApiService,
         private shareProvider: ShareProvider,
         private alertCtrl: AlertController,
+        private authService: AuthServiceProvider,
         private toastCtrl: ToastController
     ) {}
     @ViewChild(Slides) slides: Slides;
@@ -48,6 +50,8 @@ export class MapDetailPage {
     private hasMoreLocations = true;
     private locationPageSize = 20;
 
+    public isLogin = false;
+
     // 控制地图操作权限
     public actionProperty: any;
 
@@ -55,6 +59,11 @@ export class MapDetailPage {
         this.getMapData();
         this.getMapCommentCount();
         this.getMapLikeInfo();
+        this.authService.checkLogin().then(()=>{
+            this.isLogin = false;
+        }, ()=>{
+            this.isLogin = true;
+        })
     }
 
     initShare() {

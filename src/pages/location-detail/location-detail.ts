@@ -11,6 +11,7 @@ import {
 import { ApiService } from '../../services/api';
 import { Storage } from '@ionic/storage';
 import { ShareProvider } from '../../providers/share';
+import { AuthServiceProvider } from '../../providers/auth';
 // import { Keyboard } from '@ionic-native/keyboard';
 
 @IonicPage({
@@ -19,7 +20,7 @@ import { ShareProvider } from '../../providers/share';
 @Component({
     selector: 'page-location-detail',
     templateUrl: 'location-detail.html',
-    providers: [ApiService, ShareProvider]
+    providers: [ApiService, AuthServiceProvider, ShareProvider]
 })
 export class LocationDetailPage {
     @ViewChild('commentInput') commentInput: ElementRef;
@@ -32,6 +33,7 @@ export class LocationDetailPage {
         private platform: Platform,
         public navParams: NavParams,
         private apiService: ApiService,
+        private authService: AuthServiceProvider,
         private shareProvider: ShareProvider // private keyboard: Keyboard
     ) {}
 
@@ -42,10 +44,16 @@ export class LocationDetailPage {
     private isOwner = false;
     private showSlider = false;
     private loading = true;
+    public isLogin = false;
 
     ionViewDidLoad() {
         console.log(this.navParams);
         this.getLocationData();
+        this.authService.checkLogin().then(()=>{
+            this.isLogin = false;
+        }, ()=>{
+            this.isLogin = true;
+        })
     }
 
     // ionViewWillEnter() {

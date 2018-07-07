@@ -48,7 +48,6 @@ export class LoginPage {
             this.navCtrl.push('SignupPage', { signStep: 1 });
           } else {
             this.showMsg('登录成功', () => {
-              this.navCtrl.setRoot('home');
               if (this.loginCallback) {
                 this.loginCallback();
               } else {
