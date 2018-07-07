@@ -27,15 +27,8 @@
         </div>
         <div class="path-plan-pannel-trigger" *ngIf="pathSearchTrigger" [@enterAnimation] (click)="openPathPannel()">{{showPathPanel?'关闭':'查看'}}导航详情</div>
         <div id="pathPannel" #pathPannel [ngClass]="{'slideInUp':showPathPanel,'slideOutDown':!showPathPanel}"></div>
-        <!-- <div id="mapDetail">
-      <div class="user-info">
-        <img class="avatar" src="{{(mapInfo.creater?.avatar || 'http://okyb0e40i.bkt.clouddn.com/FmYuiaXcxOee_nLJmouPS5C-m2uM') | imagefilter:'avatar'}}">
-        <span class="user-name">{{mapInfo.creater?.name}}</span>
-      </div>
-      <div class="map-intro">{{mapInfo.description}}</div>
-    </div> -->
-        <ion-slides id="slideContainer" [pager]=false (ionSlideDidChange)="slideDidChange()" (ionSlideWillChange)="slideWillChange()"
-            *ngIf="showSlides">
+
+        <ion-slides id="slideContainer" [pager]=false (ionSlideDidChange)="slideDidChange()" *ngIf="showSlides">
             <ion-slide *ngFor='let item of slidesData' class="map-slider">
                 <button ion-item (click)="goLocationDetail(item)">
                     <ion-thumbnail item-start>

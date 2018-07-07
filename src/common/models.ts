@@ -39,8 +39,9 @@ export interface User {
 }
 
 export interface LocationCategory {
-  userId:string,
-  title:string,
-  iconClass:string,
-  iconColor:string
+  _id?: string,
+  userId: string,
+  title: string,
+  iconClass: string,
+  iconColor: string
 }

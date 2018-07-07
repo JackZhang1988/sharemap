@@ -536,6 +536,7 @@ export class GDMap {
                 this.clusterMap = new AMap.MarkerClusterer(this.gdMap, markers, { gridSize: 80 });
             }
         });
+        return markers;
     }
 
     setFitView() {

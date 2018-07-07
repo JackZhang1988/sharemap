@@ -8,6 +8,7 @@ import {
     ToastController,
     Platform,
     Slides,
+    LoadingController,
 } from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
 import { ApiService } from '../../services/api';
@@ -40,6 +41,7 @@ export class MapViewModal {
         public navParams: NavParams,
         public apiService: ApiService,
         private gdService: GDMap,
+        private loadingCtrl: LoadingController,
         public plt: Platform,
     ) { }
     @ViewChild(Slides) slides: Slides;
@@ -58,12 +60,12 @@ export class MapViewModal {
     private curPosition: any;
     private pathSearchTrigger: boolean = false;
     private showPathPanel: boolean = false;
-    private isMass: boolean = false;
     private showSlides: boolean = true;
     private slidesData: any[] = [];
     public categoryList: LocationCategory[] = [];
     curCateType: string = 'all';
     curCateItem: LocationCategory;
+    private loading: any;
 
     //使用动态id，方式生成多个modal时id重复
     private randomMapId: string = 'mapContainer-' + new Date().getTime().toString(32);
@@ -100,7 +102,9 @@ export class MapViewModal {
         );
         this.gdService.initPathPlan('pathPannel');
 
-        let markList = [];
+        this.loading = this.loadingCtrl.create({
+            content: '正在初始化地图...'
+        });
 
         // 获得去重后端categoryList
         let __getCategoryList = (mapLocations: any[]): LocationCategory[] => {
@@ -128,7 +132,11 @@ export class MapViewModal {
         if (this.type == 'map-locations') {
             //获取map下所有location
             console.log('map-locations', this.mapLocations);
+            //mock
+            // this.mapLocations = this.mapLocations.filter(item => item._id !== '58fe1a5f7a67142b2fad1a42')
             let mapId = this.mapLocations[0].mapId;
+            this.loading.present();
+
             if (this.count >= 10) {
                 // 说明该地图位置数据需要从接口里取
                 this.apiService.getMapAllLocations({ mapId: mapId }).subscribe(res => {
@@ -137,41 +145,23 @@ export class MapViewModal {
                         this.categoryList = __getCategoryList(this.mapLocations);
 
                         if (res.result.locations.length > 100) {
-                            this.isMass = true;
-                            markList = res.result.locations.map(item => {
-                                return {
-                                    lnglat: item.lnglat,
-                                    info: item
-                                };
-                            });
-
-                            // 使用点聚合地图
-                            this.gdService.renderCluserMarker(markList, {
-                                markerClick: curMarker => {
-                                    this.curMarker = curMarker;
-                                    this.slidesData = [curMarker.getExtData().info];
-                                }
-                            });
+                            this.renderMarkerList(res.result.locations);
                         } else {
-                            this.slidesData = this.mapLocations;
-                            markList = res.result.locations.map(item => {
-                                return item.lnglat;
-                            });
-
-                            this.addMarkerList(res.result.locations);
+                            this.renderMarkerList(res.result.locations);
                         }
+                        this.loading.dismiss();
                         // this.initSlideWidth();
                     }
                 });
             } else {
-                this.slidesData = this.mapLocations;
                 this.categoryList = __getCategoryList(this.mapLocations);
-                this.addMarkerList(this.mapLocations);
+                this.renderMarkerList(this.mapLocations);
+                this.loading.dismiss();
             }
         } else {
             // location detail页不显示slide
             this.showSlides = false;
-            this.addMarkerList([this.mapLocations]);
+            this.renderMarkerList([this.mapLocations]);
 
         }
         if (this.type == 'map-locations') {
@@ -179,16 +169,36 @@ export class MapViewModal {
         }
     }
 
-    addMarkerList(markerObjList) {
-        this.markerList = this.gdService.addIconMarkers(markerObjList, {
-            markerClick: (target, index) => {
-                this.highlightMarker(target);
-                this.slides.slideTo(index);
-            }
-        });;
-        this.curMarker = this.markerList[0];
-        //默认高亮第一个marker
-        this.highlightMarker(this.curMarker);
+    renderMarkerList(markerObjList) {
+        console.log('当前 mapLocations', markerObjList);
+
+        if (markerObjList.length > 100) {
+            let clusterMarkerList = markerObjList.map(item => {
+                return {
+                    lnglat: item.lnglat,
+                    info: item
+                }
+            })
+            // 使用点聚合地图
+            this.markerList = this.gdService.renderCluserMarker(clusterMarkerList, {
+                markerClick: curMarker => {
+                    this.curMarker = curMarker;
+                    //聚合地图显示slider，但由于量比较大，所以只显示当前点击的那一个
+                    this.slidesData = [curMarker.getExtData().info];
+                }
+            });
+        } else {
+            this.slidesData = markerObjList;
+            this.markerList = this.gdService.addIconMarkers(markerObjList, {
+                markerClick: (target, index) => {
+                    this.highlightMarker(target);
+                    this.slides.slideTo(index);
+                }
+            });;
+            this.curMarker = this.markerList[0];
+            //默认高亮第一个marker
+            this.highlightMarker(this.curMarker);
+        }
     }
 
     highlightMarker(iconMarker) {
@@ -200,7 +210,20 @@ export class MapViewModal {
     }
 
     selectCategory(type: string, data?) {
+        if (this.curCateType == type) {
+            //如果当前type和上一次一样，则返回
+            return;
+        }
         this.curCateType = type;
+        this.curCateItem = data;
+        this.gdService.clearMap();
+        if (this.curCateType == 'all') {
+            this.renderMarkerList(this.mapLocations);
+        } else {
+            this.renderMarkerList(this.mapLocations.filter(item => {
+                return item.locationCategory._id == this.curCateItem._id;
+            }))
+        }
     }
 
     dismiss() {
