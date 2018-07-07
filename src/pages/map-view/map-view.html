@@ -12,6 +12,17 @@
 
 <ion-content>
     <div id="mapView" [hidden]="curView=='list'">
+        <div class="location-category" *ngIf="type == 'map-locations' && categoryList.length > 1">
+            <div class="category-all" (click)="selectCategory('all')" [ngClass]="{'active':curCateType == 'all'}">全部</div>
+            <div class="category-list">
+                <div class="category-btn" [ngClass]="{'active':curCateType == 'cate_'+i }" *ngFor="let item of categoryList;let i = index" (click)="selectCategory('cate_'+i,item)">
+                    <div class="category-marker" [ngStyle]="{'background-color':item.iconColor}">
+                        <i class="icon-item {{item.iconClass}}"></i>
+                    </div>
+                    <div class="category-titel">{{item.title}}</div>
+                </div>
+            </div>
+        </div>
         <div [attr.id]="randomMapId" class="item full-map map-container">
         </div>
         <div class="path-plan-pannel-trigger" *ngIf="pathSearchTrigger" [@enterAnimation] (click)="openPathPannel()">{{showPathPanel?'关闭':'查看'}}导航详情</div>

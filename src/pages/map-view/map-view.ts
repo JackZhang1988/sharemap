@@ -5,12 +5,13 @@ import {
     NavController,
     PopoverController,
     NavParams,
+    ToastController,
+    Platform,
     Slides,
-    ToastController
 } from 'ionic-angular';
 import { GDMap } from '../../services/gdmap';
 import { ApiService } from '../../services/api';
-// import { PathPlanPopOverComponent } from '../../components/path-plan-pop-over/path-plan-pop-over';
+import { LocationCategory } from '../../common/models'
 
 @IonicPage()
 @Component({
@@ -38,7 +39,8 @@ export class MapViewModal {
         public popoverCtrl: PopoverController,
         public navParams: NavParams,
         public apiService: ApiService,
-        private gdService: GDMap
+        private gdService: GDMap,
+        public plt: Platform,
     ) { }
     @ViewChild(Slides) slides: Slides;
     @ViewChild('pathPannel', { read: ElementRef })
@@ -59,6 +61,9 @@ export class MapViewModal {
     private isMass: boolean = false;
     private showSlides: boolean = true;
     private slidesData: any[] = [];
+    public categoryList: LocationCategory[] = [];
+    curCateType: string = 'all';
+    curCateItem: LocationCategory;
 
     //使用动态id，方式生成多个modal时id重复
     private randomMapId: string = 'mapContainer-' + new Date().getTime().toString(32);
@@ -67,7 +72,8 @@ export class MapViewModal {
         let geoTime = 0;
         let buttonOffset;
         if (this.type == 'map-locations') {
-            buttonOffset = new AMap.Pixel(10, 100);
+            let btnOffsetHeight = this.plt.is('ios') ? 100 : 140;
+            buttonOffset = new AMap.Pixel(10, btnOffsetHeight);
         } else {
             buttonOffset = new AMap.Pixel(10, 10);
         }
@@ -78,8 +84,8 @@ export class MapViewModal {
             {
                 panToLocation: false,
                 zoomToAccuracy: false,
-                buttonPosition: 'LT',
-                buttonOffset: new AMap.Pixel(10, 10)
+                // buttonPosition: 'LB',
+                buttonOffset: buttonOffset
             },
             result => {
                 this.zone.run(() => {
@@ -95,14 +101,41 @@ export class MapViewModal {
         this.gdService.initPathPlan('pathPannel');
 
         let markList = [];
+
+        // 获得去重后端categoryList
+        let __getCategoryList = (mapLocations: any[]): LocationCategory[] => {
+            let maplocCateList = mapLocations.filter(item => item.locationCategory).map(item => item.locationCategory);
+            let result = [];
+            let __hasCate = (resultArr, cateId) => {
+                let hasResult = false;
+                for (let j = 0; j < resultArr.length; j++) {
+                    if (resultArr[j]._id == cateId) {
+                        hasResult = true;
+                        break;
+                    }
+                }
+                return hasResult;
+            }
+            for (let i = 0; i < maplocCateList.length; i++) {
+                if (__hasCate(result, maplocCateList[i]._id)) {
+                    continue;
+                } else {
+                    result.push(maplocCateList[i]);
+                }
+            }
+            return result;
+        }
         if (this.type == 'map-locations') {
             //获取map下所有location
+            console.log('map-locations', this.mapLocations);
             let mapId = this.mapLocations[0].mapId;
             if (this.count >= 10) {
                 // 说明该地图位置数据需要从接口里取
                 this.apiService.getMapAllLocations({ mapId: mapId }).subscribe(res => {
                     if (res.status == 0) {
                         this.mapLocations = res.result.locations;
+                        this.categoryList = __getCategoryList(this.mapLocations);
+
                         if (res.result.locations.length > 100) {
                             this.isMass = true;
                             markList = res.result.locations.map(item => {
@@ -119,8 +152,6 @@ export class MapViewModal {
                                     this.slidesData = [curMarker.getExtData().info];
                                 }
                             });
-                            // let mock =  [{"lnglat":[116.258446,37.686622],"name":"景县","style":2},{"lnglat":[113.559954,22.124049],"name":"圣方济各堂区","style":2},{"lnglat":[116.366794,39.915309],"name":"西城区","style":2},{"lnglat":[116.486409,39.921489],"name":"朝阳区","style":2},{"lnglat":[116.286968,39.863642],"name":"丰台区","style":2},{"lnglat":[116.195445,39.914601],"name":"石景山区","style":2},{"lnglat":[116.310316,39.956074],"name":"海淀区","style":2},{"lnglat":[116.105381,39.937183],"name":"门头沟区","style":2}];
-                            // this.gdService.addMassMarks(mock);
                         } else {
                             this.slidesData = this.mapLocations;
                             markList = res.result.locations.map(item => {
@@ -134,6 +165,7 @@ export class MapViewModal {
                 });
             } else {
                 this.slidesData = this.mapLocations;
+                this.categoryList = __getCategoryList(this.mapLocations);
                 this.addMarkerList(this.mapLocations);
             }
         } else {
@@ -150,11 +182,8 @@ export class MapViewModal {
     addMarkerList(markerObjList) {
         this.markerList = this.gdService.addIconMarkers(markerObjList, {
             markerClick: (target, index) => {
-                // debugger;
-                // this.preMarker && this.unhighlightMarker(this.preMarker);
                 this.highlightMarker(target);
                 this.slides.slideTo(index);
-                // this.preMarker = target;
             }
         });;
         this.curMarker = this.markerList[0];
@@ -168,6 +197,10 @@ export class MapViewModal {
 
     unhighlightMarker(iconMarker) {
         this.gdService.unhighlightIconMarker(iconMarker);
+    }
+
+    selectCategory(type: string, data?) {
+        this.curCateType = type;
     }
 
     dismiss() {
@@ -187,9 +220,9 @@ export class MapViewModal {
         });
     }
 
-    slideWillChange(): void {
-        // this.slides.width = window.screen.width * 0.95;
-    }
+    // slideWillChange(): void {
+    //     // this.slides.width = window.screen.width * 0.95;
+    // }
 
     slideDidChange(): void {
         let curMarkerInfo = this.mapLocations[this.slides.getActiveIndex()];

@@ -1,11 +1,13 @@
 #mapView {
     height: 100%;
 }
+
 #slideContainer {
     height: auto;
     position: absolute;
     bottom: 15px;
 }
+
 #pathPannel {
     width: 95%;
     background-color: transparent;
@@ -46,4 +48,46 @@
 #pathPannel.slideOutDown {
     animation-name: slideOutDown;
     animation-duration: 1s;
+}
+
+.location-category {
+    display: flex;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 1;
+    color:#444;
+    .category-all {
+        min-width:50px;
+        padding: 5px 10px;
+        border-right: 1px solid #eee;
+        &.active{
+            color: map-get($colors,primary);
+        }
+    }
+    .category-list {
+        white-space: nowrap;
+        overflow: auto;
+        .category-btn {
+            display: inline-block;
+            padding: 4px 10px;
+            &.active{
+                color: map-get($colors,primary);
+            }
+        }
+        .category-marker {
+            float: left;
+            margin-right: 5px;
+            @include icon-marker(20px, 12px);
+            i {
+                position: relative;
+                bottom: 1px;
+                right: 1px;
+            }
+        }
+        .category-titel {
+            float: left;
+        }
+    }
 }

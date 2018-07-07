@@ -62,9 +62,9 @@ export class MapDetailPage {
     }
 
     getMapData(): void {
-        console.log(this.mapParams);
+        // console.log(this.mapParams);
         this.apiService.getMapById(this.mapParams.id).subscribe(res => {
-            console.log(res.result);
+
             this.loading = false;
             if (res.status == 0) {
                 this.mapInfo = res.result.map;
@@ -76,7 +76,6 @@ export class MapDetailPage {
                 this.viewTitle = this.mapInfo.title;
                 this.storage.get('userId').then(userID => {
                     this.isOwner = userID == res.result.map.creater._id;
-                    console.log('mapPropertry', res.result.map.mapProperty, this.isOwner);
                     if (res.result.map.mapProperty == 'cooperate' && !this.isOwner) {
                         // 协作地图并且非作者，可以添加地点，无法删除、编辑地图集
                         this.actionProperty = {
@@ -123,7 +122,6 @@ export class MapDetailPage {
     getMapCommentCount() {
         this.apiService.getMapCommentCount(this.mapParams.id).subscribe(res => {
             if (res.status == 0) {
-                console.log(res);
                 this.mapCommentCount = res.result;
             }
         });
@@ -133,7 +131,6 @@ export class MapDetailPage {
         this.storage.get('userId').then(userID => {
             this.apiService.getLikeInfo(this.mapParams.id, userID).subscribe(res => {
                 if (res.status == 0) {
-                    console.log(res);
                     this.likeCount = res.result.count;
                     this.hasLiked = res.result.hasLiked;
                 }
