@@ -127,6 +127,7 @@ export class MapViewModal {
                     result.push(maplocCateList[i]);
                 }
             }
+            console.log('cur categoryList: ', result);
             return result;
         }
         if (this.type == 'map-locations') {
@@ -221,7 +222,7 @@ export class MapViewModal {
             this.renderMarkerList(this.mapLocations);
         } else {
             this.renderMarkerList(this.mapLocations.filter(item => {
-                return item.locationCategory._id == this.curCateItem._id;
+                return item.locationCategory && item.locationCategory._id == this.curCateItem._id;
             }))
         }
     }

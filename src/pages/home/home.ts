@@ -43,9 +43,9 @@ export class HomePage implements OnInit {
                 this.maps = isRefresh ? res.result : this.maps.concat(res.result);
                 if (res.result.length < this.pageSize) {
                     this.hasMore = false;
-                    callback && callback();
                 }
             }
+            callback && callback();
         });
     }
 

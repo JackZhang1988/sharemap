@@ -16,12 +16,10 @@ export class AuthServiceProvider {
     return new Promise((resolve, reject) => {
 
       this.storage.get('token').then(jwt => {
-
+        // console.log('token', jwt);
+        // console.log('token expired date', this.jwtHelper.getTokenExpirationDate(jwt));
+        // console.log('token decode',this.jwtHelper.decodeToken(jwt));
         if (jwt && !this.jwtHelper.isTokenExpired(jwt)) {
-          // this.authHttp.get(`${SERVER_URL}/authenticate`)
-          //   .subscribe(() => this.authUser.next(jwt),
-          //     (err) => this.storage.remove('token').then(() => this.authUser.next(null)));
-          // OR
           resolve(jwt);
         } else {
           reject(null);

@@ -73,7 +73,7 @@ export class GDMap {
             self.gdMap.addControl(geolocation);
             geolocation.getCurrentPosition();
             AMap.event.addListener(geolocation, 'complete', result => {
-                console.log('当前位置: ', result);
+                // console.log('当前位置: ', result);
                 if (!result.location) {
                     result.location = result.position;
                 }
@@ -94,7 +94,7 @@ export class GDMap {
             self.citySearch = new AMap.CitySearch();
             self.citySearch.getLocalCity((status, citySearchResult) => {
                 if (status == 'complete') {
-                    console.log(citySearchResult);
+                    // console.log(citySearchResult);
                     self.city = citySearchResult.city;
                     self.initAutoSearch({
                         city: citySearchResult.city
@@ -141,7 +141,7 @@ export class GDMap {
                 if (!result.location) {
                     result.location = result.position;
                 }
-                console.log(status, result);
+                // console.log(status, result);
             });
             AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
             AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
@@ -211,9 +211,9 @@ export class GDMap {
                 citycode: locationResult.addressComponent.citycode,
                 adcode: locationResult.addressComponent.adcode
             };
-            console.log(locationResult.formattedAddress);
-            console.log(locationResult.addressComponent);
-            console.log(result.name);
+            // console.log(locationResult.formattedAddress);
+            // console.log(locationResult.addressComponent);
+            // console.log(result.name);
             return result;
         }
     }

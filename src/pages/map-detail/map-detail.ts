@@ -60,9 +60,9 @@ export class MapDetailPage {
         this.getMapCommentCount();
         this.getMapLikeInfo();
         this.authService.checkLogin().then(()=>{
-            this.isLogin = false;
-        }, ()=>{
             this.isLogin = true;
+        }, ()=>{
+            this.isLogin = false;
         })
     }
 
