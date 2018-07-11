@@ -28,7 +28,7 @@
         <div class="path-plan-pannel-trigger" *ngIf="pathSearchTrigger" [@enterAnimation] (click)="openPathPannel()">{{showPathPanel?'关闭':'查看'}}导航详情</div>
         <div id="pathPannel" #pathPannel [ngClass]="{'slideInUp':showPathPanel,'slideOutDown':!showPathPanel}"></div>
 
-        <ion-slides id="slideContainer" [pager]=false (ionSlideDidChange)="slideDidChange()" *ngIf="showSlides">
+        <ion-slides id="slideContainer" [pager]=false (ionSlideDidChange)="slideDidChange()" *ngIf="showSlides" spaceBetween="10">
             <ion-slide *ngFor='let item of slidesData' class="map-slider">
                 <button ion-item (click)="goLocationDetail(item)">
                     <ion-thumbnail item-start>

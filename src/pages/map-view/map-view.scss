@@ -57,13 +57,13 @@
     width: 100%;
     background: #fff;
     z-index: 1;
-    color:#444;
+    color: #444;
     .category-all {
-        min-width:50px;
+        min-width: 50px;
         padding: 5px 10px;
         border-right: 1px solid #eee;
-        &.active{
-            color: map-get($colors,primary);
+        &.active {
+            color: map-get($colors, primary);
         }
     }
     .category-list {
@@ -72,8 +72,8 @@
         .category-btn {
             display: inline-block;
             padding: 4px 10px;
-            &.active{
-                color: map-get($colors,primary);
+            &.active {
+                color: map-get($colors, primary);
             }
         }
         .category-marker {
@@ -89,5 +89,12 @@
         .category-titel {
             float: left;
         }
+    }
+}
+
+.map-slider {
+    background-color: #fff;
+    &:first-child {
+        margin-left: 10px;
     }
 }
