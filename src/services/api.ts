@@ -4,12 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ENV } from '@app/env';
 import { LocationCategory } from '../common/models';
+import { map } from '../../node_modules/rxjs/operators';
 
 @Injectable()
 export class ApiService {
     private serverHost = ENV.API_URL;
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
     search(params): Observable<any> {
         return this.http
@@ -172,13 +173,13 @@ export class ApiService {
             .catch((error: any) => Observable.throw(error.error || 'Server error'));
     }
 
-    getLocaionCategory(userId:string): Observable<any> {
+    getLocaionCategory(userId: string, mapId?: string): Observable<any> {
         return this.http
-            .get(this.serverHost + '/map/locationCategory?userId=' + userId)
+            .get(this.serverHost + '/map/locationCategory?userId=' + userId + (mapId ? `&mapId=${mapId}` : ''))
             .catch((error: any) => Observable.throw(error.error || 'Server error'));
     }
 
-    saveLocationCategory(params:LocationCategory): Observable<any> {
+    saveLocationCategory(params: LocationCategory): Observable<any> {
         return this.http
             .post(this.serverHost + '/map/locationCategory', params)
             .catch((error: any) => Observable.throw(error.error || 'Server error'));

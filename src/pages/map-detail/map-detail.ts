@@ -229,7 +229,7 @@ export class MapDetailPage {
     }
 
     addLocation(): void {
-        let addLocationModal = this.modalCtrl.create('SearchLocModal', {
+        let addLocationModal = this.modalCtrl.create('AddLocModal', {
             mapInfo: this.mapInfo
         });
         addLocationModal.present();

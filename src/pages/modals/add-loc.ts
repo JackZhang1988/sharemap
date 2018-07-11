@@ -103,17 +103,31 @@ export class AddLocModal extends ModalContent {
     }
 
     goConfigCategory(): void {
-        // this.navCtrl.push('IconListPage');
-        let curModal = this.modalCtrl.create('LocationCategoryPage');
-        curModal.onDidDismiss(result => {
-            if (result) {
-                if (result.type == 'category-select') {
-                    console.log(result.data);
-                    this.locationCategory = result.data;
+        let self = this;
+        let __createModal = function (data) {
+            let curModal = self.modalCtrl.create('LocationCategoryPage', data);
+            curModal.onDidDismiss(result => {
+                if (result) {
+                    if (result.type == 'category-select') {
+                        self.locationCategory = result.data;
+                    }
                 }
-            }
-        });
-        curModal.present();
+            });
+            curModal.present();
+        }
+        if (this.mapInfo && this.mapInfo.mapProperty == 'cooperate') {
+            //协同地图使用创建者的category
+            __createModal({
+                userId: this.mapInfo.creater._id,
+                mapId: this.mapInfo._id
+            });
+        } else {
+            this.storage.get('userId').then(userID => {
+                __createModal({
+                    userId: userID
+                });
+            })
+        }
     }
 
     getMaps(): void {
@@ -198,7 +212,8 @@ export class AddLocModal extends ModalContent {
         } else {
             this.storage.get('userId').then(userID => {
                 if (this.locationInfo) {
-                    //编辑地点
+                    // 编辑地点
+                    // userId需要传编辑的地图对应的创建者id，以便判断是否有权限
                     this.apiService
                         .updateLocation({
                             userId: userID,

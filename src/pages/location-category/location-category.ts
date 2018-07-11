@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Storage } from "@ionic/storage";
 import { IonicPage, NavController, NavParams, ViewController, ModalController, AlertController } from 'ionic-angular';
 import { ApiService } from '../../services/api';
 import { LocationCategory } from '../../common/models';
@@ -16,12 +15,13 @@ export class LocationCategoryPage {
     public viewCtrl: ViewController,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public storage: Storage,
     private apiService: ApiService,
     public modalCtrl: ModalController, ) {
   }
 
-  public categoryList: LocationCategory[]
+  public categoryList: LocationCategory[];
+  public userId: string = this.navParams.get('userId');
+  public mapId: string = this.navParams.get('mapId');
 
   dismiss() {
     this.viewCtrl.dismiss();
@@ -32,13 +32,13 @@ export class LocationCategoryPage {
   }
 
   getMapCategory() {
-    this.storage.get("userId").then(userId => {
-      this.apiService.getLocaionCategory(userId).subscribe(res => {
+    if (this.userId) {
+      this.apiService.getLocaionCategory(this.userId, this.mapId).subscribe(res => {
         if (res.status == 0) {
           this.categoryList = res.result;
         }
       })
-    })
+    }
   }
 
   addNewCategroy() {
