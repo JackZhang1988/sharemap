@@ -62,7 +62,6 @@ export class CommentComponent {
     this.storage.get('userId').then(userID => {
       this.apiService.getLikeInfo(this.pageId, userID).subscribe(res => {
         if (res.status == 0) {
-          console.log(res);
           this.hasLiked = res.result.hasLiked;
           this.likeList = res.result.likeList;
         }
@@ -73,7 +72,6 @@ export class CommentComponent {
   getComments() {
     this.apiService.getComments(this.pageId).subscribe(res => {
       if (res.status == 0) {
-        console.log(res);
         this.commentList = res.result;
       }
     })

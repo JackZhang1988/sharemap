@@ -141,6 +141,7 @@ export class GDMap {
                 if (!result.location) {
                     result.location = result.position;
                 }
+                self.city = result.addressComponent.citycode;
                 // console.log(status, result);
             });
             AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
@@ -175,6 +176,7 @@ export class GDMap {
         AMap.service('AMap.Transfer', function () {
             self.pathPlan.transfer = new AMap.Transfer({
                 map: self.gdMap,
+                city: self.city,
                 panel: pannel
             });
         });

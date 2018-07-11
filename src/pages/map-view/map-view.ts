@@ -98,9 +98,10 @@ export class MapViewModal {
                     }
                     geoTime++;
                 });
+                // AMap.Transfer需要传city字段，所以在获得city信息后再初始化
+                this.gdService.initPathPlan('pathPannel');
             }
         );
-        this.gdService.initPathPlan('pathPannel');
 
         this.loading = this.loadingCtrl.create({
             content: '正在初始化地图...'
